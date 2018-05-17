@@ -1,6 +1,7 @@
 package com.android.interview;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        handler机制，四个组成部分及源码解析
+        Handler handler = new Handler();
+
+
 //        布局相关的<merge>、<viewstub>控件作用及实现原理
 //        android中的布局优化
 //        relativelayout和LinearLayout在实现效果同等情况下选择使用哪个？为什么？

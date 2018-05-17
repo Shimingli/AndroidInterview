@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".dp_px_dip_sp.UnitDemoActivity"></activity>
+        <activity android:name=".code_optimization.HandlerActivity" />
     </application>
 
 </manifest>
