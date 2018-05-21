@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dp_px_dip_sp.UnitDemoActivity"></activity>
+        <activity android:name=".dp_px_dip_sp.UnitDemoActivity" />
         <activity android:name=".code_optimization.HandlerActivity" />
+        <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity"></activity>
     </application>
 
 </manifest>

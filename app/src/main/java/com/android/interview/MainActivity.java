@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
+import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
 
 /**
  * 安卓面试的资料
@@ -26,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
         });
 //        handler机制，四个组成部分及源码解析
         Handler handler = new Handler();
-
-
 //        布局相关的<merge>、<viewstub>控件作用及实现原理
+        findViewById(R.id.btn_principle_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,MergePrincipleActivity.class));
+            }
+        });
 //        android中的布局优化
 //        relativelayout和LinearLayout在实现效果同等情况下选择使用哪个？为什么？
 //        view的工作原理及measure、layout、draw流程，要求了解源码
