@@ -5,9 +5,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/timg"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/timg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".dp_px_dip_sp.UnitDemoActivity" />
-        <activity android:name=".code_optimization.HandlerActivity" />
-        <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity"></activity>
+        <activity android:name=".handler.HandlerActivity" />
+        <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity"/>
     </application>
 
 </manifest>

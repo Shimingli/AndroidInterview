@@ -1,3 +1,5 @@
+package com.android.interview.handler;
+
 //package com.android.interview.handler;
 //
 //
@@ -26,7 +28,9 @@
 // */
 //
 //// TODO: 2018/5/17  这个是 copy出来的 messageQueue
-//public final class MessageQueue {
+public final class MessageQueue {
+
+}
 //    private static final String TAG = "MessageQueue";
 //    private static final boolean DEBUG = false;
 //

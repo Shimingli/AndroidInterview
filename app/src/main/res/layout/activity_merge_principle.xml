@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity">
+    android:orientation="vertical" >
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        android:id="@+id/my_title_ly"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        layout="@layout/my_include_layout" />
+
+    <com.android.interview.merge_and_viewstub_demo.BlinkLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="我是copy出来的BlinkLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.android.interview.merge_and_viewstub_demo.BlinkLayout>
+    <!-- 代码省略 -->
+</LinearLayout>

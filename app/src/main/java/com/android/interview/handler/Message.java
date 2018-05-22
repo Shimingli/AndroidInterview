@@ -1,3 +1,7 @@
+package com.android.interview.handler;
+
+import android.os.Parcelable;
+
 ///*
 // * Copyright (C) 2006 The Android Open Source Project
 // *
@@ -39,7 +43,9 @@
 // */
 //
 //// TODO: 2018/5/17 Message对象是实现了Parcelable接口的，因为Message消息可能需要跨进程通信，这时候就需要进程序列化以及反序列化操作了。
-//public final class Message implements Parcelable {
+public final class Message  {//implements Parcelable
+
+}
 //    /**
 //     * User-defined message code so that the recipient can identify
 //     * what this message is about. Each {@link Handler} has its own name-space

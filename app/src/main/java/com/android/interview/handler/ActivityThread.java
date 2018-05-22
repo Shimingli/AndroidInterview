@@ -1,3 +1,5 @@
+package com.android.interview.handler;
+
 //
 ///*
 // * Copyright (C) 2006 The Android Open Source Project
@@ -149,7 +151,8 @@
 // * <p>
 // * {@hide}
 // */
-//public final class ActivityThread {
+public final class ActivityThread {
+}
 //    /**
 //     * @hide
 //     */

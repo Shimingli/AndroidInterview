@@ -1,3 +1,5 @@
+package com.android.interview.handler;
+
 ///*
 // * Copyright (C) 2006 The Android Open Source Project
 // *
@@ -67,7 +69,9 @@
 // * your new thread.  The given Runnable or Message will then be scheduled
 // * in the Handler's message queue and processed when appropriate.
 // */
-//public class Handler {
+// TODO: 2018/5/22 保留这个类完整性 
+public class Handler {
+}
 //    /*
 //     * Set this flag to true to detect anonymous, local or member classes
 //     * that extend this Handler class and that are not static. These kind

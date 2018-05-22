@@ -1,3 +1,5 @@
+package com.android.interview.handler;
+
 ///*
 // * Copyright (C) 2006 The Android Open Source Project
 // *
@@ -56,7 +58,9 @@
 //  *      }
 //  *  }</pre>
 //  */
-//public final class Looper {
+public final class Looper {
+
+}
 //    /*
 //     * API Implementation Note:
 //     *
