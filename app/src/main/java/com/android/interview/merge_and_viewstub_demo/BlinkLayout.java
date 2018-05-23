@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 /**
@@ -71,5 +72,10 @@ public   class BlinkLayout extends FrameLayout {
         if (mBlinkState) {
             super.dispatchDraw(canvas);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
     }
 }

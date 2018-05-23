@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
@@ -36,7 +38,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        android中的布局优化
+       // 请看我的文章：https://www.jianshu.com/p/82b76e0cb41e
+
 //        relativelayout和LinearLayout在实现效果同等情况下选择使用哪个？为什么？
+        /*
+          RelativeLayout和LinearLayout是Android中常用的布局，两者的使用会极大的影响程序生成每一帧的性能，因此，正确的使用它们是提升程序性能的重要工作。记得以前，较低的SDK版本新建Android项目时，默认的布局文件是采用线性布局LinearLayout，但现在自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定好了的，也就是说这是Google的选择，而非IDE的选择。那SDK为什么会默认给开发者新建一个默认的RelativeLayout布局呢？<-----原因见最后小结
+     当然是因为RelativeLayout的性能更优，性能至上嘛。但是我们再看看默认新建的这个RelativeLayout的父容器，也就是当前窗口的顶级View——DecorView，它却是个垂直方向的LinearLayout，上面是标题栏，下面是内容栏。那么问题来了，Google为什么给开发者默认新建了个RelativeLayout，而自己却偷偷用了个LinearLayout，到底谁的性能更高，开发者该怎么选择呢？
+       下面将通过分析它们的源码来探讨其View绘制性能，并得出其正确的使用方法。
+         */
+//（1）RelativeLayout会让子View调用2次onMeasure，LinearLayout 在有weight时，也会调用子View 2次onMeasure
+//（2）RelativeLayout的子View如果高度和RelativeLayout不同，则会引发效率问题，当子View很复杂时，这个问题会更加严重。如果可以，尽量使用padding代替margin。
+//（3）在不影响层级深度的情况下,使用LinearLayout和FrameLayout而不是RelativeLayout。
+//（4）提高绘制性能的使用方式
+//        根据上面源码的分析，RelativeLayout将对所有的子View进行两次measure，而LinearLayout在使用weight属性进行布局时也会对子View进行两次measure，如果他们位于整个View树的顶端时并可能进行多层的嵌套时，位于底层的View将会进行大量的measure操作，大大降低程序性能。因此，应尽量将RelativeLayout和LinearLayout置于View树的底层，并减少嵌套。
+
+
+
+
 //        view的工作原理及measure、layout、draw流程，要求了解源码
 //        怎样自定义一个弹幕控件？
 //        如果控件内部卡顿你如何去解决并优化？
@@ -100,5 +118,10 @@ public class MainActivity extends AppCompatActivity {
 //        红黑树的一些特点？怎样保持平衡？
 
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
     }
 }
