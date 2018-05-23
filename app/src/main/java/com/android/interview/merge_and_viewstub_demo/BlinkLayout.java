@@ -21,7 +21,7 @@ public   class BlinkLayout extends FrameLayout {
 
     public BlinkLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO: 2018/5/22 对handler  源码比较熟悉的话，这里就是另外的一种使用的方法 
+        // TODO: 2018/5/22 对handler  源码比较熟悉的话，这里就是Handler另外的一种使用的方法
         mHandler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -30,6 +30,8 @@ public   class BlinkLayout extends FrameLayout {
                         mBlinkState = !mBlinkState;
                         makeBlink();
                     }
+                    //invalidate()是用来刷新View的，必须是在UI线程中进行工作。
+                    // 比如在修改某个view的显示时，调用invalidate()才能看到重新绘制的界面
                     invalidate();
                     return true;
                 }
@@ -65,6 +67,7 @@ public   class BlinkLayout extends FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        //根据这个状态是否去dispatchDraw
         if (mBlinkState) {
             super.dispatchDraw(canvas);
         }

@@ -18,5 +18,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.android.interview.merge_and_viewstub_demo.BlinkLayout>
-    <!-- 代码省略 -->
+
+
+    <Button
+        android:id="@+id/btn_view_stub"
+        android:layout_gravity="center"
+        android:text="点我加载ViewStub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ViewStub
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center"
+        android:inflatedId="@+id/find_view_stub"
+        android:id="@+id/view_stub"
+        android:layout="@layout/view_stub_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+      <!--  <requestFocus/> 在text中 这个标签带上的话，会编译不过-->
+        <TextView
+            android:id="@+id/buttonRingtone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="，会让下面的EditText一直获取焦点"/>
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <!-- 当前控件处于焦点状态 -->
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
 </LinearLayout>

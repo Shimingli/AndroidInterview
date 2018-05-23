@@ -868,12 +868,20 @@
 //                }
 //                parseInclude(parser, context, parent, attrs);
 //            } else if (TAG_MERGE.equals(name)) {
+//                // TODO: 2018/5/23 merge  作为布局里面的元素 会报错的哦 ，注意哦
 //                throw new InflateException("<merge /> must be the root element");
 //            } else {
+//                // TODO: 2018/5/23 其实就是如果是merge标签，
+//                // TODO: 2018/5/23  那么直接将其中的子元素添加到merge标签parent中，这样就保证了不会引入额外的层级。
+//                // 1、我们的例子会进入这里
 //                final View view = createViewFromTag(parent, name, context, attrs);
+//                // 2、获取merge标签的parent
 //                final ViewGroup viewGroup = (ViewGroup) parent;
+//                // 3、获取布局参数
 //                final ViewGroup.LayoutParams params = viewGroup.generateLayoutParams(attrs);
+//                // 4、递归解析每个子元素
 //                rInflateChildren(parser, view, attrs, true);
+//                // 5、将子元素直接添加到merge标签的parent view中
 //                viewGroup.addView(view, params);
 //            }
 //        }
@@ -924,6 +932,7 @@
 //            // massage the value to get a resource identifier out of it.
 //            int layout = attrs.getAttributeResourceValue(null, ATTR_LAYOUT, 0);
 //            if (layout == 0) {
+//                // TODO: 2018/5/23 include中没有 layout的标签
 //                final String value = attrs.getAttributeValue(null, ATTR_LAYOUT);
 //                if (value == null || value.length() <= 0) {//include标签中没有设置layout属性，会抛出异常
 //                    throw new InflateException("You must specify a layout in the"
