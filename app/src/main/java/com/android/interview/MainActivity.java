@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
+import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
 
 /**
  * 安卓面试的资料
@@ -40,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
 //        android中的布局优化
        // 请看我的文章：https://www.jianshu.com/p/82b76e0cb41e
 
+        //        view的工作原理及measure、layout、draw流程，要求了解源码
+        findViewById(R.id.btn_source_code_demo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ViewSourceCodeDemoActivity.class));
+            }
+        });
+
 //        relativelayout和LinearLayout在实现效果同等情况下选择使用哪个？为什么？
         /*
           RelativeLayout和LinearLayout是Android中常用的布局，两者的使用会极大的影响程序生成每一帧的性能，因此，正确的使用它们是提升程序性能的重要工作。记得以前，较低的SDK版本新建Android项目时，默认的布局文件是采用线性布局LinearLayout，但现在自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定好了的，也就是说这是Google的选择，而非IDE的选择。那SDK为什么会默认给开发者新建一个默认的RelativeLayout布局呢？<-----原因见最后小结
@@ -54,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-//        view的工作原理及measure、layout、draw流程，要求了解源码
 //        怎样自定义一个弹幕控件？
 //        如果控件内部卡顿你如何去解决并优化？
 //        listview的缓存机制

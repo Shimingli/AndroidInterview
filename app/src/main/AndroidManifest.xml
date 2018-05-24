@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".dp_px_dip_sp.UnitDemoActivity" />
         <activity android:name=".handler.HandlerActivity" />
-        <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity"/>
+        <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity" />
+        <activity android:name=".view_source_code.ViewSourceCodeDemoActivity"></activity>
     </application>
 
 </manifest>
