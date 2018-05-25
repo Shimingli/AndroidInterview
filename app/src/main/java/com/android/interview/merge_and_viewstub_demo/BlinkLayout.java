@@ -78,4 +78,5 @@ public   class BlinkLayout extends FrameLayout {
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }
+
 }

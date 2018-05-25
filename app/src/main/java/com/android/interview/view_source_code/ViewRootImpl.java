@@ -761,6 +761,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                     mAttachInfo.mRootView = null;
                     mAdded = false;
                     mFallbackEventHandler.setView(null);
+                    // TODO: 2018/5/24 就会调动这里的来
                     unscheduleTraversals();
                     setAccessibilityFocus(null, null);
                     switch (res) {
@@ -1381,7 +1382,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
         }
     }
 
-    // TODO: 2018/5/24  到这里来了 ---->  
+    // TODO: 2018/5/24  到这里来了 ---->     Traversal 遍历
     void doTraversal() {
         if (mTraversalScheduled) {
             mTraversalScheduled = false;
@@ -1587,6 +1588,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
      */
     private void performTraversals() {
         // cache mView since it is used so much below...
+        //mView 就是DecorView根布局
         final View host = mView;
 
         if (DBG) {
@@ -1594,17 +1596,20 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
             System.out.println("performTraversals");
             host.debug();
         }
-
+        //如果host=null  或者是mAdded=false 直接就return了
         if (host == null || !mAdded)
             return;
-
+        //是否正在遍历
         mIsInTraversal = true;
+        //是否马上需要绘制View
         mWillDrawSoon = true;
         boolean windowSizeMayChange = false;
         boolean newSurface = false;
         boolean surfaceChanged = false;
         WindowManager.LayoutParams lp = mWindowAttributes;
-
+        /*
+        顶层视图DecorView所需要的窗口的宽度和高度
+         */
         int desiredWindowWidth;
         int desiredWindowHeight;
 
@@ -1638,11 +1643,20 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
         mWindowAttributesChangesFlag = 0;
 
         Rect frame = mWinFrame;
+        //在构造方法中mFirst已经设置为true，表示是否是第一次绘制DecorView
         if (mFirst) {
             mFullRedrawNeeded = true;
             mLayoutRequested = true;
 
             final Configuration config = mContext.getResources().getConfiguration();
+            // TODO: 2018/5/25 注意这个方法内部做了什么
+            /*
+             return lp.type == TYPE_STATUS_BAR_PANEL
+                || lp.type == TYPE_INPUT_METHOD
+                || lp.type == TYPE_VOLUME_OVERLAY;
+             */
+            // 如果窗口的类型是有状态栏的，那么顶层视图DecorView所需要的窗口的宽度和高度
+            //就是除了状态栏
             if (shouldUseDisplaySize(lp)) {
                 // NOTE -- system code, won't try to do compat mode.
                 Point size = new Point();
@@ -1650,6 +1664,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                 desiredWindowWidth = size.x;
                 desiredWindowHeight = size.y;
             } else {
+                //否者顶层视图DecorView所需要的窗口的宽度和高度就是整个屏幕的宽度
                 desiredWindowWidth = dipToPx(config.screenWidthDp);
                 desiredWindowHeight = dipToPx(config.screenHeightDp);
             }
@@ -2154,6 +2169,8 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                 if (focusChangedDueToTouchMode || mWidth != host.getMeasuredWidth()
                         || mHeight != host.getMeasuredHeight() || contentInsetsChanged ||
                         updatedConfiguration) {
+                    // TODO: 2018/5/25 //获得view宽高的测量规格，
+                    // TODO: 2018/5/25 mWidth和mHeight表示窗口的宽高，lp.widthhe和lp.height表示DecorView根布局宽和高
                     int childWidthMeasureSpec = getRootMeasureSpec(mWidth, lp.width);
                     int childHeightMeasureSpec = getRootMeasureSpec(mHeight, lp.height);
 
@@ -2164,6 +2181,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                             + " coveredInsetsChanged=" + contentInsetsChanged);
 
                     // Ask host how big it wants to be
+                    // TODO: 2018/5/25  这里是第一步的  执行测量的操作  
                     performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
 
                     // Implementation of weights from WindowManager.LayoutParams
@@ -2209,6 +2227,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
         boolean triggerGlobalLayoutListener = didLayout
                 || mAttachInfo.mRecomputeGlobalAttributes;
         if (didLayout) {
+            // TODO: 2018/5/25  执行布局操作  
             performLayout(lp, mWidth, mHeight);
 
             // By this point all views have been sized and positioned
@@ -2355,7 +2374,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                 }
                 mPendingTransitions.clear();
             }
-
+            // TODO: 2018/5/25 执行绘制的操作
             performDraw();
         } else {
             if (isViewVisible) {
@@ -2852,6 +2871,10 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
         }
     }
 
+    /**
+     * todo 关键的方法
+     * @param fullRedrawNeeded
+     */
     private void draw(boolean fullRedrawNeeded) {
         Surface surface = mSurface;
         if (!surface.isValid()) {
@@ -3015,7 +3038,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                     scheduleTraversals();
                     return;
                 }
-
+                // TODO: 2018/5/25  关键的方法
                 if (!drawSoftware(surface, mAttachInfo, xOffset, yOffset, scalingRequired, dirty)) {
                     return;
                 }
@@ -3101,7 +3124,7 @@ public final class ViewRootImpl implements ViewParent,View.AttachInfo.Callbacks,
                 }
                 canvas.setScreenDensity(scalingRequired ? mNoncompatDensity : 0);
                 attachInfo.mSetIgnoreDirtyState = false;
-
+                // TODO: 2018/5/25   调用了View里面的draw方法
                 mView.draw(canvas);
 
                 drawAccessibilityFocusedDrawableIfNeeded(canvas);

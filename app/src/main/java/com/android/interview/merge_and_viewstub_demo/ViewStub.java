@@ -210,7 +210,7 @@
 //        // 宽高都为0   onMeasure的时候 宽高都为0
 //        setMeasuredDimension(0, 0);
 //    }
-//
+//    todo 为啥这个控件 是个大小为0的控件 ，那是因为他妈的这里更不就没有画
 //    @Override
 //    public void draw(Canvas canvas) {
 //    }
