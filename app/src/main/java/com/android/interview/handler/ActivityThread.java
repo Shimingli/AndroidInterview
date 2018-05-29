@@ -57,6 +57,8 @@ import android.os.DropBoxManager;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.LocaleList;
+import android.os.Looper;
+import android.os.Message;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.PersistableBundle;
@@ -6674,83 +6676,4 @@ public final class ActivityThread {
 
     private native void nDumpGraphicsInfo(FileDescriptor fd);
 
-    // TODO: 2018/5/17
-    // 根据我们的常识知道，如果程序没有死循环的话，执行完main函数（比如构建视图等等代码）以后就会立马退出了。
-    // 之所以我们的APP能够一直运行着，就是因为Looper.loop()里面是一个死循环
-    public static void loop() {
-        /*
-系统在主线程绑定一个Looper循环器以及消息队列，Looper就像是一个水泵一样不断把消息发送到主线程。
-如果没有消息机制，我们的代码需要直接与主线程进行访问，操作，切换，访问主线程的变量等等，
-这样做会带来不安全的问题，另外APP的开发的难度也会提高，同时也不利于整个Android系统的运作。
-有了消息机制，我们可以简单地通过发送消息，然后Looper把消息发送到主线程，然后就可以执行了
-         */
-        final Looper me = myLooper();
-        if (me == null) {
-            throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
-        }
-        final MessageQueue queue = me.mQueue;
-
-        // Make sure the identity of this thread is that of the local process,
-        // and keep track of what that identity token actually is.
-        Binder.clearCallingIdentity();
-        final long ident = Binder.clearCallingIdentity();
-        //这里有一个小小的知识，就是之所以用for (;;)而不是用while(true)是因为防止一些人通过黑科技去修改这个循环的标志
-        // （比如通过反射的方式）
-        for (;;) {
-            Message msg = queue.next(); // might block
-            if (msg == null) {
-                // No message indicates that the message queue is quitting.
-                return;
-            }
-
-            // This must be in a local variable, in case a UI event sets the logger
-            final Printer logging = me.mLogging;
-            if (logging != null) {
-                logging.println(">>>>> Dispatching to " + msg.target + " " +
-                        msg.callback + ": " + msg.what);
-            }
-
-            final long slowDispatchThresholdMs = me.mSlowDispatchThresholdMs;
-
-            final long traceTag = me.mTraceTag;
-            if (traceTag != 0 && Trace.isTagEnabled(traceTag)) {
-                Trace.traceBegin(traceTag, msg.target.getTraceName(msg));
-            }
-            final long start = (slowDispatchThresholdMs == 0) ? 0 : SystemClock.uptimeMillis();
-            final long end;
-            try {
-                msg.target.dispatchMessage(msg);
-                end = (slowDispatchThresholdMs == 0) ? 0 : SystemClock.uptimeMillis();
-            } finally {
-                if (traceTag != 0) {
-                    Trace.traceEnd(traceTag);
-                }
-            }
-            if (slowDispatchThresholdMs > 0) {
-                final long time = end - start;
-                if (time > slowDispatchThresholdMs) {
-                    Slog.w(TAG, "Dispatch took " + time + "ms on "
-                            + Thread.currentThread().getName() + ", h=" +
-                            msg.target + " cb=" + msg.callback + " msg=" + msg.what);
-                }
-            }
-
-            if (logging != null) {
-                logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
-            }
-
-            // Make sure that during the course of dispatching the
-            // identity of the thread wasn't corrupted.
-            final long newIdent = Binder.clearCallingIdentity();
-            if (ident != newIdent) {
-                Log.wtf(TAG, "Thread identity changed from 0x"
-                        + Long.toHexString(ident) + " to 0x"
-                        + Long.toHexString(newIdent) + " while dispatching to "
-                        + msg.target.getClass().getName() + " "
-                        + msg.callback + " what=" + msg.what);
-            }
-
-            msg.recycleUnchecked();
-        }
-    }
 }

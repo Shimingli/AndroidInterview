@@ -20,6 +20,13 @@
         <Button
             android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
+            android:text="handler机制，打断点用的"
+            android:id="@+id/btn_handler_demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center"
             android:text="merge、ViewStub 原理"
             android:id="@+id/btn_principle_activity"
             android:layout_width="wrap_content"

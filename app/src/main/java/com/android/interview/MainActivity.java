@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
+import com.android.interview.handler.HandlerActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
 import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
 
@@ -31,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         });
 //        handler机制，四个组成部分及源码解析
         Handler handler = new Handler();
+        findViewById(R.id.btn_handler_demo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,HandlerActivity.class));
+            }
+        });
 //        布局相关的<merge>、<viewstub>控件作用及实现原理
         findViewById(R.id.btn_principle_activity).setOnClickListener(new View.OnClickListener() {
             @Override

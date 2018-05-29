@@ -64,7 +64,8 @@ public class HandlerActivity extends AppCompatActivity {
         },5000);
         innerHandler.sendEmptyMessage(0);
         //这里实际上是调用了MessageQueue的quit，清空所有Message。
-        Looper.myLooper().quit();
+        // TODO: 2018/5/29
+        //Looper.myLooper().quit();
 
         //在系统Handler收到EXIT_APPLICATION消息的时候，就会调用Looper的quit方法：
 
