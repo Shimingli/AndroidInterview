@@ -78,6 +78,14 @@ public class HandlerActivity extends AppCompatActivity {
             }
         });
 
+        Message.obtain(mHandler, new Runnable() {
+            @Override
+            public void run() {
+                // TODO: 2018/5/30  这里可以做很多其他的事情
+            }
+        });
+
+
     }
     public class InnerHandler extends Handler{
         //弱应用，在另外一个地方会讲到

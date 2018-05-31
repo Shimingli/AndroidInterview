@@ -38,5 +38,13 @@
             android:id="@+id/btn_source_code_demo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center"
+            android:text="relativelayout和LinearLayout性能比较"
+            android:id="@+id/btn_relative_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

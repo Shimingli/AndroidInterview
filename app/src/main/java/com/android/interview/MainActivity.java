@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.handler.HandlerActivity;
+import com.android.interview.layout_performance_comparison.LayoutPerformanceComparison;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
 import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
 
@@ -67,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
 //（3）在不影响层级深度的情况下,使用LinearLayout和FrameLayout而不是RelativeLayout。
 //（4）提高绘制性能的使用方式
 //        根据上面源码的分析，RelativeLayout将对所有的子View进行两次measure，而LinearLayout在使用weight属性进行布局时也会对子View进行两次measure，如果他们位于整个View树的顶端时并可能进行多层的嵌套时，位于底层的View将会进行大量的measure操作，大大降低程序性能。因此，应尽量将RelativeLayout和LinearLayout置于View树的底层，并减少嵌套。
-
-
+        // TODO: 2018/5/30  性能对比
+        findViewById(R.id.btn_relative_linear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,LayoutPerformanceComparison.class));
+            }
+        });
 
 //        怎样自定义一个弹幕控件？
 //        如果控件内部卡顿你如何去解决并优化？

@@ -18837,9 +18837,11 @@
 //     * @param r Right position, relative to parent
 //     * @param b Bottom position, relative to parent
 //     */
+//    // TODO: 2018/5/30   ViewRootImpl.performLayout()  这个方法开始调用的地方 是在 这里的哦
 //    @SuppressWarnings({"unchecked"})
 //    public void layout(int l, int t, int r, int b) {
 //        if ((mPrivateFlags3 & PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT) != 0) {
+//            //第二次调用这个方法，，，
 //            onMeasure(mOldWidthMeasureSpec, mOldHeightMeasureSpec);
 //            mPrivateFlags3 &= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;
 //        }
@@ -21228,6 +21230,7 @@
 //     *
 //     * @see #onMeasure(int, int)
 //     */
+//    // TODO: 2018/5/30  ViewRootImpl.performMeasure() 这里也会第一次调用到  onMeasure() 方法
 //    public final void measure(int widthMeasureSpec, int heightMeasureSpec) {
 //        boolean optical = isLayoutModeOptical(this);
 //        if (optical != isLayoutModeOptical(mParent)) {
