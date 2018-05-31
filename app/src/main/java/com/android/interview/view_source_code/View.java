@@ -22060,7 +22060,7 @@
 //     *  View object's {@link View#onDragEvent(DragEvent) onDragEvent()} method.
 //     *  Both are passed a {@link DragEvent} object that has a
 //     *  {@link DragEvent#getAction()} value of
-//     *  {@link DragEvent#ACTION_DRAG_STARTED}.
+//     *  {@link DragEvent#ACTION_DRAG_STARTED}.measure
 //     * </p>
 //     * <p>
 //     * Your application can invoke {@link #startDragAndDrop(ClipData, DragShadowBuilder, Object,

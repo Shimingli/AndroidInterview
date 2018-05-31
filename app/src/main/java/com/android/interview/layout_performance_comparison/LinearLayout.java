@@ -768,9 +768,15 @@
 //        int weightedMaxWidth = 0;
 //        boolean allFillParent = true;
 //        float totalWeight = 0;
-//
+//         //获取垂直方向上的孩子，同一级的孩子的总数，我自己的Demo里面是4个孩子
 //        final int count = getVirtualChildCount();
 //
+//        /*
+//         private static final int MODE_SHIFT = 30;
+//         0x3=3  　需要移位的数字 << 移位的次数  3转化为二进制先 0011
+//        private static final int MODE_MASK  = 0x3 << MODE_SHIFT;
+//         */
+//        //获取模式
 //        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 //        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 //
@@ -786,33 +792,40 @@
 //        int nonSkippedChildCount = 0;
 //
 //        // See how tall everyone is. Also remember max width.
+//        //根据孩子的总数，走几次循环，和
 //        for (int i = 0; i < count; ++i) {
+//            //获取每个孩子
 //            final View child = getVirtualChildAt(i);
+//            //0 没用
 //            if (child == null) {
 //                mTotalLength += measureNullChild(i);
 //                continue;
 //            }
-//
+//           // 相加为0   没吊用
 //            if (child.getVisibility() == View.GONE) {
 //               i += getChildrenSkipCount(child, i);
 //               continue;
 //            }
-//
+//            //英文翻译的意思，就是没有跳过孩子的数量加1
 //            nonSkippedChildCount++;
+//            //有没有小线线       android:divider="#00dd55" 这个属性的话，就把总体的数量加1
 //            if (hasDividerBeforeChildAt(i)) {
 //                mTotalLength += mDividerHeight;
 //            }
 //
 //            final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 //            // 得到每个子控件的LayoutParams后，累加权重和，后面用于跟weightSum相比较
+//            //每个孩子的权重来累加一下，就可以了
 //            totalWeight += lp.weight;
 //
 //            // 我们都知道，测量模式有三种：
-//            // * UNSPECIFIED：父控件对子控件无约束
-//            // * Exactly：父控件对子控件强约束，子控件永远在父控件边界内，越界则裁剪。如果要记忆的话，可以记忆为有对应的具体数值或者是Match_parent
+//// * UNSPECIFIED：父控件对子控件无约束
+// // * Exactly：父控件对子控件强约束，子控件永远在父控件边界内，越界则裁剪。如果要记忆的话，可以记忆为有对应的具体数值或者是Match_parent
 //            // * AT_Most：子控件为wrap_content的时候，测量值为AT_MOST。
+//            // TODO: 2018/5/31  其实特简单 知道么 ，就是我们常用的另外的一种的方法，孩子都设置了权重，height=0 ，多看代码啊  ，傻逼
 //            final boolean useExcessSpace = lp.height == 0 && lp.weight > 0;
-//            // 下面的if/else分支都是跟weight相关
+//            // 下面的if/else分支都是跟weight相关 heightMode == MeasureSpec.EXACTLY
+//            // TODO: 2018/5/31  heightMode == MeasureSpec.EXACTLY   表明这个LinearLayout的布局的高度是Match_parent,或者是固定值200dp
 //            if (heightMode == MeasureSpec.EXACTLY && useExcessSpace) {
 //                // Optimization: don't bother measuring children who are only
 //                // laid out using excess space. These views will get measured
@@ -824,7 +837,10 @@
 //                // 这其实就是我们通常情况下用weight时的写法
 //                // 测量到这里的时候，会给个标志位，稍后再处理。此时会计算总高度
 //                final int totalLength = mTotalLength;
+//                // TODO: 2018/5/31
+//                //这里就是总体的高度 ，这个LinearLayout
 //                mTotalLength = Math.max(totalLength, totalLength + lp.topMargin + lp.bottomMargin);
+//                //跳过测量的标记  todo
 //                skippedMeasure = true;
 //            } else {
 //                // 到这个分支，则需要对不同的情况进行测量
@@ -839,6 +855,7 @@
 //                    // 为何需要这么做，主要是因为当父类为wrap_content时，其大小实际上由子控件控制
 //                    // 我们都知道，自定义控件的时候，通常我们会指定测量模式为wrap_content时的默认大小
 //                    // 这里强制给定为wrap_content为的就是防止子控件高度为0.
+//                    // TODO: 2018/5/31  这里非常的有趣 ----》 如果设置孩子的 height=0  并且 weight >0 的话 其实底层还是把孩子的height 设置为wrap_content 了么
 //                    lp.height = LayoutParams.WRAP_CONTENT;
 //                }
 //
@@ -847,12 +864,10 @@
 //                // use all available space (and we will shrink things later
 //                // if needed).
 //                final int usedHeight = totalWeight == 0 ? mTotalLength : 0;
-//                /**【1】*/
-//                // 下面这句虽然最终调用的是ViewGroup通用的同名方法，但传入的height值是跟平时不一样的
-//                // 这里可以看到，传入的height是跟weight有关，关于这里，稍后的文字描述会着重阐述
+//                // TODO: 2018/5/31   先测量孩子，有多少孩子就 测量几次 ，孩子是分开测量的
 //                measureChildBeforeLayout(child, i, widthMeasureSpec, 0,
 //                        heightMeasureSpec, usedHeight);
-//
+//                //垂直的方向就获取高度
 //                final int childHeight = child.getMeasuredHeight();
 //                // 重置子控件高度，然后进行精确赋值
 //                if (useExcessSpace) {
@@ -868,6 +883,8 @@
 //                mTotalLength = Math.max(totalLength, totalLength + childHeight + lp.topMargin +
 //                       lp.bottomMargin + getNextLocationOffset(child));
 //                //这里是Vertical的测量的方式
+//                // TODO: 2018/5/31 measureWithLargestChild 这个属性不常见，如果赋值为true的话，所有
+//                //weight子View都会采用最大View的最小尺寸
 //                if (useLargestChild) {
 //                    largestChildHeight = Math.max(childHeight, largestChildHeight);
 //                }

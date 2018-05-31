@@ -1,73 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.interview.layout_performance_comparison.MyFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent">
-   <!-- middle 在每一项中间添加分割线
-    end 在整体的最后一项添加分割线
-    beginning 在整体的最上方添加分割线-->
-    <com.android.interview.layout_performance_comparison.MyLinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:divider="#00dd55"
-        android:background="@color/colorAccent"
-        android:showDividers = "middle|end|beginning|none"
-        android:layout_height="200dp">
-        <TextView
-            android:textSize="20sp"
-            android:text="我是MyLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textSize="20sp"
-            android:text="我是MyLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textSize="20sp"
-            android:text="我是MyLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textSize="20sp"
-            android:text="我是MyLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </com.android.interview.layout_performance_comparison.MyLinearLayout>
-    <com.android.interview.layout_performance_comparison.MyRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:background="#55303F9F"
-        android:layout_height="200dp">
-        <TextView
-            android:id="@+id/tv1"
-            android:textSize="20sp"
-            android:text="我是MyRelativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_below="@+id/tv1"
-            android:id="@+id/tv2"
-            android:textSize="20sp"
-            android:text="我是MyRelativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_below="@+id/tv2"
-            android:id="@+id/tv3"
-            android:textSize="20sp"
-            android:text="我是MyRelativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_below="@+id/tv3"
-            android:id="@+id/tv4"
-            android:textSize="20sp"
-            android:text="我是MyRelativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </com.android.interview.layout_performance_comparison.MyRelativeLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <!-- middle 在每一项中间添加分割线
+         end 在整体的最后一项添加分割线
+         beginning 在整体的最上方添加分割线-->
+        <com.android.interview.layout_performance_comparison.MyLinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:divider="#00dd55"
+            android:background="@color/colorAccent"
+            android:showDividers="middle|end|beginning|none"
+            android:layout_height="200dp">
+
+            <TextView
+
+                android:textSize="20sp"
+                android:text="我是MyLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:textSize="20sp"
+                android:text="我是MyLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:textSize="20sp"
+                android:text="我是MyLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:textSize="20sp"
+                android:text="我是MyLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </com.android.interview.layout_performance_comparison.MyLinearLayout>
+
+        <com.android.interview.layout_performance_comparison.MyRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:background="#55303F9F"
+            android:layout_height="200dp">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:textSize="20sp"
+                android:text="我是MyRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/tv1"
+                android:id="@+id/tv2"
+                android:textSize="20sp"
+                android:text="我是MyRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/tv2"
+                android:id="@+id/tv3"
+                android:textSize="20sp"
+                android:text="我是MyRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/tv3"
+                android:id="@+id/tv4"
+                android:textSize="20sp"
+                android:text="我是MyRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </com.android.interview.layout_performance_comparison.MyRelativeLayout>
+
+    </LinearLayout>
+</com.android.interview.layout_performance_comparison.MyFrameLayout>

@@ -6,6 +6,8 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayDeque;
+
 /**
  * author： Created by shiming on 2018/5/30 11:42
  * mailbox：lamshiming@sina.com
@@ -35,14 +37,15 @@ class MyRelativeLayout extends RelativeLayout {
         super(context, attrs);
         mL = SystemClock.currentThreadTimeMillis();
         System.out.println("shiming MyRelativeLayout");
+        ArrayDeque arrayDeque = new ArrayDeque();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        long l2 = SystemClock.currentThreadTimeMillis();
+        long l2 = System.nanoTime();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        long l1 = SystemClock.currentThreadTimeMillis();
-        long l11 = l1 - mL;
+        long l1 = System.nanoTime();
+        long l11 = l1 - l2;
         System.out.println("shiming MyRelativeLayout  onMeasure time====="+l11);
     }
 

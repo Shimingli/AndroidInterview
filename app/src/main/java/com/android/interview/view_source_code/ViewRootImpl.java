@@ -2190,7 +2190,13 @@
 //                    int width = host.getMeasuredWidth();
 //                    int height = host.getMeasuredHeight();
 //                    boolean measureAgain = false;
-//
+//                    /**
+//*指示额外空间的多少将被水平分配。
+//*与这些LayOutPARAMs关联的视图。如果视图指定0
+//*不应被拉伸。否则额外像素将被优先评估。
+//*在所有重量大于0的视图中。
+//*/                   // TODO: 2018/5/31  这里
+//                    // WindowManager.LayoutParams=lp;
 //                    if (lp.horizontalWeight > 0.0f) {
 //                        width += (int) ((mWidth - width) * lp.horizontalWeight);
 //                        childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(width,
@@ -2203,7 +2209,7 @@
 //                                MeasureSpec.EXACTLY);
 //                        measureAgain = true;
 //                    }
-//
+//                    // TODO: 2018/5/31  我知道这里为啥执行两次
 //                    if (measureAgain) {
 //                        if (DEBUG_LAYOUT) Log.v(mTag,
 //                                "And hey let's measure once more: width=" + width
@@ -2432,6 +2438,11 @@
 //        mLayoutRequested = true;    // ask wm for a new surface next time.
 //    }
 //
+//    /**
+//     * TODO 这里绘制两次
+//     * @param childWidthMeasureSpec
+//     * @param childHeightMeasureSpec
+//     */
 //    private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {
 //        if (mView == null) {
 //            return;
