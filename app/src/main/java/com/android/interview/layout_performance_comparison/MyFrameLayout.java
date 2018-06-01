@@ -43,7 +43,7 @@ API等级27：Android 8.1 Oreo
         /**
          * 重写了这个方法，让它去测量孩子，然后在layout
          */
-
+        // TODO: 2018/5/31  明天搞明白 我终于搞明白了，但是有个问题？知道为啥测量两次，第二次测量和第一次测量有什么作用，搞明白了，就可画图了，哈哈哈哈 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         System.out.println("shiming MyFrameLayout onMeasure");
         System.out.println("shiming MyFrameLayout onMeasure 执行了几次"+i);
