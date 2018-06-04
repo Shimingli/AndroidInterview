@@ -374,6 +374,7 @@ public abstract class LayoutInflater {
      *         this is the root View; otherwise it is the root of the inflated
      *         XML file.
      */
+    // TODO: 2018/6/4  入口的函数
     public View inflate(@LayoutRes int resource, @Nullable ViewGroup root) {
         return inflate(resource, root, root != null);
     }
@@ -421,7 +422,7 @@ public abstract class LayoutInflater {
             Log.d(TAG, "INFLATING from resource: \"" + res.getResourceName(resource) + "\" ("
                     + Integer.toHexString(resource) + ")");
         }
-
+        //这里通过底层的方法，得到一个XmlResourceParser对象
         final XmlResourceParser parser = res.getLayout(resource);
         try {
             return inflate(parser, root, attachToRoot);
@@ -454,9 +455,11 @@ public abstract class LayoutInflater {
      */
     public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean attachToRoot) {
         synchronized (mConstructorArgs) {
+            //底层的方法，不知道原理
             Trace.traceBegin(Trace.TRACE_TAG_VIEW, "inflate");
 
             final Context inflaterContext = mContext;
+            //转化为这个对象AttributeSet
             final AttributeSet attrs = Xml.asAttributeSet(parser);
             Context lastContext = (Context) mConstructorArgs[0];
             mConstructorArgs[0] = inflaterContext;
@@ -546,6 +549,7 @@ public abstract class LayoutInflater {
                 throw ie;
             } finally {
                 // Don't retain static reference on context.
+                //不要在上下文中保留静态引用。
                 mConstructorArgs[0] = lastContext;
                 mConstructorArgs[1] = null;
 
