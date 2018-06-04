@@ -163,6 +163,7 @@
 //         * among all views whose weight is greater than 0.
 //         */
 //        @ViewDebug.ExportedProperty
+//        // TODO: 2018/6/4 决定是否第二次 测量 onMeasure
 //        public float horizontalWeight;
 //
 //        /**
@@ -172,6 +173,7 @@
 //         * among all views whose weight is greater than 0.
 //         */
 //        @ViewDebug.ExportedProperty
+//         // TODO: 2018/6/4 决定是否第二次 测量 onMeasure
 //        public float verticalWeight;
 //
 //        /**
