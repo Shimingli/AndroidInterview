@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
  * mailbox：lamshiming@sina.com
  */
 
-public   class BlinkLayout extends FrameLayout {
+public  class BlinkLayout extends FrameLayout {
     private static final int MESSAGE_BLINK = 0x42;
     private static final int BLINK_DELAY = 500;
     private boolean mBlink;

@@ -1,5 +1,6 @@
 package com.android.interview.merge_and_viewstub_demo;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +27,13 @@ public class MergePrincipleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merge_principle);
         // TODO: 2018/5/22 如果在include的标签下
-        View titleView = findViewById(R.id.my_title_parent_id) ;
+       View titleView = findViewById(R.id.my_title_parent_id) ;
+        //View titleView = findViewById(R.id.my_title_ly) ;
+        //LayoutInflater.from(mContext).inflate(resId, contentParent);
+
+//        LayoutInflater inflater1 = getLayoutInflater();//调用Activity的getLayoutInflater()
+//        LayoutInflater inflater2 = LayoutInflater.from(this);
+//        LayoutInflater inflater3 = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         /*
         include时设置了该布局的id为my_title_ly，而my_title_layout.xml中的根视图的id为my_title_parent_id
         。此时如果通过findViewById来找my_title_parent_id这个控件，然后再查找my_title_parent_id下的子控件则会抛出空指针
@@ -128,33 +135,7 @@ public class MergePrincipleActivity extends AppCompatActivity {
 //        }
 
     }
-    // TODO: 2018/5/22 三种setContentView的源码解析  AppComatDelegateImplV9
-//    @Override
-//    public void setContentView(View v) {
-//        ensureSubDecor();
-//        ViewGroup contentParent = (ViewGroup) mSubDecor.findViewById(android.R.id.content);
-//        contentParent.removeAllViews();
-//        contentParent.addView(v);
-//        mOriginalWindowCallback.onContentChanged();
-//    }
-//
-//    @Override
-//    public void setContentView(int resId) {
-//        ensureSubDecor();
-//        ViewGroup contentParent = (ViewGroup) mSubDecor.findViewById(android.R.id.content);
-//        contentParent.removeAllViews();
-//        LayoutInflater.from(mContext).inflate(resId, contentParent);
-//        mOriginalWindowCallback.onContentChanged();
-//    }
-//
-//    @Override
-//    public void setContentView(View v, ViewGroup.LayoutParams lp) {
-//        ensureSubDecor();
-//        ViewGroup contentParent = (ViewGroup) mSubDecor.findViewById(android.R.id.content);
-//        contentParent.removeAllViews();
-//        contentParent.addView(v, lp);
-//        mOriginalWindowCallback.onContentChanged();
-//    }
+
 
 
 }

@@ -143,6 +143,10 @@ public class MyLinearLayout extends LinearLayout {
         return super.getChildCount();
     }
 
+    /**
+     * 如果是这个布局是ViewGroup 包裹的View  ，那么孩子的View 会首先调用 onFinishInflate 这个方法
+     *
+     */
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

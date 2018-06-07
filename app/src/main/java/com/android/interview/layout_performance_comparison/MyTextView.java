@@ -47,4 +47,13 @@ class MyTextView extends TextView {
         super.onDraw(canvas);
         System.out.println("shiming MyTextView  onDraw");
     }
+
+    /**
+     * 是在View中的一个空实现，是在onMeasure之前调用，先填充完成后，再去测回，onLayout  onDraw
+     */
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        System.out.println("shiming MyTextView onFinishInflate" );
+    }
 }
