@@ -27,13 +27,19 @@ class MyTextView extends TextView {
 
     /**
      * 也会onMeasure 两次 比较可以滴
+     *
+     * 打印方法呢，需要注意，在哪里打印，当设置了weight的属性的时候
+     * 下面的TextView会走47次
+     *
+     * 如果不设置 weight的属性的话 只会走两次
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         System.out.println("shiming MyTextView  onMeasure");
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
     }
 
     @Override
