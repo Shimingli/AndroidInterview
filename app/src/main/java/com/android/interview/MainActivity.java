@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.handler.HandlerActivity;
 import com.android.interview.layout_performance_comparison.LayoutPerformanceComparison;
+import com.android.interview.listview_demo.ListViewDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
 import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
 
@@ -78,7 +79,48 @@ public class MainActivity extends AppCompatActivity {
 
 //        怎样自定义一个弹幕控件？
 //        如果控件内部卡顿你如何去解决并优化？
+        /**
+         * 开发app的性能目标就是保持60fps，这意味着每一帧你只有16ms≈1000/60的时间来处理所有的任务。
+         * Android系统每隔16ms发出VSYNC信号，触发对UI进行渲染，如果每次渲染都成功，这样就能够达到流畅的画面所需要的60fps。
+         * 
+         */
+        // TODO: 2018/6/20 建议去使用的方法
+//        1、常规做法
+//        没有用的父布局——没有背景绘制或没有大小限制的父布局，不会对界面效果产生任何影响。特别是进来的布局，很容易产生问题。可以通过标签替代。
+//        在布局层次一样的情况下，建议使用LinearLayout代替RelativeLayout。
+//        使用LinearLayout导致的层次变深，可以使用RelativeLayout进行替换。同样的界面我们可以使用不同的方式去实现，选择一个层级最少的方案。
+//        不常用的UI被设置成了GONE，尝试使用代替。
+//        去掉多余的背景颜色，减少过渡绘制，对于有多层背景色的布局来说，留最上面的一层即可。谨慎使用alpha，如果后渲染的元素有设置alpha值，那么这个元素就会和屏幕上已经渲染好的元素做blend处理，这样会导致不少性能问题，特别是出现在列表的Item中。
+//        对于使用Selector当背景的布局，可以将normal状态的color设置为透明。
+//        我们不能因为提高性能而忽略了界面需要达到的效果（平衡Design与Performance）
+//          2：代码问题查找
+//        在绘制时实例化对象（onDraw）
+//        手机不能进入休眠状态（Wake lock）
+//        资源忘记回收
+//                Handler使用不当倒置内存泄漏
+//        没有使用SparseArray代替HashMap
+//                未被使用的资源
+//        布局中无用的参数
+//        可优化布局（如：ImageView与TextView的组合是否可以使用TextView独立完成）
+//        效率低下的 无用的命名空间等
+//        3：优化App的逻辑层
+//        主线程里占用CUP时间很长的函数，特别关注IO操作（文件IO、网络IO、数据库操作等）
+//        主线程调用次数多的函数
+        // TODO: 2018/6/20     检查性能优化的三方的工具    ：AndroidPerformanceMonitor https://github.com/Shimingli/AndroidPerformanceMonitor
+//         4： GitHub BlockCanary — 轻松找出Android App界面卡顿元凶
+//        BlockCanary是一个Android平台的一个非侵入式的性能监控组件，应用只需要实现一个抽象类，提供一些该组件需要的上下文环境，就可以在平时使用应用的时候检测主线程上的各种卡慢问题，并通过组件提供的各种信息分析出原因并进行修复。
+//        取名为BlockCanary则是为了向LeakCanary致敬，顺便本库的UI部分是从LeakCanary改来的，之后可能会做一些调整。
+
+
 //        listview的缓存机制
+          findViewById(R.id.btn_list_demo).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  startActivity(new Intent(MainActivity.this,ListViewDemoActivity.class));
+              }
+          });
+
+
 //        Invalidate、postInvalidate、requestLayout应用场景
 //        多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展

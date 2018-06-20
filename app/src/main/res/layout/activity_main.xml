@@ -46,5 +46,12 @@
             android:id="@+id/btn_relative_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center"
+            android:text="listview的缓存机制"
+            android:id="@+id/btn_list_demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>
