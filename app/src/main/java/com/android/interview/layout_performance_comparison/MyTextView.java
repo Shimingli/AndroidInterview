@@ -32,6 +32,8 @@ class MyTextView extends TextView {
      * 下面的TextView会走47次
      *
      * 如果不设置 weight的属性的话 只会走两次
+     *
+     * 如果是 weight的话，就会绘制4次
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */

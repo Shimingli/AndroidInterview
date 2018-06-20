@@ -11,15 +11,15 @@
          end 在整体的最后一项添加分割线
          beginning 在整体的最上方添加分割线-->
         <com.android.interview.layout_performance_comparison.MyLinearLayout
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:divider="#00dd55"
             android:background="@color/colorAccent"
             android:showDividers="middle|end|beginning|none"
-            android:layout_height="200dp">
+            android:layout_height="0dp">
             <com.android.interview.layout_performance_comparison.MyTextView
-
                 android:textSize="20sp"
                 android:text="我是MyLinearLayout"
                 android:layout_width="wrap_content"
@@ -42,24 +42,24 @@
         </com.android.interview.layout_performance_comparison.MyLinearLayout>
 
         <com.android.interview.layout_performance_comparison.MyRelativeLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:background="#55303F9F"
-            android:layout_height="200dp">
-
-            <TextView
-                android:id="@+id/tv1"
+            android:layout_height="0dp">
+            <com.android.interview.layout_performance_comparison.MyTextView
                 android:textSize="20sp"
-                android:text="我是MyRelativeLayout"
+                android:id="@+id/tv1"
+                android:text="我是 MyTextView   MyTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_below="@+id/tv1"
                 android:id="@+id/tv2"
                 android:textSize="20sp"
-                android:text="我是MyRelativeLayout"
+                android:text="我是MyTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

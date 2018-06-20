@@ -644,6 +644,9 @@
 //                mViewLayoutDirectionInitial = mView.getRawLayoutDirection();
 //                mFallbackEventHandler.setView(view);
 //                // TODO: 2018/6/4 这里传入的attrs 决定了View 或者是ViewGroup是否会onMeasure 两次
+//                //lp.horizontalWeight > 0.0f  copyFrom通过copy得到了 mWindowAttributes
+//                //也就是 lp的对象
+//                // TODO: 2018/6/20  如果lp.verticalWeight > 0.0f 或者是  lp.horizontalWeight > 0.0f  那么就会发生二次绘制
 //                mWindowAttributes.copyFrom(attrs);
 //                if (mWindowAttributes.packageName == null) {
 //                    mWindowAttributes.packageName = mBasePackageName;
@@ -1491,6 +1494,7 @@
 //                    if (DEBUG_DIALOG) Log.v(mTag, "Window " + mView + ": next baseSize="
 //                            + baseSize);
 //                    childWidthMeasureSpec = getRootMeasureSpec(baseSize, lp.width);
+//                    // TODO: 2018/6/20   View 发生测量
 //                    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
 //                    if (DEBUG_DIALOG) Log.v(mTag, "Window " + mView + ": measured ("
 //                            + host.getMeasuredWidth() + "," + host.getMeasuredHeight() + ")");
@@ -1779,7 +1783,8 @@
 //                }
 //            }
 //
-//            // Ask host how big it wants to be
+//            // Ask host how big it wants to be 问主人想要多大
+//            // TODO: 2018/6/20   第一次执行的测量 地方 --->
 //            windowSizeMayChange |= measureHierarchy(host, lp, res,
 //                    desiredWindowWidth, desiredWindowHeight);
 //        }
@@ -2186,21 +2191,25 @@
 //                            + " coveredInsetsChanged=" + contentInsetsChanged);
 //
 //                    // Ask host how big it wants to be
-//                    // TODO: 2018/5/25  这里是第一步的  执行测量的操作
+//                    // TODO: 2018/5/25  这是第二次的  执行测量的操作
 //                    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
 //
 //                    // Implementation of weights from WindowManager.LayoutParams
 //                    // We just grow the dimensions as needed and re-measure if
 //                    // needs be
+//                    //Implementation of weights from WindowManager.LayoutParams
+//                    //从窗口管理器的权重实现
+//                    //我们只需根据需要增长维度并重新测量需要
 //                    int width = host.getMeasuredWidth();
 //                    int height = host.getMeasuredHeight();
 //                    boolean measureAgain = false;
 //                    /**
-//*指示额外空间的多少将被水平分配。
-//*与这些LayOutPARAMs关联的视图。如果视图指定0
-//*不应被拉伸。否则额外像素将被优先评估。
-//*在所有重量大于0的视图中。
-//*/                   // TODO: 2018/5/31  这里
+//                     * 指示额外空间的多少将被水平分配。
+//                     * 与这些LayOutPARAMs关联的视图。如果视图指定0
+//                   *不应被拉伸。否则额外像素将被优先评估。
+//                   *在所有重量大于0的视图中。
+//                     */
+//                     // TODO: 2018/5/31  这里
 //                    // WindowManager.LayoutParams=lp;
 //                    if (lp.horizontalWeight > 0.0f) {
 //                        width += (int) ((mWidth - width) * lp.horizontalWeight);
@@ -2528,6 +2537,7 @@
 //
 //        Trace.traceBegin(Trace.TRACE_TAG_VIEW, "layout");
 //        try {
+//            // TODO: 2018/6/20 理论上  这是第一次
 //            host.layout(0, 0, host.getMeasuredWidth(), host.getMeasuredHeight());
 //
 //            mInLayout = false;
@@ -2554,9 +2564,11 @@
 //                        view.requestLayout();
 //                    }
 //                    //测试层级
+//                    // TODO: 2018/6/20    这里面 会发生 onMeasure啊
 //                    measureHierarchy(host, lp, mView.getContext().getResources(),
 //                            desiredWindowWidth, desiredWindowHeight);
 //                    mInLayout = true;
+//                    // TODO: 2018/6/20 这是第二次 啊啊啊
 //                    host.layout(0, 0, host.getMeasuredWidth(), host.getMeasuredHeight());
 //
 //                    mHandlingLayoutInLayoutRequest = false;

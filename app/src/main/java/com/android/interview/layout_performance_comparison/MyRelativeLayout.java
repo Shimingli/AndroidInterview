@@ -43,27 +43,30 @@ class MyRelativeLayout extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         long l2 = System.nanoTime();
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
         long l1 = System.nanoTime();
         long l11 = l1 - l2;
         System.out.println("shiming MyRelativeLayout  onMeasure time====="+l11);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         long ll = SystemClock.currentThreadTimeMillis();
-        super.onLayout(changed, l, t, r, b);
+
         long l2 = SystemClock.currentThreadTimeMillis();
         long l1l = l2 - mL;
         System.out.println("shiming MyRelativeLayout  onLayout time====="+l1l);
+        super.onLayout(changed, l, t, r, b);
     }
 
     @Override
     public void draw(Canvas canvas) {
         long ll = SystemClock.currentThreadTimeMillis();
-        super.draw(canvas);
+
         long l2 = SystemClock.currentThreadTimeMillis();
         long l1l = l2 - mL;
         System.out.println("shiming MyRelativeLayout  draw time====="+l1l);
+        super.draw(canvas);
     }
 }

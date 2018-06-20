@@ -3811,10 +3811,21 @@
 //                View decor = r.window.getDecorView();
 //                decor.setVisibility(View.INVISIBLE);
 //                //获取ViewManager对象，在这里getWindowManager()实质上获取的是ViewManager的子类对象WindowManager
-//                // TODO: 2018/5/24 WindowManager
+//                // TODO: 2018/5/24 WindowManager  WindowManagerImpl implements WindowManager
+//                //其实 指定也就是 WindowMAnagerImpl的对象
 //                ViewManager wm = a.getWindowManager();
+//                // TODO: 2018/6/20 关键还是 这里 这个对象决定了 是否还要绘制  第二次
+//                //这里 就是PhoneWindow的对象
+//                // TODO: 2018/6/20  也就是调用的是 Window 中的setAttributes的方法
+//                /**
+//                 *    public void setAttributes(WindowManager.LayoutParams a) {
+//                 *         mWindowAttributes.copyFrom(a);
+//                 *         dispatchWindowAttributesChanged(mWindowAttributes);
+//                 *     }
+//                 */
 //                WindowManager.LayoutParams l = r.window.getAttributes();
 //                a.mDecor = decor;
+//                //基窗口，所有其他类型的应用窗口将出现在基窗口上层
 //                l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 //                l.softInputMode |= forwardBit;
 //                if (r.mPreserveWindow) {
@@ -3833,7 +3844,7 @@
 //                if (a.mVisibleFromClient) {
 //                    if (!a.mWindowAdded) {
 //                        a.mWindowAdded = true;
-//                        //在这里WindowManager将DecorView添加到PhoneWindow中
+//                        //在这里WindowManagerImpl将DecorView添加到PhoneWindow中
 //                        wm.addView(decor, l);
 //                    } else {
 //                        // The activity will get a callback for this {@link LayoutParams} change

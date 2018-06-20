@@ -50,6 +50,7 @@ public class MyLinearLayout extends LinearLayout {
     // TODO: 2018/5/31 可以看到 FrameLayout 是所有上Activity 填充的父布局
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        System.out.println("shiming MyLinearLayout onMeasure");
         long l1 = SystemClock.currentThreadTimeMillis();
         //long l11 = System.currentTimeMillis();
         //System.nanoTime()
@@ -70,7 +71,6 @@ public class MyLinearLayout extends LinearLayout {
          onMeasure time=====251042
          */
         System.out.println("shiming MyLinearLayout  onMeasure time====="+newtime);
-        System.out.println("shiming MyLinearLayout onMeasure");
         // TODO: 2018/5/31 需要对 FrameLayout 进行 onMeasure 代码分析
     }
 
@@ -91,8 +91,9 @@ public class MyLinearLayout extends LinearLayout {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         System.out.println("shiming MyLinearLayout onDraw");
+        super.onDraw(canvas);
+
     }
     /*
     其实就是 View中的draw的方法 ，注意调用的时机 ，底层是通过

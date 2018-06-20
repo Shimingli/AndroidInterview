@@ -290,6 +290,7 @@
 //        if (view == null) {
 //            throw new IllegalArgumentException("view must not be null");
 //        }
+//        // mGlobal.addView(view, params, mContext.getDisplay(), mParentWindow);
 //        if (display == null) {
 //            throw new IllegalArgumentException("display must not be null");
 //        }

@@ -28,7 +28,10 @@
 //        this(context, null);
 //    }
 //
-//    private WindowManagerImpl(Context context, Window parentWindow) {
+//
+//import android.support.annotation.NonNull;
+//
+//private WindowManagerImpl(Context context, Window parentWindow) {
 //        mContext = context;
 //        mParentWindow = parentWindow;
 //    }
@@ -51,7 +54,8 @@
 //        mDefaultToken = token;
 //    }
 //
-//    @Override
+//
+//@Override
 //    public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
 //        applyDefaultToken(params);
 //        mGlobal.addView(view, params, mContext.getDisplay(), mParentWindow);
