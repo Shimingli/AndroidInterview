@@ -4451,7 +4451,8 @@
 //        }
 //    }
 //
-//    // This method also sets the child's mParent to null
+//    // This method also sets the child's mParent to null 
+// TODO: 2018/6/21   此方法还将子节点的父节点设置为空。
 //    private void removeFromArray(int index) {
 //        final View[] children = mChildren;
 //        if (!(mTransitioningViews != null && mTransitioningViews.contains(children[index]))) {
@@ -4982,7 +4983,7 @@
 //
 //    /**
 //     * Detaches a range of views from their parents. Detaching a view should be followed
-//     * either by a call to
+////     * either by a call to
 //     * {@link #attachViewToParent(View, int, android.view.ViewGroup.LayoutParams)}
 //     * or a call to {@link #removeDetachedView(View, boolean)}. Detachment should only be
 //     * temporary; reattachment or removal should happen within the same drawing cycle as

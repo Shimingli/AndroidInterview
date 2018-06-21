@@ -744,9 +744,13 @@ public class ListView extends AbsListView {
     /**
      * {@inheritDoc}
      */
+    // TODO: 2018/6/21  实现的是基类的抽象的方法，主要是添加数据和移除数据使用的  
     @Override
     void fillGap(boolean down) {
         final int count = getChildCount();
+        /*
+        down参数用于表示ListView是向下滑动还是向上滑动的，可以看到，如果是向下滑动的话就会调用fillDown()方法，而如果是向上滑动的话就会调用fillUp()方法。那么这两个方法我们都已经非常熟悉了，内部都是通过一个循环来去对ListView进行填充，所以这两个方法我们就不看了，但是填充ListView会通过调用makeAndAddView()方法来完成，又是makeAndAddView()方法，
+         */
         if (down) {
             int paddingTop = 0;
             if ((mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK) {
@@ -779,6 +783,7 @@ public class ListView extends AbsListView {
      * @return The view that is currently selected, if it happens to be in the
      *         range that we draw.
      */
+    // TODO: 2018/6/21 可以看到，这里使用了一个while循环来执行重复逻辑，一开始nextTop的值是第一个子元素顶部距离整个ListView顶部的像素值，pos则是刚刚传入的mFirstPosition的值，而end是ListView底部减去顶部所得的像素值，mItemCount则是Adapter中的元素数量。因此一开始的情况下nextTop必定是小于end值的，并且pos也是小于mItemCount值的。那么每执行一次while循环，pos的值都会加1，并且nextTop也会增加，当nextTop大于等于end时，也就是子元素已经超出当前屏幕了，或者pos大于等于mItemCount时，也就是所有Adapter中的元素都被遍历结束了，就会跳出while循环
     private View fillDown(int pos, int nextTop) {
         View selectedView = null;
 
@@ -790,6 +795,7 @@ public class ListView extends AbsListView {
         while (nextTop < end && pos < mItemCount) {
             // is this the selected item?
             boolean selected = pos == mSelectedPosition;
+            // TODO: 2018/6/21  主要是观察这个方法
             View child = makeAndAddView(pos, nextTop, true, mListPadding.left, selected);
 
             nextTop = child.getBottom() + mDividerHeight;
@@ -844,6 +850,11 @@ public class ListView extends AbsListView {
      *        drawn
      *
      * @return The view that is currently selected
+     */
+    /**
+     * ，它所负责的主要任务就是从mFirstPosition开始，自顶至底去填充ListView。而这个方法本身并没有什么逻辑，就是判断了一下mFirstPosition值的合法性，然后调用fillDown()方法，那么我们就有理由可以猜测，填充ListView的操作是在fillDown()方法中完成的。进入fillDown()方法
+     * @param nextTop
+     * @return
      */
     private View fillFromTop(int nextTop) {
         mFirstPosition = Math.min(mFirstPosition, mSelectedPosition);
@@ -1660,6 +1671,7 @@ public class ListView extends AbsListView {
 
             final int childrenTop = mListPadding.top;
             final int childrenBottom = mBottom - mTop - mListPadding.bottom;
+            // TODO: 2018/6/21 listView当中目前还没有任何子View，数据都还是由Adapter管理的，并没有展示到界面上，因此getChildCount()方法得到的值肯定是0
             final int childCount = getChildCount();
 
             int index = 0;
@@ -1702,7 +1714,8 @@ public class ListView extends AbsListView {
                 newSel = getChildAt(index + delta);
             }
 
-
+            //todo 是基类 AdapterView 内部类 AdapterDataSetObserver  观察者模式 标记数据源是否发生了改变
+//            dataChanged只有在数据源发生改变的情况下才会变成true，其它情况都是false
             boolean dataChanged = mDataChanged;
             if (dataChanged) {
                 handleDataChanged();
@@ -1789,13 +1802,14 @@ public class ListView extends AbsListView {
                     recycleBin.addScrapView(getChildAt(i), firstPosition+i);
                 }
             } else {
+                // TODO: 2018/6/21 调用RecycleBin的fillActiveViews()方法。按理来说，调用fillActiveViews()方法是为了将ListView的子View进行缓存的，可是目前ListView中还没有任何的子View，因此这一行暂时还起不了任何作用。
                 recycleBin.fillActiveViews(childCount, firstPosition);
             }
 
             // Clear out old views
             detachAllViewsFromParent();
             recycleBin.removeSkippedScrap();
-
+            // TODO: 2018/6/21      int mLayoutMode = LAYOUT_NORMAL;  默认的情况下是这样子的
             switch (mLayoutMode) {
             case LAYOUT_SET_SELECTION:
                 if (newSel != null) {
@@ -1837,10 +1851,12 @@ public class ListView extends AbsListView {
                 sel = moveSelection(oldSel, newSel, delta, childrenTop, childrenBottom);
                 break;
             default:
+                //第一次没有数据的时候，就会走到这里来
                 if (childCount == 0) {
-                    if (!mStackFromBottom) {
+                    if (!mStackFromBottom) { //列表从底部边缘或顶部边缘堆叠。
                         final int position = lookForSelectablePosition(0, true);
                         setSelectedPositionInt(position);
+                        //todo  下面又会紧接着进行两次if判断，childCount目前是等于0的，并且默认的布局顺序是从上往下，因此会进入到第145行的fillFromTop()方法
                         sel = fillFromTop(childrenTop);
                     } else {
                         final int position = lookForSelectablePosition(mItemCount - 1, false);
@@ -2052,8 +2068,11 @@ public class ListView extends AbsListView {
      *                 otherwise
      * @return the view that was added
      */
+    // TODO: 2018/6/21 首先仍然是会尝试调用RecycleBin的getActiveView()方法来获取子布局，只不过肯定是获取不到的了，因为在第二次Layout过程中我们已经从mActiveViews中获取过了数据，而根据RecycleBin的机制，mActiveViews是不能够重复利用的，因此这里返回的值肯定是null。
     private View makeAndAddView(int position, int y, boolean flow, int childrenLeft,
             boolean selected) {
+
+        // TODO: 2018/6/21  第一次通过 onLayout 方法去看的结果 尝试从RecycleBin当中快速获取一个active view，不过很遗憾的是目前RecycleBin当中还没有缓存任何的View，所以这里得到的值肯定是null。那么取得了null之后就会继续向下运行，到第28行会调用obtainView()方法来再次尝试获取一个View，这次的obtainView()方法是可以保证一定返回一个View的，于是下面立刻将获取到的View传入到了setupChild()方法当中。那么obtainView()内部到底是怎么工作的呢？
         if (!mDataChanged) {
             // Try to use an existing view for this position.
             final View activeView = mRecycler.getActiveView(position);
@@ -2067,9 +2086,10 @@ public class ListView extends AbsListView {
 
         // Make a new view for this position, or convert an unused view if
         // possible.
+        //etActiveView()方法返回的值是null，那么就还是会走到的obtainView()方法当中
         final View child = obtainView(position, mIsScrap);
-
         // This needs to be positioned and measured.
+        // TODO: 2018/6/21 ListView也会作为obtainView()的结果进行返回，并最终传入到setupChild()方法当中。其实也就是说，第一次layout过程当中，所有的子View都是调用LayoutInflater的inflate()方法加载出来的，这样就会相对比较耗时，但是不用担心，后面就不会再有这种情况了 其实 就是通过LayoutInflater的方法 把view inflate 进来
         setupChild(child, position, y, flow, childrenLeft, selected, mIsScrap[0]);
 
         return child;
@@ -2149,6 +2169,9 @@ public class ListView extends AbsListView {
             if (p.viewType == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
                 p.recycledHeaderFooter = true;
             }
+            // TODO: 2018/6/21 setupChild()方法当中的代码虽然比较多，但是我们只看核心代码的话就非常简单了，刚才调用obtainView()方法获取到的子元素View，调用了addViewInLayout()方法将它添加到了ListView当中。那么根据fillDown()方法中的while循环，会让子元素View将整个ListView控件填满然后就跳出，也就是说即使我们的Adapter中有一千条数据，ListView也只会加载第一屏的数据，剩下的数据反正目前在屏幕上也看不到，所以不会去做多余的加载工作，这样就可以保证ListView中的内容能够迅速展示到屏幕上。
+
+            //在布局期间添加视图。如果在OnLay（）方法中需要添加更多的视图（例如，列表视图），这是很有用的。
             addViewInLayout(child, flowDown ? -1 : 0, p, true);
             // add view in layout will reset the RTL properties. We have to re-resolve them
             child.resolveRtlPropertiesIfNeeded();

@@ -1,8 +1,9 @@
 package com.android.interview.listview_demo;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import com.android.interview.R;
@@ -11,6 +12,8 @@ import com.android.interview.R;
  * ListViewDemoActivity   解释listview的缓存的机制的问题
   ListView之所以能够实现加载成百上千条数据都不会OOM，最主要在于它内部优秀的实现机制。虽然作为普通的使用者，我们大可不必关心ListView内部到底是怎么实现的，但是当你了解了它的内部原理之后，很多之前难以解释的问题都变得有理有据了
  * ListView在借助RecycleBin机制的帮助下，实现了一个生产者和消费者的模式，不管有任意多条数据需要显示，ListView中的子View其实来来回回就那么几个，移出屏幕的子View会很快被移入屏幕的数据重新利用起来，原理示意图如下所示：
+ *
+ * https://blog.csdn.net/guolin_blog/article/details/44996879
  */
 public class ListViewDemoActivity extends AppCompatActivity {
 
@@ -34,6 +37,10 @@ public class ListViewDemoActivity extends AppCompatActivity {
             mAdapter.addItem("shiming  " + i);
         }
         mListView.setAdapter(mAdapter);
+
+
+//        recyclerview
+        RecyclerView dd=findViewById(R.id.dimensions);
 
     }
 }

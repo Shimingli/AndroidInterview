@@ -2313,9 +2313,13 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      *
      * @return A view displaying the data associated with the specified position
      */
+//    RecyleBin的getScrapView()方法来尝试从废弃缓存中获取一个View，那么废弃缓存有没有View呢？当然有，因为刚才在trackMotionScroll()方法中我们就已经看到了，一旦有任何子View被移出了屏幕，就会将它加入到废弃缓存中，而从obtainView()方法中的逻辑来看，一旦有新的数据需要显示到屏幕上，就会尝试从废弃缓存中获取View。所以它们之间就形成了一个生产者和消费者的模式，那么ListView神奇的地方也就在这里体现出来了，不管你有任意多条数据需要显示，ListView中的子View其实来来回回就那么几个，移出屏幕的子View会很快被移入屏幕的数据重新利用起来，因而不管我们加载多少数据都不会出现OOM的情况，甚至内存都不会有所增加。
+
     View obtainView(int position, boolean[] isScrap) {
         Trace.traceBegin(Trace.TRACE_TAG_VIEW, "obtainView");
-
+        /*
+        obtainView()方法中的代码并不多，但却包含了非常非常重要的逻辑，不夸张的说，整个ListView中最重要的内容可能就在这个方法里了。那么我们还是按照执行流程来看，代码中调用了RecycleBin的getScrapView()方法来尝试获取一个废弃缓存中的View，同样的道理，这里肯定是获取不到的，getScrapView()方法会返回一个null。这时该怎么办呢？没有关系，，调用mAdapter的getView()方法来去获取一个View。那么mAdapter是什么呢？当然就是当前ListView关联的适配器了。而getView()方法又是什么呢？还用说吗，这个就是我们平时使用ListView时最最经常重写的一个方法了，这里getView()方法中传入了三个参数，分别是position，null和this。
+         */
         isScrap[0] = false;
 
         // Check whether we have a transient state view. Attempt to re-bind the
@@ -2326,6 +2330,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
             // If the view type hasn't changed, attempt to re-bind the data.
             if (params.viewType == mAdapter.getItemViewType(position)) {
+                // TODO: 2018/6/21 第二个参数就是我们最熟悉的convertView呀，难怪平时我们在写getView()方法是要判断一下convertView是不是等于null，如果等于null才调用inflate()方法来加载布局，不等于null就可以直接利用convertView，因为convertView就是我们之间利用过的View，只不过被移出屏幕后进入到了废弃缓存中，现在又重新拿出来使用而已。然后我们只需要把convertView中的数据更新成当前位置上应该显示的数据，那么看起来就好像是全新加载出来的一个布局一样，这背后的道理你是不是已经完全搞明白了？
                 final View updatedView = mAdapter.getView(position, transientView, this);
 
                 // If we failed to re-bind the data, scrap the obtained view.
@@ -2341,8 +2346,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             transientView.dispatchFinishTemporaryDetach();
             return transientView;
         }
-
+       //RecyleBin的getScrapView()方法来尝试从废弃缓存中获取一个View!
         final View scrapView = mRecycler.getScrapView(position);
+        //ListView也会作为obtainView()的结果进行返回，并最终传入到setupChild()方法当中。其实也就是说，第一次layout过程当中，所有的子View都是调用LayoutInflater的inflate()方法加载出来的，这样就会相对比较耗时，但是不用担心，后面就不会再有这种情况了
         final View child = mAdapter.getView(position, scrapView, this);
         if (scrapView != null) {
             if (child != scrapView) {
@@ -3356,6 +3362,14 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         return false;
     }
 
+    // TODO: 2018/6/21  手指在滑动的 时候
+
+    /**
+     *
+     * @param x 屏幕上的位置
+     * @param y  的位置
+     * @param vtev 事件 ，到底是什么事件
+     */
     private void scrollIfNeeded(int x, int y, MotionEvent vtev) {
         int rawDeltaY = y - mMotionY;
         int scrollOffsetCorrection = 0;
@@ -3530,7 +3544,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                         mScrollY = 0;
                         invalidateParentIfNeeded();
                     }
-
+                    // TODO: 2018/6/21   关键的方法  就是手指滑动的时候 这个方法会一直走
+                    //相当于我们手指只要在屏幕上稍微有一点点移动，这个方法就会被调用，而如果是正常在屏幕上滑动的话，那么这个方法就会被调用很多次。
                     trackMotionScroll(incrementalDeltaY, incrementalDeltaY);
 
                     mTouchMode = TOUCH_MODE_SCROLL;
@@ -3646,7 +3661,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 onTouchDown(ev);
                 break;
             }
-
+            // TODO: 2018/6/20  们目前所关心的就只有手指在屏幕上滑动这一个事件而已，对应的是ACTION_MOVE这个动作，那么我们就只看这部分代码就可以了
             case MotionEvent.ACTION_MOVE: {
                 onTouchMove(ev, vtev);
                 break;
@@ -3769,6 +3784,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
     }
 
+    /**
+     * listView 处于手指滑动的状态 ，所以这个方法会走到这里
+     * @param ev
+     * @param vtev
+     */
     private void onTouchMove(MotionEvent ev, MotionEvent vtev) {
         int pointerIndex = ev.findPointerIndex(mActivePointerId);
         if (pointerIndex == -1) {
@@ -3815,7 +3835,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                     motionView.drawableHotspotChanged(point[0], point[1]);
                 }
                 break;
-            case TOUCH_MODE_SCROLL:
+            case TOUCH_MODE_SCROLL: // TODO: 2018/6/21  当屏幕在滑动的时候  是这个case的值
             case TOUCH_MODE_OVERSCROLL:
                 scrollIfNeeded((int) ev.getX(pointerIndex), y, vtev);
                 break;
@@ -4885,7 +4905,15 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * @param incrementalDeltaY Change in deltaY from the previous event.
      * @return true if we're already at the beginning/end of the list and have nothing to do.
      */
+    // 跟踪运动滚动  监听了 滚动的 事件
+
+    /**
+     * @param deltaY deltaY表示从手指按下时的位置到当前手指位置的距离
+     * @param incrementalDeltaY   incrementalDeltaY则表示据上次触发event事件手指在Y方向上位置的改变量，那么其实我们就可以通过incrementalDeltaY的正负值情况来判断用户是向上还是向下滑动的了。
+     * @return
+     */
     boolean trackMotionScroll(int deltaY, int incrementalDeltaY) {
+        //获取孩子
         final int childCount = getChildCount();
         if (childCount == 0) {
             return true;
@@ -4917,7 +4945,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         } else {
             deltaY = Math.min(height - 1, deltaY);
         }
-
+        // TODO: 2018/6/21  如果incrementalDeltaY小于0，说明是向下滑动，否则就是向上滑动。
         if (incrementalDeltaY < 0) {
             incrementalDeltaY = Math.max(-(height - 1), incrementalDeltaY);
         } else {
@@ -4946,7 +4974,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         if (cannotScrollDown || cannotScrollUp) {
             return incrementalDeltaY != 0;
         }
-
+        //小于0 往下面滑动
         final boolean down = incrementalDeltaY < 0;
 
         final boolean inTouchMode = isInTouchMode();
@@ -4959,19 +4987,22 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
         int start = 0;
         int count = 0;
-
+       // 如果 往下滑动的时候
         if (down) {
             int top = -incrementalDeltaY;
             if ((mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK) {
                 top += listPadding.top;
             }
+            //当ListView向下滑动的时候，就会进入一个for循环当中，从上往下依次获取子View
             for (int i = 0; i < childCount; i++) {
                 final View child = getChildAt(i);
                 if (child.getBottom() >= top) {
                     break;
                 } else {
+                    // TODO: 2018/6/21 并将count计数器加1，计数器用于记录有多少个子View被移出了屏幕  
                     count++;
                     int position = firstPosition + i;
+                    // TODO: 2018/6/21     如果该子View的bottom值已经小于top值了，就说明这个子View已经移出屏幕了，所以会调用RecycleBin的addScrapView()方法将这个View加入到废弃缓存当中，
                     if (position >= headerViewsCount && position < footerViewsStart) {
                         // The view will be rebound to new data, clear any
                         // system-managed transient state.
@@ -4981,6 +5012,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 }
             }
         } else {
+            // TODO: 2018/6/21  这里是向上滑动的
             int bottom = getHeight() - incrementalDeltaY;
             if ((mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK) {
                 bottom -= listPadding.bottom;
@@ -4990,6 +5022,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 if (child.getTop() <= bottom) {
                     break;
                 } else {
+                    // TODO: 2018/6/21 如果是ListView向上滑动的话，其实过程是基本相同的，只不过变成了从下往上依次获取子View，然后判断该子View的top值是不是大于bottom值了，如果大于的话说明子View已经移出了屏幕，同样把它加入到废弃缓存中，并将计数器加1。
                     start = i;
                     count++;
                     int position = firstPosition + i;
@@ -5006,8 +5039,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mMotionViewNewTop = mMotionViewOriginalTop + deltaY;
 
         mBlockLayoutRequests = true;
-
+        //如果移除屏幕的View的个数大于0的话，就会这样
         if (count > 0) {
+            //根据当前计数器的值来进行一个detach操作，它的作用就是把所有移出屏幕的子View全部detach掉，在ListView的概念当中，所有看不到的View就没有必要为它进行保存，因为屏幕外还有成百上千条数据等着显示呢，一个好的回收策略才能保证ListView的高性能和高效率
+
+            // Detaches a range of views from their parents.
             detachViewsFromParent(start, count);
             mRecycler.removeSkippedScrap();
         }
@@ -5017,7 +5053,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         if (!awakenScrollBars()) {
             invalidate();
         }
+        //调用了offsetChildrenTopAndBottom()方法，并将incrementalDeltaY作为参数传入，这个方法的作用是让ListView中所有的子View都按照传入的参数值进行相应的偏移，这样就实现了随着手指的拖动，ListView的内容也会随着滚动的效果。
 
+        // TODO: 2018/6/21   set the vertical location of all children of this view by the specified number of pixels.  将该视图的所有子像素的垂直位置设置为指定的像素数。  这个方法是VieGroup的方法 被hide了
         offsetChildrenTopAndBottom(incrementalDeltaY);
 
         if (down) {
@@ -5025,6 +5063,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
 
         final int absIncrementalDeltaY = Math.abs(incrementalDeltaY);
+        // TODO: 2018/6/21  如果ListView中最后一个View的底部已经移入了屏幕，或者ListView中第一个View的顶部移入了屏幕，就会调用fillGap()方法，那么因此我们就可以猜出fillGap()方法是用来加载屏幕外数据的
         if (spaceAbove < absIncrementalDeltaY || spaceBelow < absIncrementalDeltaY) {
             fillGap(down);
         }
