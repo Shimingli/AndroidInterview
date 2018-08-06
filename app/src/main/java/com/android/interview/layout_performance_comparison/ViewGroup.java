@@ -53,6 +53,7 @@
 //
 //import com.android.internal.R;
 //import com.android.internal.util.Predicate;
+//import com.android.interview.view_source_code.ViewRootImpl;
 //
 //import java.util.ArrayList;
 //import java.util.Collections;
@@ -4173,7 +4174,7 @@
 //        }
 //
 //        if (child == null) {
-//            throw new IllegalArgumentException("Cannot add a null child view to a ViewGroup");
+//            throw new IllegalArgumentException("Cannot add a null child view to ainvalidateChild ViewGroup");
 //        }
 //
 //        // addViewInner() will call child.requestLayout() when setting the new LayoutParams
@@ -5035,7 +5036,9 @@
 //     * Don't call or override this method. It is used for the implementation of
 //     * the view hierarchy.
 //     */
+//    //  todo  不可重载这个方法
 //    public final void invalidateChild(View child, final Rect dirty) {
+//        //设置 parent 等于自身
 //        ViewParent parent = this;
 //
 //        final AttachInfo attachInfo = mAttachInfo;
@@ -5060,7 +5063,7 @@
 //                mPrivateFlags |= PFLAG_INVALIDATED;
 //                mPrivateFlags &= ~PFLAG_DRAWING_CACHE_VALID;
 //            }
-//
+//            //储存子View的mLeft和mTop值
 //            final int[] location = attachInfo.mInvalidateChildLocation;
 //            location[CHILD_LEFT_INDEX] = child.mLeft;
 //            location[CHILD_TOP_INDEX] = child.mTop;
@@ -5090,7 +5093,7 @@
 //                        (int) (boundingRect.right + 0.5f),
 //                        (int) (boundingRect.bottom + 0.5f));
 //            }
-//
+//            // 至少 执行一次的 do{}when（）  do…while…循环，该循环的作用主要是不断向上回溯父容器，求得父容器和子View需要重绘的区域的并集(dirty)。当父容器不是ViewRootImpl的时候，调用的是ViewGroup的invalidateChildInParent方法
 //            do {
 //                View view = null;
 //                if (parent instanceof View) {
@@ -5113,10 +5116,12 @@
 //                        opaqueFlag = PFLAG_DIRTY;
 //                    }
 //                    if ((view.mPrivateFlags & PFLAG_DIRTY_MASK) != PFLAG_DIRTY) {
+//                        //     对当前View的标记位进行设置 这个标记mPrivateFlags 和requestLayout改变的标记是一样的
 //                        view.mPrivateFlags = (view.mPrivateFlags & ~PFLAG_DIRTY_MASK) | opaqueFlag;
 //                    }
 //                }
-//
+//                //调用ViewGrup的invalidateChildInParent，如果已经达到最顶层view,则调用ViewRootImpl
+//                //的invalidateChildInParent。
 //                parent = parent.invalidateChildInParent(location, dirty);
 //                if (view != null) {
 //                    // Account for transform on current parent

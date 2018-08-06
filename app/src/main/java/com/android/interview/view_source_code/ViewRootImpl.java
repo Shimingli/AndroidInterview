@@ -1163,6 +1163,7 @@
 //    @Override
 //    public void requestLayout() {
 //        if (!mHandlingLayoutInLayoutRequest) {
+//            // 检查是否在主线程，不在的话，抛出异常
 //            checkThread();
 //            mLayoutRequested = true;
 //            scheduleTraversals();
@@ -1203,9 +1204,11 @@
 //    public void invalidateChild(View child, Rect dirty) {
 //        invalidateChildInParent(null, dirty);
 //    }
-//
+//    //  invalidate  最终会调用这个方法
+//    //进行了offset和union对坐标的调整，然后把dirty区域的信息保存在mDirty中，最后调用了scheduleTraversals方法，触发View的工作流程，由于没有添加measure和layout的标记位，因此measure、layout流程不会执行，而是直接从draw流程开始
 //    @Override
 //    public ViewParent invalidateChildInParent(int[] location, Rect dirty) {
+//        // 检查线程，不是ui线程，直接抛出异常
 //        checkThread();
 //        if (DEBUG_DRAW) Log.v(mTag, "Invalidate child: " + dirty);
 //
@@ -1220,6 +1223,7 @@
 //            mTempRect.set(dirty);
 //            dirty = mTempRect;
 //            if (mCurScrollY != 0) {
+//                // 将dirty中的坐标转化为父容器中的坐标，考虑mScrollX和mScrollY的影响
 //                dirty.offset(0, -mCurScrollY);
 //            }
 //            if (mTranslator != null) {
@@ -1229,7 +1233,7 @@
 //                dirty.inset(-1, -1);
 //            }
 //        }
-//
+//        //进行了offset和union对坐标的调整
 //        invalidateRectOnScreen(dirty);
 //
 //        return null;
@@ -1243,6 +1247,7 @@
 //        }
 //
 //        // Add the new dirty rect to the current one
+//        // 添加一个新的 dirty rect 给当前的Rect
 //        localDirty.union(dirty.left, dirty.top, dirty.right, dirty.bottom);
 //        // Intersect with the bounds of the window to skip
 //        // updates that lie outside of the visible region
@@ -1361,11 +1366,12 @@
 //            mAttachInfo.mThreadedRenderer.notifyFramePending();
 //        }
 //    }
-//
+//    // requestLayout()  会调用这个方法
 //    void scheduleTraversals() {
 //        if (!mTraversalScheduled) {
 //            mTraversalScheduled = true;
 //            mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
+//            // 最终调用的是这个方法
 //            mChoreographer.postCallback(
 //                    Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);
 //            if (!mUnbufferedInputDispatch) {
@@ -3777,6 +3783,7 @@
 //        public void handleMessage(Message msg) {
 //            switch (msg.what) {
 //                case MSG_INVALIDATE:
+//                    //通知对象去 invalidate ，底层也是调用的是 invalidate，只不过使用了handler发送消息
 //                    ((View) msg.obj).invalidate();
 //                    break;
 //                case MSG_INVALIDATE_RECT:
@@ -6931,6 +6938,11 @@
 //    final InvalidateOnAnimationRunnable mInvalidateOnAnimationRunnable =
 //            new InvalidateOnAnimationRunnable();
 //
+//    /**
+//     * 用了Handler，发送了一个异步消息到主线程，显然这里发送的是MSG_INVALIDATE，即通知主线程刷新视图
+//      * @param view  只有 postInvalidate() 使用了handler 来发送消息
+//     * @param delayMilliseconds
+//     */
 //    public void dispatchInvalidateDelayed(View view, long delayMilliseconds) {
 //        Message msg = mHandler.obtainMessage(MSG_INVALIDATE, view);
 //        mHandler.sendMessageDelayed(msg, delayMilliseconds);

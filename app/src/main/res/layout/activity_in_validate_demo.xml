@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.interview.invalidate_demo.InValidateDemoActivity">
+
+    <com.android.interview.invalidate_demo.InvalidateTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Demo start"
+        android:textSize="22sp"
+        android:id="@+id/invalidate_text_view"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_centerInParent="true"
+        />
+    <Button
+        android:id="@+id/invalidate"
+        android:text="invalidate"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/invalidate_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/postInvalidate"
+        android:text="postInvalidate"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/invalidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/requestLayout"
+        android:text="requestLayout"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/postInvalidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

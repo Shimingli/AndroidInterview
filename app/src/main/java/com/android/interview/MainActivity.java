@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.handler.HandlerActivity;
+import com.android.interview.invalidate_demo.InValidateDemoActivity;
 import com.android.interview.layout_performance_comparison.LayoutPerformanceComparison;
 import com.android.interview.listview_demo.ListViewDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
@@ -121,7 +122,12 @@ public class MainActivity extends AppCompatActivity {
           });
 
 //        Invalidate、postInvalidate、requestLayout应用场景
-
+          findViewById(R.id.btn_invalidate_demo).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  startActivity(new Intent(MainActivity.this,InValidateDemoActivity.class));
+              }
+          });
 
 //        多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展

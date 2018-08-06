@@ -14714,11 +14714,11 @@
 //            mGhostView.invalidate(true);
 //            return;
 //        }
-//
+//        // 判断是否可见，是否在动画中，是否不是ViewGroup，三项满足一项，直接返回
 //        if (skipInvalidate()) {
 //            return;
 //        }
-//
+////根据View的标记位来判断该子View是否需要重绘，假如View没有任何变化，那么就不需要重绘
 //        if ((mPrivateFlags & (PFLAG_DRAWN | PFLAG_HAS_BOUNDS)) == (PFLAG_DRAWN | PFLAG_HAS_BOUNDS)
 //                || (invalidateCache && (mPrivateFlags & PFLAG_DRAWING_CACHE_VALID) == PFLAG_DRAWING_CACHE_VALID)
 //                || (mPrivateFlags & PFLAG_INVALIDATED) != PFLAG_INVALIDATED
@@ -14727,20 +14727,21 @@
 //                mLastIsOpaque = isOpaque();
 //                mPrivateFlags &= ~PFLAG_DRAWN;
 //            }
-//
+//            //设置PFLAG_DIRTY标记位
 //            mPrivateFlags |= PFLAG_DIRTY;
 //
 //            if (invalidateCache) {
 //                mPrivateFlags |= PFLAG_INVALIDATED;
 //                mPrivateFlags &= ~PFLAG_DRAWING_CACHE_VALID;
 //            }
-//
+//            //把需要重绘的区域传递给父容器
 //            // Propagate the damage rectangle to the parent view.
 //            final AttachInfo ai = mAttachInfo;
 //            final ViewParent p = mParent;
 //            if (p != null && ai != null && l < r && t < b) {
 //                final Rect damage = ai.mTmpInvalRect;
 //                damage.set(l, t, r, b);
+//                //调用父容器的方法，向上传递事件
 //                p.invalidateChild(this, damage);
 //            }
 //
@@ -15146,6 +15147,7 @@
 //    public void postInvalidateDelayed(long delayMilliseconds) {
 //        // We try only with the AttachInfo because there's no point in invalidating
 //        // if we are not attached to our window
+//        //只有attachInfo不为null的时候才会继续执行，即只有确保视图被添加到窗口的时候才会通知view树重绘，因为这是一个异步方法，如果在视图还未被添加到窗口就通知重绘的话会出现错误，所以这样要做一下判断
 //        final AttachInfo attachInfo = mAttachInfo;
 //        if (attachInfo != null) {
 //            attachInfo.mViewRootImpl.dispatchInvalidateDelayed(this, delayMilliseconds);
@@ -18853,7 +18855,7 @@
 //
 //        boolean changed = isLayoutModeOptical(mParent) ?
 //                setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);
-//
+//           //判断标记位是否为PFLAG_LAYOUT_REQUIRED，如果有，则对该View进行布局
 //        if (changed || (mPrivateFlags & PFLAG_LAYOUT_REQUIRED) == PFLAG_LAYOUT_REQUIRED) {
 //            onLayout(changed, l, t, r, b);
 //
@@ -18864,7 +18866,7 @@
 //            } else {
 //                mRoundScrollbarRenderer = null;
 //            }
-//
+//            //     //onLayout方法完成后，清除PFLAG_LAYOUT_REQUIRED标记位
 //            mPrivateFlags &= ~PFLAG_LAYOUT_REQUIRED;
 //
 //            ListenerInfo li = mListenerInfo;
@@ -18877,7 +18879,7 @@
 //                }
 //            }
 //        }
-//
+//    //  //最后清除PFLAG_FORCE_LAYOUT标记位
 //        mPrivateFlags &= ~PFLAG_FORCE_LAYOUT;
 //        mPrivateFlags3 |= PFLAG3_IS_LAID_OUT;
 //
@@ -21171,14 +21173,16 @@
 //     * <p>Subclasses which override this method should call the superclass method to
 //     * handle possible request-during-layout errors correctly.</p>
 //     */
+//     // todo
 //    @CallSuper
 //    public void requestLayout() {
+//        // 清除绘制的缓存
 //        if (mMeasureCache != null) mMeasureCache.clear();
 //
 //        if (mAttachInfo != null && mAttachInfo.mViewRequestingLayout == null) {
-//            // Only trigger request-during-layout logic if this is the view requesting it,
-//            // not the views in its parent hierarchy
+//            //只有在布局逻辑中触发请求，如果这是请求它的视图，而不是其父层次结构中的视图
 //            ViewRootImpl viewRoot = getViewRootImpl();
+//            //如果连续请求两次，其中一次自动返回！
 //            if (viewRoot != null && viewRoot.isInLayout()) {
 //                if (!viewRoot.requestLayoutDuringLayout(this)) {
 //                    return;
@@ -21186,11 +21190,12 @@
 //            }
 //            mAttachInfo.mViewRequestingLayout = this;
 //        }
-//
+//       //todo   为当前view设置标记位 PFLAG_FORCE_LAYOUT
 //        mPrivateFlags |= PFLAG_FORCE_LAYOUT;
 //        mPrivateFlags |= PFLAG_INVALIDATED;
 //
 //        if (mParent != null && !mParent.isLayoutRequested()) {
+//           //   todo  向父容器请求布局 这里是向父容器请求布局，即调用父容器的requestLayout方法，为父容器添加PFLAG_FORCE_LAYOUT标记位，而父容器又会调用它的父容器的requestLayout方法，即requestLayout事件层层向上传递，直到DecorView，即根View，而根View又会传递给ViewRootImpl，也即是说子View的requestLayout事件，最终会被ViewRootImpl接收并得到处理
 //            mParent.requestLayout();
 //        }
 //        if (mAttachInfo != null && mAttachInfo.mViewRequestingLayout == this) {
@@ -21244,7 +21249,7 @@
 //        // Suppress sign extension for the low bytes
 //        long key = (long) widthMeasureSpec << 32 | (long) heightMeasureSpec & 0xffffffffL;
 //        if (mMeasureCache == null) mMeasureCache = new LongSparseLongArray(2);
-//
+//        // requestLayout的方法改变的  mPrivateFlags |= PFLAG_FORCE_LAYOUT; 所以 forceLayout = true
 //        final boolean forceLayout = (mPrivateFlags & PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT;
 //
 //        // Optimize layout by avoiding an extra EXACTLY pass when the view is
@@ -21267,6 +21272,7 @@
 //
 //            int cacheIndex = forceLayout ? -1 : mMeasureCache.indexOfKey(key);
 //            if (cacheIndex < 0 || sIgnoreMeasureCache) {
+//                //最终会走到这方法来
 //                // measure ourselves, this should set the measured dimension flag back
 //                onMeasure(widthMeasureSpec, heightMeasureSpec);
 //                mPrivateFlags3 &= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;
@@ -21285,7 +21291,7 @@
 //                        + " measured dimension by calling"
 //                        + " setMeasuredDimension()");
 //            }
-//
+//            // 接着最后为标记位设置为PFLAG_LAYOUT_REQUIRED
 //            mPrivateFlags |= PFLAG_LAYOUT_REQUIRED;
 //        }
 //

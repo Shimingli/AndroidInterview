@@ -22,7 +22,8 @@
         <activity android:name=".merge_and_viewstub_demo.MergePrincipleActivity" />
         <activity android:name=".view_source_code.ViewSourceCodeDemoActivity" />
         <activity android:name=".layout_performance_comparison.LayoutPerformanceComparison" />
-        <activity android:name=".listview_demo.ListViewDemoActivity"></activity>
+        <activity android:name=".listview_demo.ListViewDemoActivity" />
+        <activity android:name=".invalidate_demo.InValidateDemoActivity"></activity>
     </application>
 
 </manifest>
