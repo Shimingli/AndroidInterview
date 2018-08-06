@@ -120,8 +120,9 @@ public class MainActivity extends AppCompatActivity {
               }
           });
 
-
 //        Invalidate、postInvalidate、requestLayout应用场景
+
+
 //        多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展
 //        编程题：将元素均为0、1、2的数组排序。在手打了一种直接遍历三种数目并打印的方法后让手写实现，手写实现后让再说一种稳定的方法，说了一种通过三个下标遍历一遍实现的方法，读者可自行百度，在此不赘述。
