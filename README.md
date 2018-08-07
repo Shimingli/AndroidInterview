@@ -20,5 +20,6 @@
   * requessLayout() 和invalidate()  最终的底层调用的是 ViewRootImpl.scheduleTraversals()的方法，区别是：在invalidate方法中，没有添加 measure 和 layout的标记位，因此measure和layout流程不会执行，直接从draw开始！
   * 完成 invalidate（）的xmind 流程图  
   * 完成 postInvalidate（） xmind 流程图
+  * 完成博客（安卓invalidate()、postInvalidate()、requestLayout()源码分析）https://www.jianshu.com/p/11345ef2b1ef
 
   
