@@ -10,8 +10,6 @@ import com.android.interview.R;
     Invalidate、postInvalidate、requestLayout应用场景
 
     View确定自身不再适合当前区域，比如说它的LayoutParams发生了改变，需要父布局对其进行重新测量、布局、绘制这三个流程，往往使用requestLayout。而invalidate则是刷新当前View，使当前View进行重绘，不会进行测量、布局流程，因此如果View只需要重绘而不需要测量，布局的时候，使用invalidate方法往往比requestLayout方法更高效
-
-
  */
 public class InValidateDemoActivity extends AppCompatActivity {
 
@@ -60,6 +58,8 @@ public class InValidateDemoActivity extends AppCompatActivity {
                 /*
                 “请求布局”，那就是说，如果调用了这个方法，那么对于一个子View来说，应该会重新进行布局流程。但是，真实情况略有不同，如果子View调用了这个方法，其实会从View树重新进行一次测量、布局、绘制这三个流程，最终就会显示子View的最终情况
                  */
+                //虽然执行了两次这个方法，但是呢，其实只执行一次
+                textView.requestLayout();
                 textView.requestLayout();
                 Toast.makeText(InValidateDemoActivity.this,"requestLayout",Toast.LENGTH_SHORT).show();
                 /*
