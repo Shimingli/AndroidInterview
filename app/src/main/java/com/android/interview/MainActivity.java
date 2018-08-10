@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.textclassifier.TextClassifier;
 import android.widget.LinearLayout;
 
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_dp_unit_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,UnitDemoActivity.class));
+                startActivity(new Intent(MainActivity.this, UnitDemoActivity.class));
             }
         });
 //        handler机制，四个组成部分及源码解析
@@ -38,24 +40,24 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_handler_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,HandlerActivity.class));
+                startActivity(new Intent(MainActivity.this, HandlerActivity.class));
             }
         });
 //        布局相关的<merge>、<viewstub>控件作用及实现原理
         findViewById(R.id.btn_principle_activity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,MergePrincipleActivity.class));
+                startActivity(new Intent(MainActivity.this, MergePrincipleActivity.class));
             }
         });
 //        android中的布局优化
-       // 请看我的文章：https://www.jianshu.com/p/82b76e0cb41e
+        // 请看我的文章：https://www.jianshu.com/p/82b76e0cb41e
 
         //        view的工作原理及measure、layout、draw流程，要求了解源码
         findViewById(R.id.btn_source_code_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ViewSourceCodeDemoActivity.class));
+                startActivity(new Intent(MainActivity.this, ViewSourceCodeDemoActivity.class));
             }
         });
 
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_relative_linear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LayoutPerformanceComparison.class));
+                startActivity(new Intent(MainActivity.this, LayoutPerformanceComparison.class));
             }
         });
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 开发app的性能目标就是保持60fps，这意味着每一帧你只有16ms≈1000/60的时间来处理所有的任务。
          * Android系统每隔16ms发出VSYNC信号，触发对UI进行渲染，如果每次渲染都成功，这样就能够达到流畅的画面所需要的60fps。
-         * 
+         *
          */
         // TODO: 2018/6/20 建议去使用的方法
 //        1、常规做法
@@ -114,25 +116,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        listview的缓存机制
-          findViewById(R.id.btn_list_demo).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  startActivity(new Intent(MainActivity.this,ListViewDemoActivity.class));
-              }
-          });
+        findViewById(R.id.btn_list_demo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ListViewDemoActivity.class));
+            }
+        });
 
 //        Invalidate、postInvalidate、requestLayout应用场景
-          findViewById(R.id.btn_invalidate_demo).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  startActivity(new Intent(MainActivity.this,InValidateDemoActivity.class));
-              }
-          });
+        findViewById(R.id.btn_invalidate_demo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, InValidateDemoActivity.class));
+            }
+        });
 
 //        多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
+        demo();
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展
+
+
 //        编程题：将元素均为0、1、2的数组排序。在手打了一种直接遍历三种数目并打印的方法后让手写实现，手写实现后让再说一种稳定的方法，说了一种通过三个下标遍历一遍实现的方法，读者可自行百度，在此不赘述。
 //        java内存模型，五个部分，程序计数器、栈、本地栈、堆、方法区。
+
+
 //        每个部分的概念、特点、作用。
 //        类加载的过程，加载、验证、准备、解析、初始化。每个部分详细描述。
 //        加载阶段读入.class文件，class文件时二进制吗，为什么需要使用二进制的方式？
@@ -189,8 +196,83 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
+    private void demo() {
+        CanRun canRun = new CanRun(1);
+        Thread t1 = new Thread(new MyRunnable(canRun, 1, 2), "线程-1");
+        Thread t2 = new Thread(new MyRunnable(canRun, 2, 3), "线程-2");
+        Thread t3 = new Thread(new MyRunnable(canRun, 3, 4), "线程-3");
+        Thread t4 = new Thread(new MyRunnable(canRun, 4, 5), "线程-4");
+        Thread t5 = new Thread(new MyRunnable(canRun, 5, 1), "线程-5");
+
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+        t5.start();
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
+    }
+
+    public class MyRunnable implements Runnable {
+        //公共锁对象
+        private CanRun mObject;
+        //线程标志，创建线程时初始化该值，并在run()方法中判断lock对象的status变量是否与其相等，是则运行
+        private int mCurrent;
+        //若该子线程得以运行并打印完后，将lock对象的status设置为该值，之后唤醒所有使用该锁的子线程
+        private int mNext;
+
+        public MyRunnable(CanRun obj, int current, int next) {
+            mObject = obj;
+            mCurrent = current;
+            mNext = next;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 2; i++) {
+                synchronized (mObject) {
+                    while (mObject.getStatus() != mCurrent) {
+                        try {
+                            //调用某个对象的wait()方法能让当前线程阻塞
+                            mObject.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mObject.setStatus(mNext);
+                    if (i == 0) {
+                        Log.d("MainActivity","Hello");
+                        System.out.print(Thread.currentThread().getName() + "  Hello");
+                    } else {
+                        Log.d("MainActivity","World");
+                        System.out.print(Thread.currentThread().getName() + "  World");
+                    }
+                    //调用notifyAll()方法能够唤醒所有正在等待这个对象的monitor的线程
+                    mObject.notifyAll();
+
+                }
+            }
+        }
+    }
+
+    public class CanRun {
+        public CanRun(int i) {
+            status = i;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int status;
+
     }
 }
