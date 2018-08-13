@@ -21,5 +21,6 @@
   * 完成 invalidate（）的xmind 流程图  
   * 完成 postInvalidate（） xmind 流程图
   * 完成博客（安卓invalidate()、postInvalidate()、requestLayout()源码分析）https://www.jianshu.com/p/11345ef2b1ef
-
+* 2018.8.13
+  * 对数组中只有[0,1,2]的排序，要求时间复杂度为 o(n) ,有点难以理解！两种的方法，一个是折中查找  
   
