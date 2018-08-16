@@ -15,6 +15,7 @@ import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.handler.HandlerActivity;
 import com.android.interview.invalidate_demo.InValidateDemoActivity;
 import com.android.interview.layout_performance_comparison.LayoutPerformanceComparison;
+import com.android.interview.list.SetPrincipleActivity;
 import com.android.interview.listview_demo.ListViewDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
 import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
@@ -130,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, InValidateDemoActivity.class));
+            }
+        });
+
+        // 集合的原理 btn_set_principle
+        findViewById(R.id.btn_set_principle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SetPrincipleActivity.class));
             }
         });
 
