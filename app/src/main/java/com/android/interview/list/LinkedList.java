@@ -1055,7 +1055,7 @@
 //     * @return an array containing all of the elements in this list
 //     *         in proper sequence
 //     */ 
-// TODO: 2018/8/16  //new 一个新数组 然后遍历链表，将每个元素存在数组里，返回  
+// TODO: 2018/8/16  //new 一个新数组 然后遍历链表，将每个元素存在数组里，返回
 //    public Object[] toArray() {
 //        Object[] result = new Object[size];
 //        int i = 0;

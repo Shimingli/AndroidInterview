@@ -28,4 +28,9 @@
   * 常见的集合的原理
    * ArrayList/Vector 的底层分析
    * Linckedlist 原理分析和底层原理图解
+* 2018.8.17
+  * transient :可以防止被自动序列化。   java语言的关键字，变量修饰符，如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。换句话来说就是，用transient关键字标记的成员变量不参与序列化过程。   
+  * 位异或运算（^）运算规则是：两个数转为二进制，然后从高位开始比较，如果相同则为0，不相同则为1。
+  * HashMap HashSet(内部就是map的key) ConcurrentHashMap(线程安全) 的原理分析
+  * volatile 关键字的md文档：原子性，顺序性和可见性 
   

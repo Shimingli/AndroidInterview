@@ -8,10 +8,14 @@ import com.android.interview.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.RandomAccess;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SetPrincipleActivity extends AppCompatActivity {
 
@@ -21,19 +25,98 @@ public class SetPrincipleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_principle);
 
 
-        demoArrayList();
+       // demoArrayList();
         // 应该避免使用Vector ，它只存在支持遗留代码的类中（它能正常的工作的唯一原因是：因为为了向前兼容，它被适配成为了List）
         Vector<String> vector=new Vector<>();
 
         // TODO: 2018/8/16     LinkedList 插入，删除都是移动指针效率很高。查找需要进行遍历查询，效率较低。二分查找，如果查找的index的越接近size的一半的话，这样查找的效率很低
 
 
+        hashMapDemo();
+
+
+
+        concurrentHashMapDemo();
+
+        hashSetDemo();
+
+    }
+    /*
+    HashSet 的原理比较简单，几乎全部借助于 HashMap 来实现的。
+
+所以 HashMap 会出现的问题 HashSet 依然不能避免。
+     */
+    private void hashSetDemo() {
+        HashSet<String> set=new HashSet<>();
+        set.add("10");
+        set.add("10");
+        set.add("11");
+        set.add("12");
+        set.add("0");
+
+        System.out.println("set= "+set.toString());
+    }
+
+    /*
+     ConcurrentHashMap 实现原理
+    由于 HashMap 是一个线程不安全的容器，主要体现在容量大于总量*负载因子发生扩容时会出现环形链表从而导致死循环。
+    因此需要支持线程安全的并发容器 ConcurrentHashMap 。
+     */
+    private void concurrentHashMapDemo() {
+             //  1.8   采用了 CAS + synchronized 来保证并发安全性
+         //  1.7 版本的对比 1.8 版本的  ConcurrentHashMap()  那就是查询遍历链表效率太低。
+
+        // 1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（O(logn)）
+        AtomicInteger atomicInteger=new    AtomicInteger();
+        int i = atomicInteger.incrementAndGet();
+         i = atomicInteger.incrementAndGet();
+         i = atomicInteger.incrementAndGet();
+         i = atomicInteger.incrementAndGet();
+         i = atomicInteger.incrementAndGet();
+         i = atomicInteger.incrementAndGet();
+
+        System.out.println("i="+i);
 
 
 
 
     }
-   // 最佳的做法是将ArrayList作为默认的首选，当你需要而外的功能的时候，或者是当程序性能由于经常需要从表中间插入和删除而变差的时候，才会去选择LinkedList   来源于 THking in Java
+
+    private void hashMapDemo() {
+        HashMap<Integer,String> map=new HashMap<Integer,String>();
+        //在 1.6 1.7 hashmap的类的代码一共1500行左右，在1.8 一共有2000行左右
+         map.put(1,"1");
+         map.put(1,"2");
+         map.put(2,"1");
+         map.put(3,"1");
+
+        System.out.println("hashMap="+map.toString());
+//        for (HashMap<Integer,String> r = map, p ;;) {
+//             p.get(3);
+//        }
+           // cap 为默认的长度  a=a|b  a|=b的意思就是把a和b按位或然后赋值给a 按位或的意思就是先把a和b都换成2进制，然后用或操作
+          int cap=10;
+          int n = cap - 1;//9
+          n |= n >>> 1;//9的二进制=1001  >>>表示无符号的右移 100 =十进制 4     n=  1001 |= 100
+          System.out.println("n="+n); // n=13; 其实就是等于      n=  1001 |= 100 也就是n=1101 换成十进制等于13
+          n |= n >>> 2;
+          n |= n >>> 4;
+          n |= n >>> 8;
+          n |= n >>> 16;
+          int i= (n < 0) ? 1 : (n >= 1000000) ? 1000000 : n + 1;
+          System.out.println("设置hashmap的长度为10，那么他的新的扩容的临界值="+i);
+         // 设置hashmap的长度为10，那么他的新的扩容的临界值=16
+
+        HashMap<Integer,String> mapTwo=new HashMap<Integer,String>();
+         mapTwo.put(1,"shiming");
+        int size = mapTwo.size();
+        System.out.println("hashMap size ="+size);
+        // hashCode  在 object 中是一个本地的方法
+
+
+    }
+
+    // 最佳的做法是将ArrayList作为默认的首选，当你需要而外的功能的时候，或者是当程序性能由于经常需要从表中间插入和删除而变差的时候，才会去选择LinkedList   来源于 THking in Java
     private void demoArrayList() {
         //ArrayList 实现于 List、RandomAccess 接口。可以插入空数据，也支持随机访问。
 
