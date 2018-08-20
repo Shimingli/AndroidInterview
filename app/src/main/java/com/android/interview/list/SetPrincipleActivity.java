@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.LruCache;
 import android.util.SparseArray;
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
+import android.util.SparseLongArray;
 
 import com.android.interview.R;
 
@@ -53,7 +56,62 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
 
         sparseArrayDemo();
+
+
+        binarySearchDemo();
+
     }
+    /*
+     二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。
+     但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。
+     */
+    private void binarySearchDemo() {
+        System.out.println("binary Search");
+        // 线性的数组
+        int[] ints={1,2,3,4,5};
+        int i=binarySearch(ints,ints.length,87);
+        int i1=binarySearch(ints,ints.length,105);
+        int i2=binarySearch(ints,ints.length,211);
+        int i3=binarySearch(ints,ints.length,5);
+
+        System.out.println(" i="+i);
+        System.out.println(" i1="+i1);
+        System.out.println(" i2="+i2);
+        System.out.println(" i3="+i3);
+    }
+
+    /**
+     * 二分查找
+     * @param ints  需要被查找的数组
+     * @param length  数组的长度
+     * @param value  查找的值
+     */
+    private int binarySearch(int[] ints, int length, int value) {
+
+        int i = 0;
+        int h = length - 1;
+        while (i <= h) {
+            /**
+             * >>>与>>唯一的不同是它无论原来的最左边是什么数，统统都用0填充。
+             * —比如你的例子，byte是8位的，-1表示为byte型是11111111(补码表示法）
+             * b>>>4就是无符号右移4位，即00001111，这样结果就是15。
+             * 这里相当移动一位，除以二
+             */
+            //中间的角标
+            final int mid = (i + h) >>> 1;// 第一次 2 第二次 mid=3 第三次mid=4
+            final int midVal = ints[mid];// 第一次 3 第二次 midVal=4 第三次mid=5
+            if (midVal < value) {
+                i = mid + 1;// 第一次 3  第二次 i=4
+            } else if (value < midVal) {
+                h = mid - 1;
+            } else if (value == midVal) {
+                return mid; //第三次mid=5 返回了
+            }
+        }
+        // 这个取反 ，相当于 value +1 然后 取反  就可以了
+        return ~value;
+    }
+
     /*
     SparseArray是android里为<Interger,Object> 这样的Hashmap而专门写的类,目的是提高效率，其核心是折半查找函数（binarySearch）。
 
@@ -89,6 +147,32 @@ public class SetPrincipleActivity extends AppCompatActivity {
         key 是有序的排列的 ，然后  key的相同的话，会覆盖一个新的value值给他，
          */
         System.out.println(" sparseArray=" +sparseArray.toString());
+
+       int[] mKeys={10,5,14,5,46};
+       int[] newKeys=new int[5];
+        /*
+         * @param      src      源数组。
+         * @param      srcPos    表示源数组要复制的起始位置，
+         * @param      dest     目的地数组。
+         * @param      destPos  在目标数据中的起始位置。
+         * @param      length   要复制的数组元素的数目。
+         */
+        // todo  source of type android.util.SparseArray is not an array
+        // destPsot +length  不能超过 新的数组的长度
+        System.arraycopy(mKeys,0, newKeys, 2, 3);
+        for (Integer str : newKeys) {
+            System.out.print("newKeys="+str+"   ");
+        }
+    //    System.out.println(" newKeys= "+mKeys.toString());
+
+
+        //SparseBooleanArray
+
+        //SparseIntArray
+
+       // SparseLongArray
+
+
     }
 
     /**
