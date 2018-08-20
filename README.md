@@ -37,4 +37,5 @@
 * 2018.8.20 
    *  LinkedHashMap的原理分析，里面维护了一个Entry<K,V> ，然后LRUCache 底层使用的就是这个 linkedHashMap 
    * 分析了LinkedHashMap的底层原理，同时完成 使用的方法 
+   * LruCache的底层的原理  
   

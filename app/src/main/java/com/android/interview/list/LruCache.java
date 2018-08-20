@@ -86,6 +86,7 @@ public class LruCache<K, V> {
             throw new IllegalArgumentException("maxSize <= 0");
         }
         this.maxSize = maxSize;
+        // 初始化这里 就是  new的 true的  所以使用的顺序排序
         this.map = new LinkedHashMap<K, V>(0, 0.75f, true);
     }
 
@@ -113,12 +114,16 @@ public class LruCache<K, V> {
      * be created.
      */
     public final V get(K key) {
+        //key为空抛出异常
         if (key == null) {
             throw new NullPointerException("key == null");
         }
 
         V mapValue;
         synchronized (this) {
+            //获取对应的缓存对象
+            //get()方法会实现将访问的元素更新到队列头部的功能
+            // todo LinkedHashMap  里面已经实现了 如果 添加到头部去
             mapValue = map.get(key);
             if (mapValue != null) {
                 hitCount++;
@@ -166,25 +171,37 @@ public class LruCache<K, V> {
      *
      * @return the previous value mapped by {@code key}.
      */
+    /**
+     *  todo 重要的就是在添加过缓存对象后，调用 trimToSize()方法，来判断缓存是否已满，如果满了就要删除近期最少使用的算法
+     * @param key
+     * @param value
+     * @return
+     */
     public final V put(K key, V value) {
+        //不可为空，否则抛出异常
         if (key == null || value == null) {
             throw new NullPointerException("key == null || value == null");
         }
 
         V previous;
+        // 多线程 可以使用
         synchronized (this) {
+            //插入的缓存对象值加1
             putCount++;
+            //增加已有缓存的大小
             size += safeSizeOf(key, value);
+            //向map中加入缓存对象
             previous = map.put(key, value);
             if (previous != null) {
+                //如果已有缓存对象，则缓存大小恢复到之前
                 size -= safeSizeOf(key, previous);
             }
         }
-
+        //entryRemoved()是个空方法，可以自行实现
         if (previous != null) {
             entryRemoved(false, key, previous, value);
         }
-
+        //调整缓存大小(关键方法)
         trimToSize(maxSize);
         return previous;
     }
@@ -211,6 +228,7 @@ public class LruCache<K, V> {
                 // get the last item in the linked list.
                 // This is not efficient, the goal here is to minimize the changes
                 // compared to the platform version.
+                //迭代器获取第一个对象，即队尾的元素，近期最少访问的元素
                 Map.Entry<K, V> toEvict = null;
                 for (Map.Entry<K, V> entry : map.entrySet()) {
                     toEvict = entry;
@@ -223,11 +241,12 @@ public class LruCache<K, V> {
 
                 key = toEvict.getKey();
                 value = toEvict.getValue();
+                //删除该对象，并更新缓存大小
                 map.remove(key);
                 size -= safeSizeOf(key, value);
                 evictionCount++;
             }
-
+            // 空实现
             entryRemoved(true, key, value, null);
         }
     }
@@ -294,6 +313,7 @@ public class LruCache<K, V> {
     }
 
     private int safeSizeOf(K key, V value) {
+        //  每一个的需要缓存的大小
         int result = sizeOf(key, value);
         if (result < 0) {
             throw new IllegalStateException("Negative size: " + key + "=" + value);

@@ -1,5 +1,6 @@
 package com.android.interview.list;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.LruCache;
@@ -44,7 +45,78 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
         linkedHashMapDemo();
 
+
+
+        lrucacheDemo();
+
     }
+
+    /**
+     * Android中提供了一种基本的缓存策略，即LRU（least recently used）。
+     * 基于该种策略，当存储空间用尽时，缓存会清除最近最少使用的对象。
+     */
+    private void lrucacheDemo() {
+
+        LruCache<Integer,String> lruCache=new LruCache<>(5);
+        lruCache.put(1,"1");
+        lruCache.put(2,"2");
+        lruCache.put(3,"3");
+        lruCache.put(4,"4");
+        lruCache.put(5,"5");
+
+        lruCache.get(1);
+        lruCache.get(2);
+        lruCache.get(3);
+        lruCache.get(4);
+        Map<Integer, String> snapshot = lruCache.snapshot();
+
+
+        //lruCache={5=5, 1=1, 2=2, 3=3, 4=4}    5最少使用到
+        System.out.println("lruCache="+snapshot.toString());
+        //当多添加一个的话，那么5就会被删除，加入6上去
+        lruCache.put(6,"6");
+        // new  lruCache={1=1, 2=2, 3=3, 4=4, 6=6}
+        Map<Integer, String> snapshot1 = lruCache.snapshot();
+        System.out.println(" new  lruCache="+snapshot1.toString());
+
+    }
+
+    public class ImageCache {
+        //定义LruCache，指定其key和保存数据的类型
+        private LruCache<String, Bitmap> mImageCache;
+
+        ImageCache() {
+            //获取当前进程可以使用的内存大小，单位换算为KB
+            final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
+
+            //取总内存的1/4作为缓存
+            final int cacheSize = maxMemory / 4;
+
+            //初始化LruCache
+            mImageCache = new LruCache<String, Bitmap>(cacheSize) {
+
+                //定义每一个存储对象的大小
+                @Override
+                protected int sizeOf(String key, Bitmap bitmap) {
+                    return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+                }
+            };
+        }
+
+        //获取数据
+        public Bitmap getBitmap(String url) {
+            return mImageCache.get(url);
+        }
+
+        //存储数据
+        public void putBitmap(String url, Bitmap bitmap) {
+            mImageCache.put(url, bitmap);
+        }
+    }
+
+
+
+
 
     private void linkedHashMapDemo() {
         /**
