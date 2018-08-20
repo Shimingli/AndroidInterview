@@ -34,3 +34,7 @@
   * HashMap HashSet(内部就是map的key) ConcurrentHashMap(线程安全) 的原理分析
   * volatile 关键字的md文档：原子性，顺序性和可见性 
   
+* 2018.8.20 
+   *  LinkedHashMap的原理分析，里面维护了一个Entry<K,V> ，然后LRUCache 底层使用的就是这个 linkedHashMap 
+   * 分析了LinkedHashMap的底层原理，同时完成 使用的方法 
+  

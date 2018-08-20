@@ -570,6 +570,7 @@
 //            n = (tab = resize()).length;
 //        /*如果table的在（n-1）&hash的值是空，就新建一个节点插入在该位置*/
 //        if ((p = tab[i = (n - 1) & hash]) == null)
+//            // todo  LinkedHashMap 重新重写了这个方法，然后使用了 LinkedHashMap.Entry 里面多了两个结点    Entry<K,V> before, after;
 //            tab[i] = newNode(hash, key, value, null);
 //        ///*表示有冲突,开始处理冲突*/
 //        else {
@@ -605,6 +606,7 @@
 //                V oldValue = e.value;
 //                if (!onlyIfAbsent || oldValue == null)
 //                    e.value = value;
+//                // todo  LinkedHashMap  对其重写
 //                afterNodeAccess(e);
 //                return oldValue;
 //            }
@@ -613,6 +615,7 @@
 //        /*如果当前大小大于门限，门限原本是初始容量*0.75*/
 //        if (++size > threshold)
 //            resize();
+//        // todo  LinkedHashMap 对其重写
 //        afterNodeInsertion(evict);
 //        return null;
 //    }

@@ -2,6 +2,7 @@ package com.android.interview.list;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.LruCache;
 
 import com.android.interview.R;
 
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.RandomAccess;
@@ -32,18 +34,68 @@ public class SetPrincipleActivity extends AppCompatActivity {
         // TODO: 2018/8/16     LinkedList 插入，删除都是移动指针效率很高。查找需要进行遍历查询，效率较低。二分查找，如果查找的index的越接近size的一半的话，这样查找的效率很低
 
 
-        hashMapDemo();
+      //  hashMapDemo();
 
 
 
-        concurrentHashMapDemo();
+      //  concurrentHashMapDemo();
 
-        hashSetDemo();
+       // hashSetDemo();
+
+        linkedHashMapDemo();
 
     }
+
+    private void linkedHashMapDemo() {
+        /**
+        众所周知 HashMap 是一个无序的 Map，因为每次根据 key 的 hashcode 映射到 Entry 数组上，所以遍历出来的顺序并不是写入的顺序。
+        因此 JDK 推出一个基于 HashMap 但具有顺序的 LinkedHashMap 来解决有排序需求的场景。
+        它的底层是继承于 HashMap 实现的，由一个双向链表所构成。
+        LinkedHashMap 的排序方式有两种：
+         ---> 根据写入顺序排序。
+         ---> 根据访问顺序排序。
+        其中根据访问顺序排序时，每次 get 都会将访问的值移动到链表末尾，这样重复操作就能得到一个按照访问顺序排序的链表。
+         */
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map.put("1",1) ;
+        map.put("2",2) ;
+        map.put("3",3) ;
+        map.put("4",4) ;
+        map.put("5",5) ;
+        map.put("6",6) ;
+        map.put("7",7) ;
+        map.put("8",8) ;
+        map.put("9",9) ;
+        map.put("10",10) ;
+        System.out.println("map="+map.toString());  //map{1=1, 2=2, 3=3, 4=4, 5=5}
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println("map   Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        }
+
+        //LruCache  底层使用的就是 LinekHashMap  最近最少使用的    图片的加载框架
+      //访问顺序排序的链表。
+      // LRU” （Least Recently Used）最近最少使用的，看了源码才知道核心是LRUCache类，这个类的核心其实是 LinkedHashMap类
+        LinkedHashMap<String, Integer> map1 = new LinkedHashMap<String, Integer>(10, (float) 0.75,true);
+        map1.put("1",1) ;
+        map1.put("2",2) ;
+        map1.put("3",3) ;
+        map1.put("4",4) ;
+        map1.put("5",5) ;
+        map1.put("6",6) ;
+        map1.put("7",7) ;
+        map1.put("8",8) ;
+        map1.put("9",9) ;
+        map1.put("10",10) ;
+        map1.get("6");
+        System.out.println("map1=="+map1);
+        for (Map.Entry<String, Integer> entry : map1.entrySet()) {
+            System.out.println("__________________--");
+            System.out.println("map1   Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        }
+    }
+
     /*
     HashSet 的原理比较简单，几乎全部借助于 HashMap 来实现的。
-
 所以 HashMap 会出现的问题 HashSet 依然不能避免。
      */
     private void hashSetDemo() {
@@ -81,7 +133,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
 
     }
-
+    //  HashMap 底层是基于 数组 + 链表 组成的
     private void hashMapDemo() {
         HashMap<Integer,String> map=new HashMap<Integer,String>();
         //在 1.6 1.7 hashmap的类的代码一共1500行左右，在1.8 一共有2000行左右
