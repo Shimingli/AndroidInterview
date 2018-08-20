@@ -38,4 +38,6 @@
    *  LinkedHashMap的原理分析，里面维护了一个Entry<K,V> ，然后LRUCache 底层使用的就是这个 linkedHashMap 
    * 分析了LinkedHashMap的底层原理，同时完成 使用的方法 
    * LruCache的底层的原理  
-  
+   * SparseArray与HashMap无论是怎样进行插入,数据量相同时,前者都要比后者要省下一部分内存,但是效率呢？----在倒序插入的时候,SparseArray的插入时间和HashMap的插入时间远远不是一个数量级.由于SparseArray每次在插入的时候都要使用二分查找判断是否有相同的值被插入.因此这种倒序的情况是SparseArray效率最差的时候.
+   * SpareArray 底层就是两个数组 一个 int[] 和 一个 object[] ，对应着key值和value值，没有其他内存的开销 ，但是 HashMap 的内存模型里面有数组 链表 和红黑树 ，所以相对应起来，开销很大  
+   * 倒序插入key值的话，会不断进行二分查找。尽量使用append 方法，不要使用 put方法。插入的值最好是有序的 ，比如key值为  1 2 3 4 5 6 这样的顺序，最好

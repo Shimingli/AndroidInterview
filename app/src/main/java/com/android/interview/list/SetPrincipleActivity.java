@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.LruCache;
+import android.util.SparseArray;
 
 import com.android.interview.R;
 
@@ -49,6 +50,45 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
         lrucacheDemo();
 
+
+
+        sparseArrayDemo();
+    }
+    /*
+    SparseArray是android里为<Interger,Object> 这样的Hashmap而专门写的类,目的是提高效率，其核心是折半查找函数（binarySearch）。
+
+     todo   SparseArray与HashMap无论是怎样进行插入,数据量相同时,前者都要比后者要省下一部分内存,但是效率呢？----在倒序插入的时候,SparseArray的插入时间和HashMap的插入时间远远不是一个数量级.由于SparseArray每次在插入的时候都要使用二分查找判断是否有相同的值被插入.因此这种倒序的情况是SparseArray效率最差的时候.
+     */
+    private void sparseArrayDemo() {
+        SparseArray<String> sparseArray=new SparseArray<>();
+        sparseArray.append(2,"shiming2");
+        sparseArray.append(1,"shiming1");
+        sparseArray.append(3,"shiming3");
+        sparseArray.append(1,"shiming4");
+        sparseArray.append(7,"shiming4");
+        sparseArray.append(8,"shiming4");
+        sparseArray.append(810,"shiming4");
+        sparseArray.append(100,"shiming4");
+        sparseArray.append(4,"shiming4");
+        sparseArray.append(5,"shiming4");
+        sparseArray.append(6,"shiming4");
+        /*
+08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-11
+08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-12
+08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-13
+         */
+        //位非运算符（~）
+        int i = ~10;
+        System.out.println("~10="+i);
+        int i1 = ~11;
+        System.out.println("~10="+i1);
+        int i2 = ~12;
+        System.out.println("~10="+i2);
+        // todo  sparseArray={1=shiming4, 2=shiming2, 3=shiming3, 4=shiming4, 5=shiming4, 6=shiming4, 7=shiming4, 8=shiming4, 100=shiming4, 810=shiming4}
+        /*
+        key 是有序的排列的 ，然后  key的相同的话，会覆盖一个新的value值给他，
+         */
+        System.out.println(" sparseArray=" +sparseArray.toString());
     }
 
     /**
