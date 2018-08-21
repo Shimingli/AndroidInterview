@@ -49,3 +49,5 @@
 * 2018.8.21
    * 算法 ： algorithm  对算法的不熟悉，导致对这个单词也不熟悉，牛逼 
    * 左右递增和上下递增的二维数组，查找一个num，如何快速的查找，已解决
+   * 替换空格：通过对比发现，如果只使用一次的话，建议选择 string.replace()! 使用多次的话，建议选择replaceBlank 
+   *  使用 replaceBlank中的消耗的时间 time= 202604、idoWorkReplace 实现的方式总共耗时time= 1800000、 使用 StringBuffer中的消耗的时间 time= 455729、 使用 replaceSpaces中的消耗的时间 time= 1447917
