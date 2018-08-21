@@ -24,7 +24,8 @@
         <activity android:name=".layout_performance_comparison.LayoutPerformanceComparison" />
         <activity android:name=".listview_demo.ListViewDemoActivity" />
         <activity android:name=".invalidate_demo.InValidateDemoActivity" />
-        <activity android:name=".list.SetPrincipleActivity"></activity>
+        <activity android:name=".list.SetPrincipleActivity" />
+        <activity android:name=".algorithm.AlgorithmDemoActivity"></activity>
     </application>
 
 </manifest>

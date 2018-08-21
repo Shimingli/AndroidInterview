@@ -5,12 +5,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.textclassifier.TextClassifier;
-import android.widget.LinearLayout;
 
+import com.android.interview.algorithm.AlgorithmDemoActivity;
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
 import com.android.interview.handler.HandlerActivity;
 import com.android.interview.invalidate_demo.InValidateDemoActivity;
@@ -144,6 +142,22 @@ public class MainActivity extends AppCompatActivity {
 
 //        多线程，5个线程内部打印hello和word，hello在前，要求提供一种方法使得5个线程先全部打印出hello后再打印5个word。
         demo();
+
+        // algorithm  算法的原理
+         findViewById(R.id.btn_algorithm).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 startActivity(new Intent(MainActivity.this,AlgorithmDemoActivity.class));
+             }
+         });
+
+
+
+
+
+
+
+
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展
 
 
