@@ -92,10 +92,11 @@
 //{
 //    static final long serialVersionUID = -5024744406713321676L;
 //
+//
+//    //  map ：用于存放最终数据的。
 //    private transient HashMap<E,Object> map;
 //
 //    // Dummy value to associate with an Object in the backing Map
-//   //  map ：用于存放最终数据的。
 //    // PRESENT ：是所有写入 map 的 value 值。
 //    private static final Object PRESENT = new Object();
 //

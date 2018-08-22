@@ -247,7 +247,7 @@
 //    void reinitialize() {
 //        super.reinitialize();
 //        head = tail = null;
-//    }
+//}
 //    // todo  LinkedHashMap 重新重写了这个方法，然后使用了 LinkedHashMap.Entry 里面多了两个结点    Entry<K,V> before, after;
 //    Node<K,V> newNode(int hash, K key, V value, Node<K,V> e) {
 //        LinkedHashMap.Entry<K,V> p =

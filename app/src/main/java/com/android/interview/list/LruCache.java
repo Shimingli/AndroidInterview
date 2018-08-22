@@ -220,25 +220,15 @@
 //                            + ".sizeOf() is reporting inconsistent results!");
 //                }
 //
-//                if (size <= maxSize) {
-//                    break;
-//                }
-//
-//                // BEGIN LAYOUTLIB CHANGE
-//                // get the last item in the linked list.
-//                // This is not efficient, the goal here is to minimize the changes
-//                // compared to the platform version.
+//                if (size <= maxSize) { break; }
 //                //迭代器获取第一个对象，即队尾的元素，近期最少访问的元素
 //                Map.Entry<K, V> toEvict = null;
 //                for (Map.Entry<K, V> entry : map.entrySet()) {
 //                    toEvict = entry;
 //                }
-//                // END LAYOUTLIB CHANGE
-//
 //                if (toEvict == null) {
 //                    break;
 //                }
-//
 //                key = toEvict.getKey();
 //                value = toEvict.getValue();
 //                //删除该对象，并更新缓存大小

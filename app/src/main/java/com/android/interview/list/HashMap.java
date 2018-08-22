@@ -351,6 +351,7 @@
 //    /**
 //     * Returns a power of two size for the given target capacity.
 //     */
+//   // 返回给定目标容量的两个大小的容量。
 //    // todo 设置hashmap的长度为10，那么他的新的扩容的临界值=16
 //    static final int tableSizeFor(int cap) {
 //        int n = cap - 1;
@@ -392,7 +393,7 @@
 //            throw new IllegalArgumentException("Illegal load factor: " +
 //                    loadFactor);
 //        this.loadFactor = loadFactor;
-//        // 加入指定的容量为 10 那么新的扩容的临界值为 13
+//        // 加入指定的容量为 10 那么新的扩容的临界值为 16
 //        this.threshold = tableSizeFor(initialCapacity);
 //    }
 //
@@ -444,9 +445,10 @@
 //                if (t > threshold)
 //                    //也就会走到这里来
 //                    threshold = tableSizeFor(t);
-//            }
-//            else if (s > threshold)
+//            } else if (s > threshold) {
+//                // 扩容机制
 //                resize();
+//            }
 //            // copy的过程  遍历hashmap的话，这个应该是最高效的方式
 //            for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
 //                K key = e.getKey();
@@ -503,10 +505,10 @@
 //     * @param key the key
 //     * @return the node, or null if none
 //     */
+//    // 不断的去取结点，是红黑树就去找红黑树，是聊边就去找链表
 //    final Node<K,V> getNode(int hash, Object key) {
 //        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
-//        if ((tab = table) != null && (n = tab.length) > 0 &&
-//                (first = tab[(n - 1) & hash]) != null) {
+//        if ((tab = table) != null && (n = tab.length) > 0 && (first = tab[(n - 1) & hash]) != null) {
 //            if (first.hash == hash && // always check first node
 //                    ((k = first.key) == key || (key != null && key.equals(k))))
 //                return first;
@@ -553,7 +555,7 @@
 //
 //    /**
 //     * Implements Map.put and related methods
-//     *
+//     * 实现Map.put及其相关方法
 //     * @param hash hash for key
 //     * @param key the key
 //     * @param value the value to put
@@ -562,7 +564,6 @@
 //     * @return previous value, or null if none
 //     */
 //    // 在构造函数中，也调用了这个方法，唯一不同的地方就是 evict=fasle
-//
 //    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 //                   boolean evict) {
 //        Node<K,V>[] tab; Node<K,V> p; int n, i;
@@ -576,8 +577,7 @@
 //        else {
 //            Node<K,V> e; K k;
 //            /*检查第一个Node，p是不是要找的值*/
-//            if (p.hash == hash &&
-//                    ((k = p.key) == key || (key != null && key.equals(k))))
+//            if (p.hash == hash && ((k = p.key) == key || (key != null && key.equals(k))))
 //                e = p;
 //            else if (p instanceof TreeNode)
 //                e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
@@ -648,12 +648,10 @@
 //
 //                /*把新表的门限设置为旧表门限的两倍，newThr=oldThr*2*/
 //                newThr = oldThr << 1; // double threshold
-//        }
-//
-//        else if (oldThr > 0) // initial capacity was placed in threshold
+//        } else if (oldThr > 0) {// initial capacity was placed in threshold
 //            newCap = oldThr;
 //            /*如果旧表的长度的是0，就是说第一次初始化表*/
-//        else {               // zero initial threshold signifies using defaults
+//        } else {               // zero initial threshold signifies using defaults
 //            // todo 在new hashMap中的长度 ，然后调用了 put的方法的时候，就会发生一次扩容 ，长度为16
 //            newCap = DEFAULT_INITIAL_CAPACITY;
 //            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
@@ -720,7 +718,7 @@
 //     * Replaces all linked nodes in bin at index for given hash unless
 //     * table is too small, in which case resizes instead.
 //     */
-//    //如果冲突的节点数已经达到8个，看是否需要改变冲突节点的存储结构，　　　　　　
+//    //如果冲突的节点数已经达到7个，看是否需要改变冲突节点的存储结构，　　　　　　
 //    //treeifyBin首先判断当前hashMap的长度，如果不足64，只进行
 //    //resize，扩容table，如果达到64，那么将冲突的存储结构为红黑树
 //    final void treeifyBin(Node<K,V>[] tab, int hash) {

@@ -68,10 +68,9 @@
 //            mValues = EmptyArray.OBJECT;
 //        } else {
 //            /*
-//
 //     public static Object[] newUnpaddedObjectArray(int minLen) {
-//        return (Object[])VMRuntime.getRuntime().newUnpaddedArray(Object.class, minLen);
-//    }
+//      return (Object[])VMRuntime.getRuntime().newUnpaddedArray(Object.class, minLen);
+//   }
 //             */
 //            mValues = ArrayUtils.newUnpaddedObjectArray(initialCapacity);
 //            mKeys = new int[mValues.length];
@@ -216,7 +215,7 @@
 //            removeAt(i);
 //        }
 //    }
-//
+//    // 通过gc的方法，把DELETED值的 values 清空
 //    private void gc() {
 //        // Log.e("SparseArray", "gc start with " + mSize);
 //
@@ -261,7 +260,6 @@
 //            //这里就是key要插入的位置，上面二分查找方法提到过
 //            //位非运算符（~）
 //            i = ~i;
-//
 //            if (i < mSize && mValues[i] == DELETED) {
 //                mKeys[i] = key;
 //                mValues[i] = value;
@@ -448,6 +446,7 @@
 //        }
 //
 //        if (mGarbage && mSize >= mKeys.length) {
+//            // 通过gc的方法，把DELETED值的 values 清空
 //            gc();
 //        }
 //        // 可以直接都要这里来 ，是最节约能量

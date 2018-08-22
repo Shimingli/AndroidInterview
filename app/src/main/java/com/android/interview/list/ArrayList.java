@@ -212,7 +212,7 @@
 //    }
 //
 //    private void ensureCapacityInternal(int minCapacity) {
-//        // 加了一个元素的话，就不等了
+//        // 如果 是直接new ArrayList的话，那么扩容的最小的值为10
 //        if (elementData == EMPTY_ELEMENTDATA) {
 //            minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
 //        }
@@ -245,9 +245,9 @@
 //    // 增加容量以确保它至少能容纳由最小容量参数指定的元素数量。  grow：翻译为成长
 //    private void grow(int minCapacity) {
 //        // overflow-conscious code
-//        int oldCapacity = elementData.length;
+//        int oldCapacity = elementData.length; //1
 //        //(oldCapacity >> 1)等于 oldCapacity%2 意思就是除以2，取整数
-//        int newCapacity = oldCapacity + (oldCapacity >> 1);
+//        int newCapacity = oldCapacity + (oldCapacity >> 1); //1
 //        if (newCapacity - minCapacity < 0)
 //            newCapacity = minCapacity;
 //        if (newCapacity - MAX_ARRAY_SIZE > 0)
@@ -759,18 +759,16 @@
 //     *             instance is emitted (int), followed by all of its elements
 //     *             (each an <tt>Object</tt>) in the proper order.
 //     */
-//     todo 对象中自定义了 writeObject 和 readObject 方法时，JVM 会调用这两个自定义方法来实现序列化与反序列化  ArrayList 只序列化了被使用的数据。
+//    // todo 对象中自定义了 writeObject 和 readObject 方法时，JVM 会调用这两个自定义方法来实现序列化与反序列化  ArrayList 只序列化了被使用的数据。
 //    private void writeObject(java.io.ObjectOutputStream s)
 //            throws java.io.IOException{
 //        // Write out element count, and any hidden stuff
 //        int expectedModCount = modCount;
 //        s.defaultWriteObject();
-//
 //        // Write out size as capacity for behavioural compatibility with clone()
 //        s.writeInt(size);
-//
 //        // Write out all elements in the proper order.
-          //  todo 只序列化了被使用的数据
+//         //   todo 只序列化了被使用的数据
 //        for (int i=0; i<size; i++) {
 //            s.writeObject(elementData[i]);
 //        }
@@ -779,13 +777,11 @@
 //            throw new ConcurrentModificationException();
 //        }
 //    }
-//
 //    /**
 //     * Reconstitute the <tt>ArrayList</tt> instance from a stream (that is,
 //     * deserialize it).
 //     */
-//    private void readObject(java.io.ObjectInputStream s)
-//            throws java.io.IOException, ClassNotFoundException {
+//    private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
 //        elementData = EMPTY_ELEMENTDATA;
 //
 //        // Read in size, and any hidden stuff

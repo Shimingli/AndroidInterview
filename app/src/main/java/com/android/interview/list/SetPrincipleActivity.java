@@ -1,6 +1,7 @@
 package com.android.interview.list;
 
 import android.graphics.Bitmap;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.LruCache;
@@ -11,12 +12,15 @@ import android.util.SparseLongArray;
 
 import com.android.interview.R;
 
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.RandomAccess;
@@ -32,18 +36,18 @@ public class SetPrincipleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_principle);
 
 
-       // demoArrayList();
+        demoArrayList();
         // 应该避免使用Vector ，它只存在支持遗留代码的类中（它能正常的工作的唯一原因是：因为为了向前兼容，它被适配成为了List）
         Vector<String> vector=new Vector<>();
 
         // TODO: 2018/8/16     LinkedList 插入，删除都是移动指针效率很高。查找需要进行遍历查询，效率较低。二分查找，如果查找的index的越接近size的一半的话，这样查找的效率很低
 
 
-      //  hashMapDemo();
+      hashMapDemo();
 
 
 
-      //  concurrentHashMapDemo();
+        concurrentHashMapDemo();
 
        // hashSetDemo();
 
@@ -135,7 +139,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
 08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-12
 08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-13
          */
-        //位非运算符（~）
+        //非运算符（~）
         int i = ~10;
         System.out.println("~10="+i);
         int i1 = ~11;
@@ -283,6 +287,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
         map1.put("9",9) ;
         map1.put("10",10) ;
         map1.get("6");
+        // {1=1, 2=2, 3=3, 4=4, 5=5, 7=7, 8=8, 9=9, 10=10, 6=6}
         System.out.println("map1=="+map1);
         for (Map.Entry<String, Integer> entry : map1.entrySet()) {
             System.out.println("__________________--");
@@ -342,15 +347,20 @@ public class SetPrincipleActivity extends AppCompatActivity {
 //        for (HashMap<Integer,String> r = map, p ;;) {
 //             p.get(3);
 //        }
+          // todo  无符号的右移（>>>）:按照二进制把数字右移指定数位，高位直接补零，低位移除！
            // cap 为默认的长度  a=a|b  a|=b的意思就是把a和b按位或然后赋值给a 按位或的意思就是先把a和b都换成2进制，然后用或操作
-          int cap=10;
+          int cap=6000;
           int n = cap - 1;//9
           n |= n >>> 1;//9的二进制=1001  >>>表示无符号的右移 100 =十进制 4     n=  1001 |= 100
           System.out.println("n="+n); // n=13; 其实就是等于      n=  1001 |= 100 也就是n=1101 换成十进制等于13
-          n |= n >>> 2;
-          n |= n >>> 4;
-          n |= n >>> 8;
-          n |= n >>> 16;
+          n |= n >>> 2; // 1101 移动两位 0011 |1101  等于1111
+         System.out.println("n="+n);// n=15  1111
+          n |= n >>> 4;// 1111 移动4为 0000 |1111 =1111
+        System.out.println("n="+n);
+          n |= n >>> 8;// 1111 移动8为 0000 |1111 =1111
+        System.out.println("n="+n); // n=15
+          n |= n >>> 16;// 1111 移动16为 0000 |1111 =1111
+        System.out.println("n="+n);// n=15
           int i= (n < 0) ? 1 : (n >= 1000000) ? 1000000 : n + 1;
           System.out.println("设置hashmap的长度为10，那么他的新的扩容的临界值="+i);
          // 设置hashmap的长度为10，那么他的新的扩容的临界值=16
@@ -362,18 +372,52 @@ public class SetPrincipleActivity extends AppCompatActivity {
         // hashCode  在 object 中是一个本地的方法
 
 
+
+        String[] newTab = new String[16];
+        //newTab 的长度=16
+        System.out.println("newTab 的长度="+newTab.length);
+
+        int newHash=hash("test");
+        // 1的hash值=1    test :hash值=3556516
+        System.out.println( "newHash 1的hash值="+newHash);
+        i = (16 - 1) & newHash;
+        // i值=1  test值=4
+        System.out.println("newHash的 i值="+i);
+        // todo  位与运算符（&） 两个数都转为二进制，然后从高位开始比较，如果两个数都为1则为1，否则为0。
+
+        String[] newS=setTest();
+        newS[0]="16";
+        // newS =[Ljava.lang.String;@1e0b9a
+        System.out.println("newS ="+newS);
+        //newS =[Ljava.lang.String;@1e0b9a
+        System.out.println("test ="+test);
+        System.out.println("test="+test.length);
+        System.out.println("test="+test[0]);
+
+    }
+    String[] test;
+    public String[]  setTest(){
+        String[] newS=new String[10];
+        test=newS;
+        return newS;
     }
 
+     int hash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    }
     // 最佳的做法是将ArrayList作为默认的首选，当你需要而外的功能的时候，或者是当程序性能由于经常需要从表中间插入和删除而变差的时候，才会去选择LinkedList   来源于 THking in Java
     private void demoArrayList() {
         //ArrayList 实现于 List、RandomAccess 接口。可以插入空数据，也支持随机访问。
-
+         Object[] EMPTY_ELEMENTDATA = {};
+        System.out.println("length= "+EMPTY_ELEMENTDATA.length);
 
         // 2的二进制是10，>>代表右移，10右移1位是二进制的1，<<代表左移，10左移1位是二进制的100，也就是十进制的4。
-        System.out.println("2>>1==="+(2>>1));
-        System.out.println("100>>1=="+(100>>1));
-        System.out.println("88>>1=="+(88>>1));
-        System.out.println("45>>1=="+(45>>1));
+        System.out.println("2>>1==="+(2>>1)); //2>>1===1
+        System.out.println("1>>1==="+(1>>1)); //1>>1===0
+        System.out.println("100>>1=="+(100>>1)); //100>>1==50
+        System.out.println("88>>1=="+(88>>1)); //88>>1==44
+        System.out.println("45>>1=="+(45>>1));//45>>1==22
 
         //证明list的线程不安全
         final ArrayList<String> lists=new ArrayList<>();
@@ -401,6 +445,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
         t2.start();
         try {
             Thread.sleep(1000);
+            // 即使睡完觉了，但是也有可能长度不对
             for(int l=0;l<lists.size();l++){
                 // todo   两个线程不断的插入的话，就会导致插入的是null     我是i=34   我是i=10   我是i=35   我是i=11   null   null   我是i=12   我是i=38   我是i=13   我是i=39
                 System.out.print(lists.get(l)+"   ");

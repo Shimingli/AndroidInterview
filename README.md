@@ -1,13 +1,14 @@
 # AndroidInterview
 安卓面试的题总结
 
-* 以前完成的资料和博客
+* 完成的资料和博客
    * （Android源码分析(View的绘制流程)） https://www.jianshu.com/p/b63c6afa1844 
    * （Android源码分析(ViewStub源码解析)）https://www.jianshu.com/p/63a066e7a5a9
    * （Android源码分析（LayoutInflater.from(this).inflate(resId,null);源码解析））https://www.jianshu.com/p/38c6a9842efc
    * （Android源码分析（Activity.setContentView源码解析））https://www.jianshu.com/p/d9d919608842
    * （Android源码分析（Handler机制））https://www.jianshu.com/p/a2c53e96cae6
    * （Android源码分析（事件传递））https://www.jianshu.com/p/f7e3a14daf51
+   *  （常用集合的原理分析）https://www.jianshu.com/p/a5f638bafd3b
    
    
    
@@ -51,3 +52,7 @@
    * 左右递增和上下递增的二维数组，查找一个num，如何快速的查找，已解决
    * 替换空格：通过对比发现，如果只使用一次的话，建议选择 string.replace()! 使用多次的话，建议选择replaceBlank 
    *  使用 replaceBlank中的消耗的时间 time= 202604、idoWorkReplace 实现的方式总共耗时time= 1800000、 使用 StringBuffer中的消耗的时间 time= 455729、 使用 replaceSpaces中的消耗的时间 time= 1447917
+   
+* 2018.8.22
+   * 位与运算符（&） 两个数都转为二进制，然后从高位开始比较，如果两个数都为1则为1，否则为0。   
+   * 完成博客 https://www.jianshu.com/p/a5f638bafd3b

@@ -477,7 +477,9 @@
 //     * @return the element at the specified position in this list
 //     * @throws IndexOutOfBoundsException {@inheritDoc}
 //     */
+//    // 关于 get的方法。
 //    public E get(int index) {
+//        // 常看数组角标是否越界
 //        checkElementIndex(index);
 //        return node(index).item;
 //    }
@@ -571,7 +573,7 @@
 //    // TODO: 2018/8/16  效率是非常低的，特别是当 index 越接近 size 的中间值
 //    Node<E> node(int index) {
 //        //二分查找来看 index 离 size 中间距离来判断是从头结点正序查还是从尾节点倒序查
-//        // assert isElementIndex(index);
+//       // assert isElementIndex(index);
 //         //通过下标获取某个node 的时候，（增、查 ），会根据index处于前半段还是后半段 进行一个折半，以提升查询效率
 //        if (index < (size >> 1)) {
 //            Node<E> x = first;
@@ -1054,8 +1056,8 @@
 //     *
 //     * @return an array containing all of the elements in this list
 //     *         in proper sequence
-//     */ 
-// TODO: 2018/8/16  //new 一个新数组 然后遍历链表，将每个元素存在数组里，返回
+//     */
+//// TODO: 2018/8/16  //new 一个新数组 然后遍历链表，将每个元素存在数组里，返回
 //    public Object[] toArray() {
 //        Object[] result = new Object[size];
 //        int i = 0;
