@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.android.interview.R;
+import com.android.interview.algorithm.tree.BinaryTreeDemo;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,9 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
 
         //输入个链表的头结点，从尾到头反过来打印出每个结点的值。
         ListNodeDemo.demo();
+
+        // 二叉树
+        BinaryTreeDemo.binaryTree();
 
     }
    /*
