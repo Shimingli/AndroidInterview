@@ -14,6 +14,7 @@ public class BinaryTreeDemo {
   // 另外一种数据结构——链表，链表的插入和删除很快，我们只需要改变一些引用值就行了，但是查找数据却很慢了，因为不管我们查找什么数据，都需要从链表的第一个数据项开始，遍历到找到所需数据项为止，这个查找也是平均需要比较N/2次。
    public static void binaryTree(){
        BinaryTree bt = new BinaryTree();
+       // 第一个插入的结点是 根节点
        bt.insert(50);
        bt.insert(20);
        bt.insert(80);
@@ -28,6 +29,8 @@ public class BinaryTreeDemo {
 //       bt.delete(30);//删除有一个子节点的节点
 //       bt.delete(80);//删除有两个子节点的节点
 
+
+       //查找到根节点
        Node node = bt.find(50);
        // 中序遍历
        System.out.println("中序遍历的开始");

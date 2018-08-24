@@ -11,7 +11,9 @@ public class BinaryTree implements Tree {
 
     //查找节点
     public Node find(int key) {
+        // 以根节点开始
         Node current = root;
+        // 知道找到了当前的 current的等于 null
         while (current != null) {
             if (current.data > key) {//当前值比查找值大，搜索左子树
                 current = current.leftChild;
@@ -53,7 +55,7 @@ public class BinaryTree implements Tree {
         return false;
     }
 
-    //中序遍历
+    //中序遍历   左子树 ---》根节点----》 右子树
     public void infixOrder(Node current) {
         if (current != null) {
             infixOrder(current.leftChild);
