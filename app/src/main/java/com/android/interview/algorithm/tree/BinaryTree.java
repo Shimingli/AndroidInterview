@@ -35,7 +35,7 @@ public class BinaryTree implements Tree {
             Node parentNode = null;
             while (current != null) {
                 parentNode = current;
-                if (current.data > data) {//当前值比插入值大，搜索左子节点
+                if (current.data > newNode.data) {//当前值比插入值大，搜索左子节点
                     current = current.leftChild;
                     if (current == null) {//左子节点为空，直接将新值插入到该节点
                         parentNode.leftChild = newNode;

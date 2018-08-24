@@ -12,8 +12,6 @@ public class BinaryTreeDemo {
      */
     // 对于有序数组，查找很快，并介绍可以通过二分法查找，但是想要在有序数组中插入一个数据项，就必须先找到插入数据项的位置，然后将所有插入位置后面的数据项全部向后移动一位，来给新数据腾出空间，平均来讲要移动N/2次，这是很费时的。同理，删除数据也是
   // 另外一种数据结构——链表，链表的插入和删除很快，我们只需要改变一些引用值就行了，但是查找数据却很慢了，因为不管我们查找什么数据，都需要从链表的第一个数据项开始，遍历到找到所需数据项为止，这个查找也是平均需要比较N/2次。
-
-
    public static void binaryTree(){
        BinaryTree bt = new BinaryTree();
        bt.insert(50);
@@ -34,20 +32,28 @@ public class BinaryTreeDemo {
        // 中序遍历
        System.out.println("中序遍历的开始");
        bt.infixOrder(node);
+       //10 20 25 30 50 60 80 85 90 100
        System.out.println();
        System.out.println("中序遍历的结束");
 
        System.out.println("前序遍历的开始");
        bt.preOrder(node);
+       //50 10 20 25 30 60 80 85 90 100
        System.out.println();
        System.out.println("前序遍历的结束");
 
+       System.out.println("后序遍历的开始");
+       bt.postOrder(node);
+       //10 20 25 30 60 80 85 90 100 50
+       System.out.println();
+       System.out.println("后序遍历的结束");
 
 
-       System.out.println(bt.findMax().data);
-       System.out.println(bt.findMin().data);
-       System.out.println(bt.find(100));
-       System.out.println(bt.find(200));
+
+       System.out.println("找到最大的结点"+bt.findMax().data);
+       System.out.println("找到最小的结点"+bt.findMin().data);
+       System.out.println("找到结点为100的Node ："+bt.find(100));
+       System.out.println("找到结点为200的Node"+bt.find(200));
    }
 
 
