@@ -1,16 +1,11 @@
 package com.android.interview.algorithm;
 
-import android.appwidget.AppWidgetHost;
-import android.nfc.Tag;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.android.interview.R;
 import com.android.interview.algorithm.tree.BinaryTreeDemo;
-
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static com.android.interview.algorithm.MYDemoNum.str;
 
