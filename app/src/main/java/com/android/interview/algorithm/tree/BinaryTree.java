@@ -90,7 +90,14 @@ public class BinaryTree implements Tree {
         }
     }
 
+    /**
+     * 1、根节点50，查找左节点20，在继续查找20的左节点10,10没有左右节点，打印10,然后查找到20的右节点30,30继续查找到25，第一次输出为 10 20 25 30
+     * 3、最终输出
+     * 10 20 25 30 60 80 85 90 100 50
+     * @param current
+     */
     //后序遍历
+    //在二叉树中，先左后右再根，即首先遍历左子树，然后遍历右子树，最后访问根结点。
     public void postOrder(Node current) {
         if (current != null) {
             infixOrder(current.leftChild);
