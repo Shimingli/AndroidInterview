@@ -39,6 +39,11 @@ public class BinaryTreeDemo {
        System.out.println();
        System.out.println("中序遍历的结束");
 
+
+
+
+
+
        System.out.println("前序遍历的开始");
        bt.preOrder(node);
        //50 10 20 25 30 60 80 85 90 100
