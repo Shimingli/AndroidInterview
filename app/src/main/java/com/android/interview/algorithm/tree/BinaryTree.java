@@ -82,6 +82,7 @@ public class BinaryTree implements Tree {
      */
     //前序遍历
     // 前序遍历首先访问根结点然后遍历左子树，最后遍历右子树。
+    // 根节点>>左子树>>右子树
     public void preOrder(Node current) {
         if (current != null) {
             System.out.print(current.data + " ");

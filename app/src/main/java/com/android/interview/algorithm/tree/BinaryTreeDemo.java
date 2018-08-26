@@ -1,5 +1,7 @@
 package com.android.interview.algorithm.tree;
 
+import java.lang.reflect.Constructor;
+
 /**
  * author： Created by shiming on 2018/8/23 16:15
  * mailbox：lamshiming@sina.com
@@ -27,7 +29,7 @@ public class BinaryTreeDemo {
        bt.insert(100);
 //       bt.delete(10);//删除没有子节点的节点
 //       bt.delete(30);//删除有一个子节点的节点
-//       bt.delete(80);//删除有两个子节点的节点
+      // bt.delete(80);//删除有两个子节点的节点
 
 
        //查找到根节点
@@ -58,7 +60,37 @@ public class BinaryTreeDemo {
        System.out.println("找到最小的结点"+bt.findMin().data);
        System.out.println("找到结点为100的Node ："+bt.find(100));
        System.out.println("找到结点为200的Node"+bt.find(200));
+
+
+
+
+      // 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+       // 例如：前序遍历序列｛ 50 10 20 25 30 60 80 85 90 100｝和中序遍历序列｛10 20 25 30 50 60 80 85 90 100}，
+       // 重建二叉树并输出它的头结点。
+       // TODO   根节点-->>左子树-->>右子树
+       System.out.println("前序遍历的结果为  {50 10 20 25 30 60 80 85 90 100｝");
+       //  TODO  左子树 ---》根节点----》 右子树
+       System.out.println("中序遍历序列｛10 20 25 30 50 60 80 85 90 100}");
+       int[] preorderTraversal={50,10,20,25,30,60,80,85,90,100};
+       int[] inorderTraversal={10,20,25,30,50,60,80,85,90,100};
+
+       demo(preorderTraversal,inorderTraversal);
    }
+
+    private static Node demo(int[] preorderTraversal, int[] inorderTraversal) {
+       //两个数组的长度肯定是一样的，同时不为0，也不为null
+       if (preorderTraversal==null||inorderTraversal==null||preorderTraversal.length!=inorderTraversal.length||preorderTraversal.length<1){
+           return null;
+       }
+       return construct(preorderTraversal,inorderTraversal);
+
+    }
+
+    private static Node construct(int[] preorderTraversal, int[] inorderTraversal) {
+
+
+       return null;
+    }
 
 
 }
