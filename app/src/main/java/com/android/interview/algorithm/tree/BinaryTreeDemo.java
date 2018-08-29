@@ -1,8 +1,5 @@
 package com.android.interview.algorithm.tree;
 
-import javax.xml.transform.Source;
-import java.lang.reflect.Constructor;
-import java.util.Objects;
 
 /**
  * author： Created by shiming on 2018/8/23 16:15
@@ -36,6 +33,7 @@ public class BinaryTreeDemo {
 
        //查找到根节点
        Node node = bt.find(50);
+       System.out.println("node 旧的"+node.leftChild.data);
        // 中序遍历
        System.out.println("中序遍历的开始");
        bt.infixOrder(node);
@@ -81,10 +79,12 @@ public class BinaryTreeDemo {
 
       // Node demo = demo(preorderTraversal, inorderTraversal);
        System.out.println("start dddddddd");
-       Node construct = construct(preorderTraversal, 0, preorderTraversal.length - 1, inorderTraversal, 0, inorderTraversal.length - 1);
-       System.out.println("开始了"+construct.data);
+//       Node construct = construct(preorderTraversal, 0, preorderTraversal.length - 1, inorderTraversal, 0, inorderTraversal.length - 1);
+       Node construct=  reConstructBinaryTree(preorderTraversal,inorderTraversal);
+      System.out.println("开始了  "+construct.leftChild.data);
+      System.out.println("开始了 construct.data== "+construct.data);
        System.out.println("新的中序遍历的开始");
-       bt.infixOrder(construct);
+       bt.infixOrderDemo("根",construct);
        //10 20 25 30 50 60 80 85 90 100
        System.out.println();
        System.out.println("新的中序遍历的结束");
@@ -95,7 +95,77 @@ public class BinaryTreeDemo {
        //while (construct.rightChild!=null){
        //    System.out.print(construct.rightChild.data+" ");
        //}
+
+       boolean b = sameTree2(node, construct);
+       System.out.println("两个的二叉树是否一样啊 "+b);
+       boolean b1= sameTree2(node, node);
+       System.out.println("两个的二叉树是否一样啊 "+b1);
+       boolean b2= sameTree2(construct, construct);
+       System.out.println("两个的二叉树是否一样啊 "+b2);
+
+       System.out.println("新新----的中序遍历的开始----old");
+       bt.infixOrderDemo("根",node);
+       //10 20 25 30 50 60 80 85 90 100
+       System.out.println();
+       System.out.println("新新----的中序遍历的结束----old");
+       Node node1 = BuildTree.reConstructBinaryTree(preorderTraversal, inorderTraversal);
+       System.out.println("新新----的中序遍历的开始");
+       bt.infixOrderDemo("根",node1);
+       //10 20 25 30 50 60 80 85 90 100
+       System.out.println();
+       System.out.println("新新----的中序遍历的结束");
+
+
+
+       Node node2 =  BuildTree.reConstructBinaryTreeNew(preorderTraversal,inorderTraversal);
+       System.out.println("新新----的中序遍历的开始------------");
+       bt.infixOrderDemo("根",node2);
+       //10 20 25 30 50 60 80 85 90 100
+       System.out.println();
+       System.out.println("新新----的中序遍历的结束------------");
+
    }
+
+        public static boolean sameTree2(Node root1, Node root2){
+               //树的结构不一样
+           if((root1 == null && root2 != null) || (root1 != null && root2 == null)) {
+               return false;
+           }else {
+
+           }
+              //两棵树最终递归到终点时
+          if(root1 == null && root2 == null)
+              return true;
+
+           if(root1.data!=(root2.data) )
+                       return false;
+           else
+           return sameTree2(root1.leftChild, root2.leftChild) && sameTree2(root1.rightChild, root2.rightChild);
+   }
+    public static Node reConstructBinaryTree(int [] pre,int [] in) {
+        Node root=reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
+        return root;
+    }
+    //前序遍历{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}
+    private static Node reConstructBinaryTree(int [] pre,int startPre,int endPre,int [] in,int startIn,int endIn) {
+        //如果起始下标大于结束下标，无效输入，终止程序
+        if(startPre>endPre||startIn>endIn)
+            return null;
+        //前序遍历找到根节点
+        Node root=new Node(pre[startPre]);
+
+        for(int i=startIn;i<=endIn;i++)
+            if(in[i]==pre[startPre]){
+                //i-startIn是左子树节点的个数，前序遍历起始值加上这个就是终点值
+                //i-1就是中序遍历左子树的终点，起始值是从0一直从0开始
+                root.leftChild=reConstructBinaryTree(pre,startPre+1,startPre+i-startIn,in,startIn,i-1);
+                //前序右子树遍历的起始值:startPre+i-startIn+1 前序右子树遍历的终点值:endPre
+                //中序遍历右子树的起始值:i+1,endIn
+                root.rightChild=reConstructBinaryTree(pre,i-startIn+startPre+1,endPre,in,i+1,endIn);
+            }
+
+        return root;
+    }
 
     private static Node demo(int[] preorderTraversal, int[] inorderTraversal) {
        //两个数组的长度肯定是一样的，同时不为0，也不为null
@@ -212,11 +282,19 @@ public class BinaryTreeDemo {
         // 递归构建当前根结点的左子树，左子树的元素个数：index-is+1个
         // 左子树对应的前序遍历的位置在[ps+1, ps+index-is]
         // 左子树对应的中序遍历的位置在[is, index-1]
-        node.leftChild = construct(preorder, ps + 1, ps + index - is, inorder, is, index - 1);
+        Node construct = construct(preorder, ps + 1, ps + index - is, inorder, is, index - 1);
+        if (node!=null&&construct!=null) {
+            System.out.println("当前的结点的值为" + node.data + "+ leftChild Data" + construct.data);
+        }
+        node.leftChild =construct;
         // 递归构建当前根结点的右子树，右子树的元素个数：ie-index个
         // 右子树对应的前序遍历的位置在[ps+index-is+1, pe]
         // 右子树对应的中序遍历的位置在[index+1, ie]
-        node.rightChild = construct(preorder, ps + index - is + 1, pe, inorder, index + 1, ie);
+        Node construct1 = construct(preorder, ps + index - is + 1, pe, inorder, index + 1, ie);
+        if (node!=null&&construct1!=null) {
+            System.out.println("当前的结点的值为" + node.data + "rightChild data" + construct1.data);
+        }
+        node.rightChild = construct1;
         // 返回创建的根结点
         return node;
     }

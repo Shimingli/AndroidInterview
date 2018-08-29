@@ -1,5 +1,7 @@
 package com.android.interview.algorithm.tree;
 
+import android.text.TextUtils;
+
 /**
  * author： Created by shiming on 2018/8/23 16:35
  * mailbox：lamshiming@sina.com
@@ -73,7 +75,15 @@ public class BinaryTree implements Tree {
             infixOrder(current.rightChild);
         }
     }
+    public void infixOrderDemo(String str,Node current) {
+        if (current != null) {
 
+            System.out.println("这个值是什么啊 Node"+current.data+"  是那边啊 "+str);
+            infixOrderDemo("左",current.leftChild);
+          //  System.out.print(current.data + " ");
+            infixOrderDemo("右",current.rightChild);
+        }
+    }
     /**
      * 1、根节点50，查找左节点，找到20，然后找到10，输出10，然后找到25 ，然后30 。到这里输出的结果是 50 10 20 25 30
      * 2、查找根节点的50的右节点，然后找出80，找出80的左节点60.接着80，查找80的右节点95，输出85 然后 90 ，最后输出100
