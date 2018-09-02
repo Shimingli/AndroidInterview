@@ -257,7 +257,6 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
                 row++;
             }
         }
-
         return false;
     }
 

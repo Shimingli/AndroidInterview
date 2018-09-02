@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 
 class ListNodeDemo {
-
+    //输入个链表的头结点，从尾到头反过来打印出每个结点的值。
     public static void demo() {
         ListNode listNode = new ListNode(10);
         ListNode listNode1 = new ListNode(11);
@@ -24,7 +24,7 @@ class ListNodeDemo {
 
         ArrayList<Integer> integers = printListFromTailToHead(listNode);
         String string = integers.toString();
-        System.out.println("其实把链表转换了下，只收录其中的头和尾巴："+string);
+        //System.out.println("其实把链表转换了下，只收录其中的头和尾巴："+string);
 
         printListInversely(listNode);
     }

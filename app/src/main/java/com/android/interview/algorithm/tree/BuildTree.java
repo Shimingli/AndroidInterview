@@ -52,7 +52,7 @@ class BuildTree {
     public static Node reConstructBinaryTreeNew(int[] pre, int[] in) {
         if (pre.length == 0 || in.length == 0)
             return null;
-        Node node = new Node(pre[0]);
+         Node node = new Node(pre[0]);
         for (int i = 0; i < pre.length; i++) {
             if (pre[0] == in[i]) {
                 node.leftChild = reConstructBinaryTreeNew(Arrays.copyOfRange(pre, 1, i + 1), Arrays.copyOfRange(in, 0, i));
