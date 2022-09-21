@@ -17,6 +17,7 @@ import com.android.interview.layout_performance_comparison.LayoutPerformanceComp
 import com.android.interview.list.SetPrincipleActivity;
 import com.android.interview.listview_demo.ListViewDemoActivity;
 import com.android.interview.merge_and_viewstub_demo.MergePrincipleActivity;
+import com.android.interview.tenxunmusic.RunnableTest;
 import com.android.interview.view_source_code.ViewSourceCodeDemoActivity;
 
 import java.util.Arrays;
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RunnableTest.main();
+
+
         setContentView(R.layout.activity_main);
 //        android中的dp、px、dip相关概念
         findViewById(R.id.tv_dp_unit_demo).setOnClickListener(new View.OnClickListener() {
