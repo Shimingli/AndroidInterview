@@ -1,16 +1,13 @@
 package com.android.interview.merge_and_viewstub_demo;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.interview.R;
 
@@ -22,12 +19,13 @@ Principle 原理 merge 标签 and StubView
 public class MergePrincipleActivity extends AppCompatActivity {
     private ViewStub mViewStub;
     private Button mBtnViewStub;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merge_principle);
         // TODO: 2018/5/22 如果在include的标签下
-       View titleView = findViewById(R.id.my_title_parent_id) ;
+        View titleView = findViewById(R.id.my_title_parent_id);
         //View titleView = findViewById(R.id.my_title_ly) ;
         //LayoutInflater.from(mContext).inflate(resId, contentParent);
 
@@ -41,7 +39,7 @@ public class MergePrincipleActivity extends AppCompatActivity {
         // TODO: 2018/5/22 shiming titleTextViewnull
         // TODO: 2018/5/22 himing titleTextViewandroid.widget.RelativeLayout{5117337 V.E...... ......I. 0,0-0,0 #7f0b0078 app:id/my_title_parent_id} 
         System.out.println("shiming titleTextView" + titleView);
-        if (titleView!=null) {
+        if (titleView != null) {
             // 此时 titleView 为空，找不到。此时空指针
             TextView titleTextView = (TextView) titleView.findViewById(R.id.title_tv);
             titleTextView.setText("new Title titleTextView");
@@ -49,13 +47,13 @@ public class MergePrincipleActivity extends AppCompatActivity {
 
         // 使用include时设置的id,即R.id.my_title_ly
         // TODO: 2018/5/22      include标签的设置的id===  android:id="@+id/my_title_ly"
-       //View includeLayout = findViewById(R.id.my_title_ly) ;
-       View includeLayout = null ;
-         // 通过titleView找子控件
+        //View includeLayout = findViewById(R.id.my_title_ly) ;
+        View includeLayout = null;
+        // 通过titleView找子控件
         // TODO: 2018/5/22 shiming includeLayoutandroid.widget.RelativeLayout{78e0cf8 V.E...... ......I. 0,0-0,0 #7f0b0077 app:id/my_title_ly}
         // todo shiming includeLayoutnull 
-         System.out.println("shiming includeLayout" + includeLayout);
-        if (includeLayout!=null) {
+        System.out.println("shiming includeLayout" + includeLayout);
+        if (includeLayout != null) {
             TextView titleTextView1 = (TextView) includeLayout.findViewById(R.id.title_tv);
             if (titleTextView1 != null)
                 titleTextView1.setText("new Title--titleTextView1");
@@ -84,7 +82,7 @@ public class MergePrincipleActivity extends AppCompatActivity {
         mBtnViewStub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null!=mViewStub.getParent()){
+                if (null != mViewStub.getParent()) {
                     /*
                     android:inflatedId 的值是Java代码中调用ViewStub的 inflate()或者是serVisibility方法返回的Id，这个id就是被填充的View的Id
                      */
@@ -96,29 +94,29 @@ public class MergePrincipleActivity extends AppCompatActivity {
                     //inflate--->android.support.v7.widget.AppCompatImageView{de7e3a2 V.ED..... ......I. 0,0-0,0 #7f07003e app:id/find_view_stub}
 //                    System.out.println("shiming inflate--->"+inflate);
                     final View find_view_stub = findViewById(R.id.find_view_stub);
-                    System.out.println("shiming ----"+find_view_stub);
+                    System.out.println("shiming ----" + find_view_stub);
                     // TODO: 2018/5/23  根据输出的结果 为null  只要ViewStub 设置了    android:inflatedId="@+id/find_view_stub"  找出来就是null
                     View viewById = findViewById(R.id.view_stub_inner_frame_layout);
-                    System.out.println("shiming ViewStub 里面的根布局的id 为==="+viewById);
+                    System.out.println("shiming ViewStub 里面的根布局的id 为===" + viewById);
                     View iamgeivew11 = find_view_stub.findViewById(R.id.imageview);
                     //himing ---- iamgeivew11null
                     // TODO: 2018/5/4 為啥為null  原因是布局文件中根布局只有View，没有ViewGroup
-                    System.out.println("shiming ---- iamgeivew11"+iamgeivew11);
+                    System.out.println("shiming ---- iamgeivew11" + iamgeivew11);
 
-                }else{
-                    Toast.makeText(MergePrincipleActivity.this,"已经inflate了",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MergePrincipleActivity.this, "已经inflate了", Toast.LENGTH_LONG).show();
                     final View viewById = findViewById(R.id.find_view_stub);
                     View iamgeivew = findViewById(R.id.imageview);
                     //已经inflate了android.support.v7.widget.AppCompatImageView{4637833 V.ED..... ........ 348,294-732,678 #7f07003e app:id/find_view_stub}
-                    System.out.println("shiming l----已经inflate了"+viewById);//
-                    System.out.println("shiming l----已经inflate了iamgeivew"+iamgeivew);//已经inflate了iamgeivew==null
+                    System.out.println("shiming l----已经inflate了" + viewById);//
+                    System.out.println("shiming l----已经inflate了iamgeivew" + iamgeivew);//已经inflate了iamgeivew==null
                     View iamgeivew11 = viewById.findViewById(R.id.imageview);
                     //已经inflate了 iamgeivew11null
-                    System.out.println("shiming l----已经inflate了 iamgeivew11"+iamgeivew11);
+                    System.out.println("shiming l----已经inflate了 iamgeivew11" + iamgeivew11);
 
                     // TODO: 2018/5/23  根据输出的结果 为null  只要ViewStub 设置了    android:inflatedId="@+id/find_view_stub"  找出来就是null
                     View viewById1 = findViewById(R.id.view_stub_inner_frame_layout);
-                    System.out.println("shiming ViewStub 已经inflate了 ===里面的根布局的id 为==="+viewById1);
+                    System.out.println("shiming ViewStub 已经inflate了 ===里面的根布局的id 为===" + viewById1);
                 }
             }
         });
@@ -135,7 +133,6 @@ public class MergePrincipleActivity extends AppCompatActivity {
 //        }
 
     }
-
 
 
 }

@@ -1,10 +1,11 @@
 package com.android.interview.dp_px_dip_sp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.interview.R;
 /**

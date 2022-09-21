@@ -1,31 +1,23 @@
 package com.android.interview.list;
 
 import android.graphics.Bitmap;
-import android.nfc.Tag;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.LruCache;
 import android.util.SparseArray;
-import android.util.SparseBooleanArray;
-import android.util.SparseIntArray;
-import android.util.SparseLongArray;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.interview.R;
 
-import org.w3c.dom.Node;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.RandomAccess;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SetPrincipleActivity extends AppCompatActivity {
@@ -38,25 +30,22 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
         demoArrayList();
         // 应该避免使用Vector ，它只存在支持遗留代码的类中（它能正常的工作的唯一原因是：因为为了向前兼容，它被适配成为了List）
-        Vector<String> vector=new Vector<>();
+        Vector<String> vector = new Vector<>();
 
         // TODO: 2018/8/16     LinkedList 插入，删除都是移动指针效率很高。查找需要进行遍历查询，效率较低。二分查找，如果查找的index的越接近size的一半的话，这样查找的效率很低
 
 
-      hashMapDemo();
-
+        hashMapDemo();
 
 
         concurrentHashMapDemo();
 
-       // hashSetDemo();
+        // hashSetDemo();
 
         linkedHashMapDemo();
 
 
-
         lrucacheDemo();
-
 
 
         sparseArrayDemo();
@@ -65,6 +54,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
         binarySearchDemo();
 
     }
+
     /*
      二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。
      但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。
@@ -72,22 +62,23 @@ public class SetPrincipleActivity extends AppCompatActivity {
     private void binarySearchDemo() {
         System.out.println("binary Search");
         // 线性的数组
-        int[] ints={1,2,3,4,5};
-        int i=binarySearch(ints,ints.length,87);
-        int i1=binarySearch(ints,ints.length,105);
-        int i2=binarySearch(ints,ints.length,211);
-        int i3=binarySearch(ints,ints.length,5);
+        int[] ints = {1, 2, 3, 4, 5};
+        int i = binarySearch(ints, ints.length, 87);
+        int i1 = binarySearch(ints, ints.length, 105);
+        int i2 = binarySearch(ints, ints.length, 211);
+        int i3 = binarySearch(ints, ints.length, 5);
 
-        System.out.println(" i="+i);
-        System.out.println(" i1="+i1);
-        System.out.println(" i2="+i2);
-        System.out.println(" i3="+i3);
+        System.out.println(" i=" + i);
+        System.out.println(" i1=" + i1);
+        System.out.println(" i2=" + i2);
+        System.out.println(" i3=" + i3);
     }
 
     /**
      * 二分查找
-     * @param ints  需要被查找的数组
-     * @param length  数组的长度
+     *
+     * @param ints   需要被查找的数组
+     * @param length 数组的长度
      * @param value  查找的值
      */
     private int binarySearch(int[] ints, int length, int value) {
@@ -122,18 +113,18 @@ public class SetPrincipleActivity extends AppCompatActivity {
      todo   SparseArray与HashMap无论是怎样进行插入,数据量相同时,前者都要比后者要省下一部分内存,但是效率呢？----在倒序插入的时候,SparseArray的插入时间和HashMap的插入时间远远不是一个数量级.由于SparseArray每次在插入的时候都要使用二分查找判断是否有相同的值被插入.因此这种倒序的情况是SparseArray效率最差的时候.
      */
     private void sparseArrayDemo() {
-        SparseArray<String> sparseArray=new SparseArray<>();
-        sparseArray.append(2,"shiming2");
-        sparseArray.append(1,"shiming1");
-        sparseArray.append(3,"shiming3");
-        sparseArray.append(1,"shiming4");
-        sparseArray.append(7,"shiming4");
-        sparseArray.append(8,"shiming4");
-        sparseArray.append(810,"shiming4");
-        sparseArray.append(100,"shiming4");
-        sparseArray.append(4,"shiming4");
-        sparseArray.append(5,"shiming4");
-        sparseArray.append(6,"shiming4");
+        SparseArray<String> sparseArray = new SparseArray<>();
+        sparseArray.append(2, "shiming2");
+        sparseArray.append(1, "shiming1");
+        sparseArray.append(3, "shiming3");
+        sparseArray.append(1, "shiming4");
+        sparseArray.append(7, "shiming4");
+        sparseArray.append(8, "shiming4");
+        sparseArray.append(810, "shiming4");
+        sparseArray.append(100, "shiming4");
+        sparseArray.append(4, "shiming4");
+        sparseArray.append(5, "shiming4");
+        sparseArray.append(6, "shiming4");
         /*
 08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-11
 08-20 15:59:40.209 11866-11866/com.android.interview I/System.out: ~10=-12
@@ -141,19 +132,19 @@ public class SetPrincipleActivity extends AppCompatActivity {
          */
         //非运算符（~）
         int i = ~10;
-        System.out.println("~10="+i);
+        System.out.println("~10=" + i);
         int i1 = ~11;
-        System.out.println("~10="+i1);
+        System.out.println("~10=" + i1);
         int i2 = ~12;
-        System.out.println("~10="+i2);
+        System.out.println("~10=" + i2);
         // todo  sparseArray={1=shiming4, 2=shiming2, 3=shiming3, 4=shiming4, 5=shiming4, 6=shiming4, 7=shiming4, 8=shiming4, 100=shiming4, 810=shiming4}
         /*
         key 是有序的排列的 ，然后  key的相同的话，会覆盖一个新的value值给他，
          */
-        System.out.println(" sparseArray=" +sparseArray.toString());
+        System.out.println(" sparseArray=" + sparseArray.toString());
 
-       int[] mKeys={10,5,14,5,46};
-       int[] newKeys=new int[5];
+        int[] mKeys = {10, 5, 14, 5, 46};
+        int[] newKeys = new int[5];
         /*
          * @param      src      源数组。
          * @param      srcPos    表示源数组要复制的起始位置，
@@ -163,18 +154,18 @@ public class SetPrincipleActivity extends AppCompatActivity {
          */
         // todo  source of type android.util.SparseArray is not an array
         // destPsot +length  不能超过 新的数组的长度
-        System.arraycopy(mKeys,0, newKeys, 2, 3);
+        System.arraycopy(mKeys, 0, newKeys, 2, 3);
         for (Integer str : newKeys) {
-            System.out.print("newKeys="+str+"   ");
+            System.out.print("newKeys=" + str + "   ");
         }
-    //    System.out.println(" newKeys= "+mKeys.toString());
+        //    System.out.println(" newKeys= "+mKeys.toString());
 
 
         //SparseBooleanArray
 
         //SparseIntArray
 
-       // SparseLongArray
+        // SparseLongArray
 
 
     }
@@ -185,12 +176,12 @@ public class SetPrincipleActivity extends AppCompatActivity {
      */
     private void lrucacheDemo() {
 
-        LruCache<Integer,String> lruCache=new LruCache<>(5);
-        lruCache.put(1,"1");
-        lruCache.put(2,"2");
-        lruCache.put(3,"3");
-        lruCache.put(4,"4");
-        lruCache.put(5,"5");
+        LruCache<Integer, String> lruCache = new LruCache<>(5);
+        lruCache.put(1, "1");
+        lruCache.put(2, "2");
+        lruCache.put(3, "3");
+        lruCache.put(4, "4");
+        lruCache.put(5, "5");
 
         lruCache.get(1);
         lruCache.get(2);
@@ -200,12 +191,12 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
 
         //lruCache={5=5, 1=1, 2=2, 3=3, 4=4}    5最少使用到
-        System.out.println("lruCache="+snapshot.toString());
+        System.out.println("lruCache=" + snapshot.toString());
         //当多添加一个的话，那么5就会被删除，加入6上去
-        lruCache.put(6,"6");
+        lruCache.put(6, "6");
         // new  lruCache={1=1, 2=2, 3=3, 4=4, 6=6}
         Map<Integer, String> snapshot1 = lruCache.snapshot();
-        System.out.println(" new  lruCache="+snapshot1.toString());
+        System.out.println(" new  lruCache=" + snapshot1.toString());
 
     }
 
@@ -215,7 +206,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
 
         ImageCache() {
             //获取当前进程可以使用的内存大小，单位换算为KB
-            final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
+            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
             //取总内存的1/4作为缓存
             final int cacheSize = maxMemory / 4;
@@ -243,52 +234,49 @@ public class SetPrincipleActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void linkedHashMapDemo() {
         /**
-        众所周知 HashMap 是一个无序的 Map，因为每次根据 key 的 hashcode 映射到 Entry 数组上，所以遍历出来的顺序并不是写入的顺序。
-        因此 JDK 推出一个基于 HashMap 但具有顺序的 LinkedHashMap 来解决有排序需求的场景。
-        它的底层是继承于 HashMap 实现的，由一个双向链表所构成。
-        LinkedHashMap 的排序方式有两种：
+         众所周知 HashMap 是一个无序的 Map，因为每次根据 key 的 hashcode 映射到 Entry 数组上，所以遍历出来的顺序并不是写入的顺序。
+         因此 JDK 推出一个基于 HashMap 但具有顺序的 LinkedHashMap 来解决有排序需求的场景。
+         它的底层是继承于 HashMap 实现的，由一个双向链表所构成。
+         LinkedHashMap 的排序方式有两种：
          ---> 根据写入顺序排序。
          ---> 根据访问顺序排序。
-        其中根据访问顺序排序时，每次 get 都会将访问的值移动到链表末尾，这样重复操作就能得到一个按照访问顺序排序的链表。
+         其中根据访问顺序排序时，每次 get 都会将访问的值移动到链表末尾，这样重复操作就能得到一个按照访问顺序排序的链表。
          */
         LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
-        map.put("1",1) ;
-        map.put("2",2) ;
-        map.put("3",3) ;
-        map.put("4",4) ;
-        map.put("5",5) ;
-        map.put("6",6) ;
-        map.put("7",7) ;
-        map.put("8",8) ;
-        map.put("9",9) ;
-        map.put("10",10) ;
-        System.out.println("map="+map.toString());  //map{1=1, 2=2, 3=3, 4=4, 5=5}
+        map.put("1", 1);
+        map.put("2", 2);
+        map.put("3", 3);
+        map.put("4", 4);
+        map.put("5", 5);
+        map.put("6", 6);
+        map.put("7", 7);
+        map.put("8", 8);
+        map.put("9", 9);
+        map.put("10", 10);
+        System.out.println("map=" + map.toString());  //map{1=1, 2=2, 3=3, 4=4, 5=5}
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             System.out.println("map   Key = " + entry.getKey() + ", Value = " + entry.getValue());
         }
 
         //LruCache  底层使用的就是 LinekHashMap  最近最少使用的    图片的加载框架
-      //访问顺序排序的链表。
-      // LRU” （Least Recently Used）最近最少使用的，看了源码才知道核心是LRUCache类，这个类的核心其实是 LinkedHashMap类
-        LinkedHashMap<String, Integer> map1 = new LinkedHashMap<String, Integer>(10, (float) 0.75,true);
-        map1.put("1",1) ;
-        map1.put("2",2) ;
-        map1.put("3",3) ;
-        map1.put("4",4) ;
-        map1.put("5",5) ;
-        map1.put("6",6) ;
-        map1.put("7",7) ;
-        map1.put("8",8) ;
-        map1.put("9",9) ;
-        map1.put("10",10) ;
+        //访问顺序排序的链表。
+        // LRU” （Least Recently Used）最近最少使用的，看了源码才知道核心是LRUCache类，这个类的核心其实是 LinkedHashMap类
+        LinkedHashMap<String, Integer> map1 = new LinkedHashMap<String, Integer>(10, (float) 0.75, true);
+        map1.put("1", 1);
+        map1.put("2", 2);
+        map1.put("3", 3);
+        map1.put("4", 4);
+        map1.put("5", 5);
+        map1.put("6", 6);
+        map1.put("7", 7);
+        map1.put("8", 8);
+        map1.put("9", 9);
+        map1.put("10", 10);
         map1.get("6");
         // {1=1, 2=2, 3=3, 4=4, 5=5, 7=7, 8=8, 9=9, 10=10, 6=6}
-        System.out.println("map1=="+map1);
+        System.out.println("map1==" + map1);
         for (Map.Entry<String, Integer> entry : map1.entrySet()) {
             System.out.println("__________________--");
             System.out.println("map1   Key = " + entry.getKey() + ", Value = " + entry.getValue());
@@ -300,14 +288,14 @@ public class SetPrincipleActivity extends AppCompatActivity {
 所以 HashMap 会出现的问题 HashSet 依然不能避免。
      */
     private void hashSetDemo() {
-        HashSet<String> set=new HashSet<>();
+        HashSet<String> set = new HashSet<>();
         set.add("10");
         set.add("10");
         set.add("11");
         set.add("12");
         set.add("0");
 
-        System.out.println("set= "+set.toString());
+        System.out.println("set= " + set.toString());
     }
 
     /*
@@ -316,126 +304,127 @@ public class SetPrincipleActivity extends AppCompatActivity {
     因此需要支持线程安全的并发容器 ConcurrentHashMap 。
      */
     private void concurrentHashMapDemo() {
-             //  1.8   采用了 CAS + synchronized 来保证并发安全性
-         //  1.7 版本的对比 1.8 版本的  ConcurrentHashMap()  那就是查询遍历链表效率太低。
+        //  1.8   采用了 CAS + synchronized 来保证并发安全性
+        //  1.7 版本的对比 1.8 版本的  ConcurrentHashMap()  那就是查询遍历链表效率太低。
 
         // 1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（O(logn)）
-        AtomicInteger atomicInteger=new    AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
         int i = atomicInteger.incrementAndGet();
-         i = atomicInteger.incrementAndGet();
-         i = atomicInteger.incrementAndGet();
-         i = atomicInteger.incrementAndGet();
-         i = atomicInteger.incrementAndGet();
-         i = atomicInteger.incrementAndGet();
+        i = atomicInteger.incrementAndGet();
+        i = atomicInteger.incrementAndGet();
+        i = atomicInteger.incrementAndGet();
+        i = atomicInteger.incrementAndGet();
+        i = atomicInteger.incrementAndGet();
 
-        System.out.println("i="+i);
-
-
+        System.out.println("i=" + i);
 
 
     }
+
     //  HashMap 底层是基于 数组 + 链表 组成的
     private void hashMapDemo() {
-        HashMap<Integer,String> map=new HashMap<Integer,String>();
+        HashMap<Integer, String> map = new HashMap<Integer, String>();
         //在 1.6 1.7 hashmap的类的代码一共1500行左右，在1.8 一共有2000行左右
-         map.put(1,"1");
-         map.put(1,"2");
-         map.put(2,"1");
-         map.put(3,"1");
+        map.put(1, "1");
+        map.put(1, "2");
+        map.put(2, "1");
+        map.put(3, "1");
 
-        System.out.println("hashMap="+map.toString());
+        System.out.println("hashMap=" + map.toString());
 //        for (HashMap<Integer,String> r = map, p ;;) {
 //             p.get(3);
 //        }
-          // todo  无符号的右移（>>>）:按照二进制把数字右移指定数位，高位直接补零，低位移除！
-           // cap 为默认的长度  a=a|b  a|=b的意思就是把a和b按位或然后赋值给a 按位或的意思就是先把a和b都换成2进制，然后用或操作
-          int cap=6000;
-          int n = cap - 1;//9
-          n |= n >>> 1;//9的二进制=1001  >>>表示无符号的右移 100 =十进制 4     n=  1001 |= 100
-          System.out.println("n="+n); // n=13; 其实就是等于      n=  1001 |= 100 也就是n=1101 换成十进制等于13
-          n |= n >>> 2; // 1101 移动两位 0011 |1101  等于1111
-         System.out.println("n="+n);// n=15  1111
-          n |= n >>> 4;// 1111 移动4为 0000 |1111 =1111
-        System.out.println("n="+n);
-          n |= n >>> 8;// 1111 移动8为 0000 |1111 =1111
-        System.out.println("n="+n); // n=15
-          n |= n >>> 16;// 1111 移动16为 0000 |1111 =1111
-        System.out.println("n="+n);// n=15
-          int i= (n < 0) ? 1 : (n >= 1000000) ? 1000000 : n + 1;
-          System.out.println("设置hashmap的长度为10，那么他的新的扩容的临界值="+i);
-         // 设置hashmap的长度为10，那么他的新的扩容的临界值=16
+        // todo  无符号的右移（>>>）:按照二进制把数字右移指定数位，高位直接补零，低位移除！
+        // cap 为默认的长度  a=a|b  a|=b的意思就是把a和b按位或然后赋值给a 按位或的意思就是先把a和b都换成2进制，然后用或操作
+        int cap = 6000;
+        int n = cap - 1;//9
+        n |= n >>> 1;//9的二进制=1001  >>>表示无符号的右移 100 =十进制 4     n=  1001 |= 100
+        System.out.println("n=" + n); // n=13; 其实就是等于      n=  1001 |= 100 也就是n=1101 换成十进制等于13
+        n |= n >>> 2; // 1101 移动两位 0011 |1101  等于1111
+        System.out.println("n=" + n);// n=15  1111
+        n |= n >>> 4;// 1111 移动4为 0000 |1111 =1111
+        System.out.println("n=" + n);
+        n |= n >>> 8;// 1111 移动8为 0000 |1111 =1111
+        System.out.println("n=" + n); // n=15
+        n |= n >>> 16;// 1111 移动16为 0000 |1111 =1111
+        System.out.println("n=" + n);// n=15
+        int i = (n < 0) ? 1 : (n >= 1000000) ? 1000000 : n + 1;
+        System.out.println("设置hashmap的长度为10，那么他的新的扩容的临界值=" + i);
+        // 设置hashmap的长度为10，那么他的新的扩容的临界值=16
 
-        HashMap<Integer,String> mapTwo=new HashMap<Integer,String>();
-         mapTwo.put(1,"shiming");
+        HashMap<Integer, String> mapTwo = new HashMap<Integer, String>();
+        mapTwo.put(1, "shiming");
         int size = mapTwo.size();
-        System.out.println("hashMap size ="+size);
+        System.out.println("hashMap size =" + size);
         // hashCode  在 object 中是一个本地的方法
-
 
 
         String[] newTab = new String[16];
         //newTab 的长度=16
-        System.out.println("newTab 的长度="+newTab.length);
+        System.out.println("newTab 的长度=" + newTab.length);
 
-        int newHash=hash("test");
+        int newHash = hash("test");
         // 1的hash值=1    test :hash值=3556516
-        System.out.println( "newHash 1的hash值="+newHash);
+        System.out.println("newHash 1的hash值=" + newHash);
         i = (16 - 1) & newHash;
         // i值=1  test值=4
-        System.out.println("newHash的 i值="+i);
+        System.out.println("newHash的 i值=" + i);
         // todo  位与运算符（&） 两个数都转为二进制，然后从高位开始比较，如果两个数都为1则为1，否则为0。
 
-        String[] newS=setTest();
-        newS[0]="16";
+        String[] newS = setTest();
+        newS[0] = "16";
         // newS =[Ljava.lang.String;@1e0b9a
-        System.out.println("newS ="+newS);
+        System.out.println("newS =" + newS);
         //newS =[Ljava.lang.String;@1e0b9a
-        System.out.println("test ="+test);
-        System.out.println("test="+test.length);
-        System.out.println("test="+test[0]);
+        System.out.println("test =" + test);
+        System.out.println("test=" + test.length);
+        System.out.println("test=" + test[0]);
 
     }
+
     String[] test;
-    public String[]  setTest(){
-        String[] newS=new String[10];
-        test=newS;
+
+    public String[] setTest() {
+        String[] newS = new String[10];
+        test = newS;
         return newS;
     }
 
-     int hash(Object key) {
+    int hash(Object key) {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
+
     // 最佳的做法是将ArrayList作为默认的首选，当你需要而外的功能的时候，或者是当程序性能由于经常需要从表中间插入和删除而变差的时候，才会去选择LinkedList   来源于 THking in Java
     private void demoArrayList() {
         //ArrayList 实现于 List、RandomAccess 接口。可以插入空数据，也支持随机访问。
-         Object[] EMPTY_ELEMENTDATA = {};
-        System.out.println("length= "+EMPTY_ELEMENTDATA.length);
+        Object[] EMPTY_ELEMENTDATA = {};
+        System.out.println("length= " + EMPTY_ELEMENTDATA.length);
 
         // 2的二进制是10，>>代表右移，10右移1位是二进制的1，<<代表左移，10左移1位是二进制的100，也就是十进制的4。
-        System.out.println("2>>1==="+(2>>1)); //2>>1===1
-        System.out.println("1>>1==="+(1>>1)); //1>>1===0
-        System.out.println("100>>1=="+(100>>1)); //100>>1==50
-        System.out.println("88>>1=="+(88>>1)); //88>>1==44
-        System.out.println("45>>1=="+(45>>1));//45>>1==22
+        System.out.println("2>>1===" + (2 >> 1)); //2>>1===1
+        System.out.println("1>>1===" + (1 >> 1)); //1>>1===0
+        System.out.println("100>>1==" + (100 >> 1)); //100>>1==50
+        System.out.println("88>>1==" + (88 >> 1)); //88>>1==44
+        System.out.println("45>>1==" + (45 >> 1));//45>>1==22
 
         //证明list的线程不安全
-        final ArrayList<String> lists=new ArrayList<>();
-        Thread t1= new Thread(){
+        final ArrayList<String> lists = new ArrayList<>();
+        Thread t1 = new Thread() {
             @Override
             public void run() {
                 super.run();
-                for (int i=0;i<25;i++){
-                    lists.add("我是i="+i);
+                for (int i = 0; i < 25; i++) {
+                    lists.add("我是i=" + i);
                 }
             }
         };
-        Thread t2= new Thread(){
+        Thread t2 = new Thread() {
             @Override
             public void run() {
                 super.run();
-                for (int i=25;i<50;i++){
-                    lists.add("我是i="+i);
+                for (int i = 25; i < 50; i++) {
+                    lists.add("我是i=" + i);
                 }
 
             }
@@ -446,9 +435,9 @@ public class SetPrincipleActivity extends AppCompatActivity {
         try {
             Thread.sleep(1000);
             // 即使睡完觉了，但是也有可能长度不对
-            for(int l=0;l<lists.size();l++){
+            for (int l = 0; l < lists.size(); l++) {
                 // todo   两个线程不断的插入的话，就会导致插入的是null     我是i=34   我是i=10   我是i=35   我是i=11   null   null   我是i=12   我是i=38   我是i=13   我是i=39
-                System.out.print(lists.get(l)+"   ");
+                System.out.print(lists.get(l) + "   ");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -477,28 +466,26 @@ public class SetPrincipleActivity extends AppCompatActivity {
 //                * 冲突的，使用这个模式的时候，需要特别的注意
 
 
-       // 对象中自定义了 writeObject 和 readObject 方法时，JVM 会调用这两个自定义方法来实现序列化与反序列化  ArrayList 只序列化了被使用的数据。
-
-
+        // 对象中自定义了 writeObject 和 readObject 方法时，JVM 会调用这两个自定义方法来实现序列化与反序列化  ArrayList 只序列化了被使用的数据。
 
 
         //证明data的线程不安全
-        final List<String> data=Collections.synchronizedList(new ArrayList<String>());
-        Thread t3= new Thread(){
+        final List<String> data = Collections.synchronizedList(new ArrayList<String>());
+        Thread t3 = new Thread() {
             @Override
             public void run() {
                 super.run();
-                for (int i=0;i<25;i++){
-                    data.add("我是data i="+i);
+                for (int i = 0; i < 25; i++) {
+                    data.add("我是data i=" + i);
                 }
             }
         };
-        Thread t4= new Thread(){
+        Thread t4 = new Thread() {
             @Override
             public void run() {
                 super.run();
-                for (int i=25;i<50;i++){
-                    data.add("我是data i="+i);
+                for (int i = 25; i < 50; i++) {
+                    data.add("我是data i=" + i);
                 }
 
             }
@@ -510,8 +497,8 @@ public class SetPrincipleActivity extends AppCompatActivity {
         System.out.println("   证明data的线程不安全   ");
         try {
             Thread.sleep(1000);
-            for(int l=0;l<data.size();l++){
-                System.out.print(data.get(l)+"   "); // 这里的 data中的元素 不会为null
+            for (int l = 0; l < data.size(); l++) {
+                System.out.print(data.get(l) + "   "); // 这里的 data中的元素 不会为null
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -525,7 +512,7 @@ public class SetPrincipleActivity extends AppCompatActivity {
 //            new SynchronizedList<>(list));
 //    ```
 
-     // 1 . SynchronizedRandomAccessList
+    // 1 . SynchronizedRandomAccessList
 
 //    static class SynchronizedRandomAccessList<E>
 //            extends SynchronizedList<E>

@@ -2,11 +2,12 @@ package com.android.interview;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.interview.algorithm.AlgorithmDemoActivity;
 import com.android.interview.dp_px_dip_sp.UnitDemoActivity;
@@ -144,26 +145,15 @@ public class MainActivity extends AppCompatActivity {
         demo();
 
         // algorithm  算法的原理
-         findViewById(R.id.btn_algorithm).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 startActivity(new Intent(MainActivity.this,AlgorithmDemoActivity.class));
-             }
-         });
-
-
-
-
-
-
+        findViewById(R.id.btn_algorithm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AlgorithmDemoActivity.class));
+            }
+        });
 
 
 //        实现一个自定义view，其中含有若干textview，textview文字可换行且自定义- - view的高度可自适应拓展
-
-
-
-
-
 
 
 //        java内存模型，五个部分，程序计数器、栈、本地栈、堆、方法区。
@@ -171,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: 2018/8/13  
 //        类加载的过程，加载、验证、准备、解析、初始化。每个部分详细描述。
-        
-           
+
+
 //        加载阶段读入.class文件，class文件时二进制吗，为什么需要使用二进制的方式？
 //        验证过程是防止什么问题？验证过程是怎样的？加载和验证的执行顺序？符号引用的含义？
 //        准备过程的静态成员变量分配空间和设置初始值问题。
@@ -227,75 +217,75 @@ public class MainActivity extends AppCompatActivity {
 //        红黑树的一些特点？怎样保持平衡？
 
 
-
         //    编程题：将元素均为0、1、2的数组排序。
         // 时间复杂度：o(n)
         //两种方法，都是只遍历一次；
-        int[] arr={0,1,2,0,2,1,2,0,1,1,2,0,2,0,2,1,1,0};
+        int[] arr = {0, 1, 2, 0, 2, 1, 2, 0, 1, 1, 2, 0, 2, 0, 2, 1, 1, 0};
         sortarray1(arr);
         //arr=[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2]
-        System.out.println("arr="+Arrays.toString(arr));
-        int[] arrTwo={0,1,2,0,2,1,2,0,1,1,2,0,2,0,2,1,1,0};
+        System.out.println("arr=" + Arrays.toString(arr));
+        int[] arrTwo = {0, 1, 2, 0, 2, 1, 2, 0, 1, 1, 2, 0, 2, 0, 2, 1, 1, 0};
         sortarray2(arrTwo);
         //HelloarrTwo=[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2]
-        System.out.println("arrTwo="+Arrays.toString(arrTwo));
+        System.out.println("arrTwo=" + Arrays.toString(arrTwo));
     }
 
 
     /*借鉴《算法》中，当数组中存在大量重复元素时，对快排partition方法的改进。
      *即三个指针，把数组划分成三部分，<x、=x、>x*/
-    public void sortarray2(int[] nums){
+    public void sortarray2(int[] nums) {
         int a = 0;//指向下一个存放0的位置
-        int b = nums.length-1;//从右向左，下一个存放2的位置
+        int b = nums.length - 1;//从右向左，下一个存放2的位置
         int i = a;
-        while(i<=b){
-            if(nums[i] == 1)
+        while (i <= b) {
+            if (nums[i] == 1)
                 i++;
-            else if(nums[i] == 2)
-                exchange(nums,i,b--);
-            else if (nums[i]==0) {
+            else if (nums[i] == 2)
+                exchange(nums, i, b--);
+            else if (nums[i] == 0) {
                 exchange(nums, i++, a++);
             }
         }
     }
+
     /*只能遍历一遍，从左向右遍历*/
-    public void sortarray1(int[] nums){
-        int i=-1;
-        int j=-1;
-        int k=-1;
-        for(int p=0;p<nums.length;p++){
-            if(nums[p] == 0){
-                if(i == -1)
+    public void sortarray1(int[] nums) {
+        int i = -1;
+        int j = -1;
+        int k = -1;
+        for (int p = 0; p < nums.length; p++) {
+            if (nums[p] == 0) {
+                if (i == -1)
                     i = 0;//第一个0的位置
-                if(j != -1){
-                    for(int t=p;t>j;t--)
-                        nums[t] = nums[t-1];
+                if (j != -1) {
+                    for (int t = p; t > j; t--)
+                        nums[t] = nums[t - 1];
                     nums[j] = 0;
                     j++;
-                    if(k != -1)k++;
-                }
-                else if(k != -1){
-                    for(int t=p;t>k;t--)
-                        nums[t] = nums[t-1];
+                    if (k != -1) k++;
+                } else if (k != -1) {
+                    for (int t = p; t > k; t--)
+                        nums[t] = nums[t - 1];
                     nums[k] = 0;
                     k++;
                 }
-            } else if(nums[p] == 1){
-                if(j == -1){
-                    if(k != -1) j = k;
+            } else if (nums[p] == 1) {
+                if (j == -1) {
+                    if (k != -1) j = k;
                     else j = p;
                 }
-                if(k != -1){
-                    exchange(nums,p,k);
+                if (k != -1) {
+                    exchange(nums, p, k);
                     k++;
                 }
-            } else if(nums[p] == 2){
-                if(k == -1)
+            } else if (nums[p] == 2) {
+                if (k == -1)
                     k = p;
             }
         }
     }
-    public void exchange(int[] nums,int a,int b){
+
+    public void exchange(int[] nums, int a, int b) {
         int tmp = nums[a];
         nums[a] = nums[b];
         nums[b] = tmp;
@@ -350,10 +340,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     mObject.setStatus(mNext);
                     if (i == 0) {
-                        Log.d("MainActivity","Hello");
+                        Log.d("MainActivity", "Hello");
                         System.out.print(Thread.currentThread().getName() + "  Hello");
                     } else {
-                        Log.d("MainActivity","World");
+                        Log.d("MainActivity", "World");
                         System.out.print(Thread.currentThread().getName() + "  World");
                     }
                     //调用notifyAll()方法能够唤醒所有正在等待这个对象的monitor的线程

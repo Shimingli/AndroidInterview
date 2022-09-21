@@ -2,9 +2,11 @@ package com.android.interview.view_source_code;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,19 +27,21 @@ public class ViewSourceCodeDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_source_code_demo);
         mBtnDemo = findViewById(R.id.btn_on_click_demo);
         Context viewSourceCodeDemoActivity = this;
-        mBtnDemo.setOnClickListener(new DeclaredOnClickListener(viewSourceCodeDemoActivity,"demoOnclick"));
+        mBtnDemo.setOnClickListener(new DeclaredOnClickListener(viewSourceCodeDemoActivity, "demoOnclick"));
         String string = mBtnDemo.toString();
         //android.support.v7.widget.AppCompatButton{9d97ae6 VFED..C.. ......I. 0,0-0,0 #7f0b007e app:id/btn_on_click_demo}
-        System.out.println("shiming "+string);
+        System.out.println("shiming " + string);
 
         /*View的绘制流程 shiming ，这个真的鸡巴的累，可千万不要只看别人的文档，基本上没戏，要自己看源代码才可以*/
-         //1、ActivityThread 通过C++,启动，程序的入口函数
+        //1、ActivityThread 通过C++,启动，程序的入口函数
 
         //View
     }
-   private void demoOnclick(){
-       Toast.makeText(this,"我是源码级别实现的点击事件",Toast.LENGTH_SHORT).show();
-   }
+
+    private void demoOnclick() {
+        Toast.makeText(this, "我是源码级别实现的点击事件", Toast.LENGTH_SHORT).show();
+    }
+
     private static class DeclaredOnClickListener implements View.OnClickListener {
         private final Context mHostView;
         private final String mMethodName;

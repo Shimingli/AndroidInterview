@@ -1,8 +1,10 @@
 package com.android.interview.layout_performance_comparison;
 
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.android.interview.R;
@@ -38,8 +40,8 @@ shiming MyRelativeLayout  draw time=====19
         System.out.println("shiming  Activity  onCreate");
         setContentView(R.layout.activity_layout_performance_comparison_relative);
         // TODO: 2018/5/31  num =3;
-        int num=0x3;
-        System.out.println("shiming 0x3"+num);
+        int num = 0x3;
+        System.out.println("shiming 0x3" + num);
 
     }
 

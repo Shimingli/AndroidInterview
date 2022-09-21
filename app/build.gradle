@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.android.interview"
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         defaultConfig {
@@ -28,11 +28,11 @@ android {
 dependencies {
     //todo 看看是不是libs里有android-support包，而gradle中其实又引入了android-support，导致重复
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.1.0'
+    compile 'androidx.appcompat:appcompat:1.0.0'
+    compile 'androidx.constraintlayout:constraintlayout:1.1.3'
     testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.2', {
+    androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'androidx.recyclerview:recyclerview:1.0.0'
 }

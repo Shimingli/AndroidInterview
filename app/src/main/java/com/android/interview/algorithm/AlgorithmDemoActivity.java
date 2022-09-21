@@ -1,13 +1,14 @@
 package com.android.interview.algorithm;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.android.interview.R;
 import com.android.interview.algorithm.tree.BinaryTreeDemo;
 
 import static com.android.interview.algorithm.MYDemoNum.str;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * algorithm  算法原理
@@ -38,24 +39,25 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
         BinaryTreeDemo.binaryTree();
 
     }
-   /*
-我自己idoWorkReplace实现的方式总共耗时time= 1401563
-使用 StringBuffer中的消耗的时间 time= 596354
-使用 replaceSpaces中的消耗的时间 time= 1450521
-使用 replaceBlank中的消耗的时间 time= 200000
 
- 使用 replaceBlank中的消耗的时间 time= 202604
-  idoWorkReplace 实现的方式总共耗时time= 1800000
-  使用 StringBuffer中的消耗的时间 time= 455729
- 使用 replaceSpaces中的消耗的时间 time= 1447917
-    */
+    /*
+ 我自己idoWorkReplace实现的方式总共耗时time= 1401563
+ 使用 StringBuffer中的消耗的时间 time= 596354
+ 使用 replaceSpaces中的消耗的时间 time= 1450521
+ 使用 replaceBlank中的消耗的时间 time= 200000
+
+  使用 replaceBlank中的消耗的时间 time= 202604
+   idoWorkReplace 实现的方式总共耗时time= 1800000
+   使用 StringBuffer中的消耗的时间 time= 455729
+  使用 replaceSpaces中的消耗的时间 time= 1447917
+     */
     private void replaceSpacesDemo() {
         long l7 = System.nanoTime();
         char[] chars = replaceBlank(str.toCharArray(), str.length());
         long l8 = System.nanoTime();
         l8 = l8 - l7;
         System.out.println(TAG + "使用 replaceBlank中的消耗的时间 time= " + l8);
-        for (char c :chars){
+        for (char c : chars) {
             System.out.print(c);
         }
         System.out.println();
@@ -67,7 +69,7 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
         //todo  消耗的时间 很多  放弃这种的方法
         idoWorkReplace(str, tagStr);
         //替换我自己的方式s=We%20are%20happy.
-       // System.out.println(TAG + "替换我自己的方式s=" + s);
+        // System.out.println(TAG + "替换我自己的方式s=" + s);
         long l2 = System.nanoTime();
         l2 = l2 - l1;
 
@@ -100,10 +102,10 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
      * @param usedLength 已经字符数组中已经使用的长度
      * @return 转换后使用的字符长度，-1表示处理失败
      */
-    public char[]  replaceBlank(char[] string, int usedLength) {
+    public char[] replaceBlank(char[] string, int usedLength) {
         // 判断输入是否合法
-        System.out.println(TAG+"string.length="+string.length);
-        System.out.println(TAG+"usedLength="+usedLength);
+        System.out.println(TAG + "string.length=" + string.length);
+        System.out.println(TAG + "usedLength=" + usedLength);
         if (string == null || string.length < usedLength) {
             return null;
         }
@@ -121,7 +123,7 @@ public class AlgorithmDemoActivity extends AppCompatActivity {
         }
         // 计算转换后的字符长度是多少
         int targetLength = whiteCount * 2 + usedLength;
-         //新的保存的字符串的数组
+        //新的保存的字符串的数组
         char[] newChars = new char[targetLength];
         int tmp = targetLength; // 保存长度结果用于返回
 //        if (targetLength > string.length) { // 如果转换后的长度大于数组的最大长度，直接返回失败
